@@ -1,9 +1,10 @@
 from django.urls import path
+from django.contrib import admin
 
-from . import views
+from .views import IndexView, LoginView
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('org/<int:org_id>', views.organisation, name="organisation"),
-    path('advert/<int:advert_id>', views.advert, name="advert"),
+    path('admin/', admin.site.urls),
+    path('', IndexView.as_view()),
+    path('login/', LoginView.as_view()),
 ]

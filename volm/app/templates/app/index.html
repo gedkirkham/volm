@@ -1,1 +1,33 @@
-test 123
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script> -->
+
+<div id="app">
+    [[ message ]]
+
+    <!-- {{ django_template_variable|json_script:"djangoData" }} -->
+</div>
+
+<script>
+    // let jsVariable = JSON.parse(document.getElementById('djangoData').textContent)
+
+    var app = new Vue({
+        delimiters: ["[[", "]]"],
+        el: '#app',
+        data: {
+            message: 'test'
+        }
+        // data: jsVariable
+    })
+
+    // app
+    //     .$http
+    //     .interceptors
+    //     .push((request, next) => {
+    //         const METHOD = request.method
+    //         if (METHOD === 'POST') {
+    //             request.headers.set('Authorization')
+    //             request.headers.set
+    //         }
+    //     })
+</script>
