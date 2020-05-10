@@ -6,12 +6,12 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
-    template_name = "app/index.html"
+    template_name = "app/index.html"    
 
 class LoginView(View):
     form_class = LoginForm
@@ -34,3 +34,26 @@ class LoginView(View):
                 return HttpResponse('Unauthorised', status=401)
         
         return render(request, self.template_name, { 'form': form })
+
+class RegistrationView(View):
+    form_class = RegistrationForm
+    template_name = 'app/register.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, { 'form': form })
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            # TODO: Complete registration process
+            return HttpResponseRedirect('/')
+        else:
+            pass # TODO: add error handling
+
+        return render(request, self.template_name, {'form': form })
+
