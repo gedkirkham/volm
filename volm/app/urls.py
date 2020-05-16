@@ -1,11 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib import admin
+from django.contrib.auth import urls as auth_urls
 
-from .views import IndexView, LoginView, RegistrationView
+from .views import ContactView, IndexView, LoginView, RegistrationView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', IndexView.as_view()),
-    path('login/', LoginView.as_view()),
+    path('', include(auth_urls)),
     path('register/', RegistrationView.as_view()),
+    path('contact/', ContactView.as_view()),
+    path('', IndexView.as_view()),
 ]
