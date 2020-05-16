@@ -59,7 +59,7 @@ class LoginView(View):
         
         return render(request, self.template_name, { 'form': form })
 
-class RegistrationView(View):
+class RegistrationView(View): # TODO: install django-allauth
     form_class = RegistrationForm
     template_name = 'app/register.html'
 
