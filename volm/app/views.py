@@ -5,9 +5,33 @@ from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 
-from .forms import LoginForm, RegistrationForm
+from .forms import ContactForm, LoginForm, RegistrationForm
 
+class ContactView(View): # TODO: configure email backend
+	form_class = ContactForm
+	template_name = 'app/contact.html'
+
+	def get(self, request, *args, **kwargs):
+		form = self.form_class()
+		return render(request, self.template_name, { 'form': form })
+	
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			subject = form.cleaned_data['subject']
+			message = form.cleaned_data['message']
+			sender = form.cleaned_data['sender']
+			cc_myself = form.cleaned_data['cc_myself']
+
+			recipients = ['gedkirkham@protonmail.com']
+			if cc_myself:
+				recipients.append(sender)
+
+			send_mail(subject, message, sender, recipients)
+			return HttpResponseRedirect('/thanks/')
+		return render(request, self.template_name, {'form': form })
 
 class IndexView(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
