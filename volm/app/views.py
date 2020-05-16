@@ -46,14 +46,8 @@ class RegistrationView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            # TODO: Complete registration process
+            user = form.save() 
+            login(request, user)
             return HttpResponseRedirect('/')
-        else:
-            pass # TODO: add error handling
-
         return render(request, self.template_name, {'form': form })
 
