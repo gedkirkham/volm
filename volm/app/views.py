@@ -32,9 +32,13 @@ class ContactView(View): # TODO: configure email backend
 			return HttpResponseRedirect('/thanks/')
 		return render(request, self.template_name, {'form': form })
 
-class IndexView(LoginRequiredMixin, TemplateView):
-    login_url = '/login/'
-    template_name = "app/index.html"    
+class IndexView(LoginRequiredMixin, View):
+	login_url = '/login/'
+	template_name = "app/index.html"    
+	context = { 'django_template_variable': 'django_template_variable as context' }
+
+	def get(self, request, *args, **kwargs):
+		return render(request, self.template_name, self.context)
 
 class RegistrationView(View): # TODO: install django-allauth
     form_class = RegistrationForm

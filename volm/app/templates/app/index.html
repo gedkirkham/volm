@@ -1,23 +1,23 @@
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script> -->
+{% extends "app/base.html" %}
 
+{% block content %}
 <div id="app">
-    [[ message ]]
+	[[ message ]]
+	[[jsVariable]]
 
-    <!-- {{ django_template_variable|json_script:"djangoData" }} -->
+    {{ django_template_variable|json_script:"djangoData" }}
 </div>
 
 <script>
-    // let jsVariable = JSON.parse(document.getElementById('djangoData').textContent)
+    var jsVariable = JSON.parse(document.getElementById('djangoData').textContent)
 
     var app = new Vue({
         delimiters: ["[[", "]]"],
         el: '#app',
         data: {
-            message: 'Index page'
-        }
-        // data: jsVariable
+            message: 'Index page',
+			jsVariable: jsVariable
+        },
     })
 
     // app
@@ -31,3 +31,5 @@
     //         }
     //     })
 </script>
+
+{% endblock %}
