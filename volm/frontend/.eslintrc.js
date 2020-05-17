@@ -65,6 +65,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'prefer-promise-reject-errors': 'off',
     'comma-dangle': ['error', 'always-multiline'],
+    'vue/html-indent': ["error", 4],
 
 
     // allow debugger during development only

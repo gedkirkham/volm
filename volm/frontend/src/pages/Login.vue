@@ -1,17 +1,21 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
-    >
+    <q-page class="flex flex-center">
+        <img
+            alt="Quasar logo"
+            src="~assets/quasar-logo-full.svg"
+        >
 
-    Login page
+        <q-form @submit="login()">
+            asd
+        </q-form>
 
-    <q-btn
-      label="Login"
-      @click="login()"
-    />
-  </q-page>
+        Login page
+
+        <q-btn
+            label="Login"
+            @click="login()"
+        />
+    </q-page>
 </template>
 
 <script>
