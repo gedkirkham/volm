@@ -16,6 +16,7 @@ module.exports = function (ctx) {
 
       'i18n',
       'plugins',
+      'interceptor',
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -95,7 +96,7 @@ module.exports = function (ctx) {
 
       env: ctx.dev
         ? {
-          API: JSON.stringify('https://127.0.0.1:8000/api'),
+          API: JSON.stringify('http://127.0.0.1:8000/api'),
         }
         : {
           API: JSON.stringify(''),
