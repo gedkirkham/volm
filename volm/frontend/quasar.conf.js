@@ -101,6 +101,8 @@ module.exports = function (ctx) {
         : {
           API: JSON.stringify(''),
         },
+
+      publicPath: 'static'
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
