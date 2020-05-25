@@ -66,6 +66,8 @@ module.exports = {
     'prefer-promise-reject-errors': 'off',
     'comma-dangle': ['error', 'always-multiline'],
     'vue/html-indent': ["error", 4],
+    'vue/script-indent': ['error', 4],
+    'indent': ['error', 4],
 
 
     // allow debugger during development only
