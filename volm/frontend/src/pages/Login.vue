@@ -15,42 +15,25 @@
                 type="submit"
             />
         </q-form>
-
-        <q-btn
-            label="Get User"
-            @click="getUser()"
-        />
-
-        <q-btn
-            label="Logout"
-            @click="logout()"
-        />
     </q-page>
 </template>
 
 <script>
 export default {
-    name: 'PageIndex',
+    name: 'LoginPage',
     data () {
         return {
-            password: 'tet20051702',
-            username: 'kirk4231',
+            password: '',
+            username: '',
         }
     },
     methods: {
-        getUser () {
-            console.log(localStorage.getItem('access') || null)
-            this
-                .$http
-                .get(process.env.API + '/user/')
-                .catch(ERROR => console.error('login()', ERROR))
-        },
         login () {
             this
                 .$http
                 .post(process.env.API + '/token/', {
-                    username: 'tet20051702',
-                    password: 'kirk4231',
+                    username: '',
+                    password: '',
                 })
                 .then(RESP => {
                     const TOKENS = RESP.body
@@ -58,11 +41,6 @@ export default {
                     localStorage.setItem('refresh', TOKENS.refresh)
                 })
                 .catch(ERROR => console.error('login()', ERROR))
-            console.log(localStorage)
-        },
-        logout () {
-            localStorage.removeItem('access_token')
-            localStorage.removeItem('refresh_token')
         },
     },
 }
