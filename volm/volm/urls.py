@@ -19,14 +19,12 @@ from django.contrib.auth import urls as auth_urls
 
 from app.views import ContactView, IndexView
 
-from app import urls as app_urls
-from api import urls as api_urls
+from app import urls
 
 urlpatterns = [
-    path('', include(app_urls)),
+    path('', include(urls)),
     path('admin/', admin.site.urls),
     path('', IndexView.as_view()),
     path('', include(auth_urls)),
     path('contact/', ContactView.as_view()),
-    path('api/', include(api_urls))
 ]
