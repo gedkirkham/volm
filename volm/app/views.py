@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 
-from .forms import ContactForm, LoginForm, RegistrationForm
+from .forms import ContactForm
 
 class ContactView(View): # TODO: configure email backend
 	form_class = ContactForm
@@ -38,20 +38,4 @@ class IndexView(View):
 
 	def get(self, request, *args, **kwargs):
 		return render(request, self.template_name, self.context)
-
-class RegistrationView(View): # TODO: install django-allauth
-    form_class = RegistrationForm
-    template_name = 'app/register.html'
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, { 'form': form })
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user = form.save() 
-            login(request, user)
-            return HttpResponseRedirect('/')
-        return render(request, self.template_name, {'form': form })
 

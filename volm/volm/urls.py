@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import urls as auth_urls
 
-from app.views import ContactView, IndexView, RegistrationView
+from app.views import ContactView, IndexView
 
 from app import urls as app_urls
 from api import urls as api_urls
@@ -27,7 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view()),
     path('', include(auth_urls)),
-    path('register/', RegistrationView.as_view()),
     path('contact/', ContactView.as_view()),
     path('api/', include(api_urls))
 ]
