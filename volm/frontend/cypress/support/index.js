@@ -18,3 +18,27 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+Cypress.Commands.add('registrationFirstNameInput', () => {
+    cy.get('.test-firstName input')
+})
+
+Cypress.Commands.add('registrationPopulateForm', emailId => {
+    const FIRST_NAME = 'John'
+    cy.registrationFirstNameInput()
+        .type(FIRST_NAME).should('have.value', FIRST_NAME)
+
+    const LAST_NAME = 'Moore'
+    cy.get('.test-lastName input')
+        .type(LAST_NAME).should('have.value', LAST_NAME)
+
+    cy.get('.test-email input')
+        .type(`${emailId}@test.com`).should('have.value', `${emailId}@test.com`)
+
+    const PASSWORD = 'password123'
+    cy.get('.test-password_1 input')
+        .type(PASSWORD).should('have.value', PASSWORD)
+
+    cy.get('.test-password_2 input')
+        .type(PASSWORD).should('have.value', PASSWORD)
+})
