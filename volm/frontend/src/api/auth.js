@@ -22,8 +22,8 @@ export function registerApi (OBJ) {
             email: OBJ.email,
             first_name: OBJ.first_name,
             last_name: OBJ.last_name,
-            password1: OBJ.password_1,
-            password2: OBJ.password_2,
+            password: OBJ.password_1,
+            password_2: OBJ.password_2,
             username: OBJ.email,
         })
         .catch(ERROR => console.error('registerApi()', ERROR))

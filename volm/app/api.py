@@ -20,25 +20,30 @@ class RegisterUserAPIView(APIView):
     authentication_classes = []
     permission_classes = []
 
-    def compare_passwords(this, password1, password2):
-        if password1 and password2 and password1 == password2:
+    def compare_passwords(this, password, password_2):
+        if password and password_2 and password == password_2:
             return True
-        elif password1 and password2 and password1 != password2:
+        elif password and password_2 and password != password_2:
             return False
         return False
 
     def post(self, request, *args, **kwargs):
-        serializer = RegistrationSerializer(data=request.data)
+        data = request.data
+        
+        password_2 = data['password_2']
+        data.pop('password_2')
+
+        serializer = RegistrationSerializer(data=data)
         errors = {}
 
         data = request.data
-        passwords_match = self.compare_passwords(data['password1'], data['password2'])
+        passwords_match = self.compare_passwords(data['password'], password_2)
         if serializer.is_valid() and passwords_match:
             user = User.objects.create_user(
                     email=data['email'],
                     first_name=data['first_name'],
                     last_name=data['last_name'],
-                    password=data['password1'], 
+                    password=data['password'], 
                     username=data['email'],
                 )
             return Response(status=status.HTTP_201_CREATED)

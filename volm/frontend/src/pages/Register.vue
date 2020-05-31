@@ -4,38 +4,39 @@
             <q-form @submit="register()">
                 <q-input
                     v-model="first_name"
-                    class="q-pb-md"
+                    class="test-firstName q-pb-md"
                     label="First name *"
                     outlined
                 />
                 <q-input
                     v-model="last_name"
-                    class="q-pb-md"
+                    class="test-lastName q-pb-md"
                     label="Last name *"
                     outlined
                 />
                 <q-input
                     v-model="email"
-                    class="q-pb-md"
+                    class="test-email q-pb-md"
                     label="Email *"
                     outlined
                 />
                 <q-input
                     v-model="password_1"
-                    class="q-pb-md"
+                    class="test-password_1 q-pb-md"
                     label="Password *"
                     type="password"
                     outlined
                 />
                 <q-input
                     v-model="password_2"
-                    class="q-pb-md"
+                    class="test-password_2 q-pb-md"
                     label="Confirm password *"
                     type="password"
                     outlined
                 />
 
                 <q-btn
+                    id="test-submit"
                     color="primary"
                     label="Register"
                     type="submit"
