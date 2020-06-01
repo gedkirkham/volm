@@ -33,6 +33,12 @@ context('Registration', () => {
             cy.get('.test-password_2 input')
                 .type('{enter}')
         })
+
+        it('if FirstName is just under character limit', () => {
+            cy.registrationFirstNameInput()
+                .clear()
+                .type('012345678901234567890123456789{enter}')
+        })
     })
 
     describe('error thrown if', () => {
@@ -48,19 +54,33 @@ context('Registration', () => {
             emailId = cy.registrationPopulateForm(CURRENT_DATE + ++emailId)
         })
 
-        it('if FirstName is not present', () => {
-            cy.registrationFirstNameInput()
-                .clear()
+        describe('FirstName', () => {
+            it('is not present', () => {
+                cy.registrationFirstNameInput()
+                    .clear()
+                    .type('{enter}')
 
-            cy.get('#test-submit')
-                .click()
+                cy.wait('@registerApi').then((xhr) => {
+                    assert.strictEqual(xhr.status, 400)
+                    assert.strictEqual(xhr.response.body.first_name.length, 1)
+                    assert.strictEqual(xhr.response.body.first_name[0], 'This field may not be blank.')
+                })
 
-            cy.wait('@registerApi').then((xhr) => {
-                assert.strictEqual(xhr.status, 400)
-                // assert.strictEqual(xhr.response, 400) //TODO: add check to ensure that error response is correct
+                // TODO: Check visual error is thrown
+            })
+
+            it('is over character limit', () => {
+                cy.registrationFirstNameInput()
+                    .type('0123456789012345678901234567890{enter}')
+
+                cy.wait('@registerApi').then((xhr) => {
+                    assert.strictEqual(xhr.status, 400)
+                    assert.strictEqual(xhr.response.body.first_name.length, 1)
+                    assert.strictEqual(xhr.response.body.first_name[0], 'Ensure this field has no more than 30 characters.')
+                })
+
+                // TODO: Check visual error is thrown
             })
         })
-
-        it('if FirstName is in-valid', () => {})
     })
   })
