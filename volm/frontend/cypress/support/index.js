@@ -23,6 +23,10 @@ Cypress.Commands.add('registrationFirstNameInput', () => {
     cy.get('.test-firstName input')
 })
 
+Cypress.Commands.add('registrationFirstNameWrapper', () => {
+    cy.get('.test-firstName')
+})
+
 Cypress.Commands.add('registrationPopulateForm', emailId => {
     const FIRST_NAME = 'John'
     cy.registrationFirstNameInput()

@@ -1,6 +1,9 @@
 /// <reference types="cypress" />
 
 context('Registration', () => {
+    const ERROR_BLANK = 'This field may not be blank.'
+    const ERROR_30_MAX = 'Ensure this field has no more than 30 characters.'
+
     beforeEach(() => {
       cy.visit('http://localhost:8080/#/auth/register')
     })
@@ -63,10 +66,11 @@ context('Registration', () => {
                 cy.wait('@registerApi').then((xhr) => {
                     assert.strictEqual(xhr.status, 400)
                     assert.strictEqual(xhr.response.body.first_name.length, 1)
-                    assert.strictEqual(xhr.response.body.first_name[0], 'This field may not be blank.')
+                    assert.strictEqual(xhr.response.body.first_name[0], ERROR_BLANK)
                 })
 
-                // TODO: Check visual error is thrown
+                cy.registrationFirstNameWrapper()
+                    .contains(ERROR_BLANK)
             })
 
             it('is over character limit', () => {
@@ -76,10 +80,11 @@ context('Registration', () => {
                 cy.wait('@registerApi').then((xhr) => {
                     assert.strictEqual(xhr.status, 400)
                     assert.strictEqual(xhr.response.body.first_name.length, 1)
-                    assert.strictEqual(xhr.response.body.first_name[0], 'Ensure this field has no more than 30 characters.')
+                    assert.strictEqual(xhr.response.body.first_name[0], ERROR_30_MAX)
                 })
 
-                // TODO: Check visual error is thrown
+                cy.registrationFirstNameWrapper()
+                    .contains(ERROR_30_MAX)
             })
         })
     })
