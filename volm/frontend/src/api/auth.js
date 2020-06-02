@@ -16,7 +16,7 @@ export function loginApi (OBJ) {
 }
 
 export function registerApi (OBJ) {
-    Vue
+    return Vue
         .http
         .post(process.env.API + '/register/', {
             email: OBJ.email,
@@ -26,5 +26,4 @@ export function registerApi (OBJ) {
             password_2: OBJ.password_2,
             username: OBJ.email,
         })
-        .catch(ERROR => console.error('registerApi()', ERROR))
 }
