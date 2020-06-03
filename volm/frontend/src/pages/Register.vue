@@ -10,8 +10,8 @@
                     class="test-firstName q-pb-xl"
                     label="First name *"
                     outlined
-                    :error="is_first_name_error"
-                    :error-message="first_name_error_message"
+                    :error="!!errors.first_name"
+                    :error-message="errors.first_name"
                 />
                 <q-input
                     v-model="last_name"
@@ -53,6 +53,7 @@
 
 <script>
 import { registerApi } from 'src/api/auth.js'
+import constants from 'src/constants.js'
 
 export default {
     name: 'RegisterPage',
@@ -66,17 +67,17 @@ export default {
             password_2: '',
         }
     },
-    computed: {
-        is_first_name_error () {
-            return !!this.first_name_error_message
-        },
-        first_name_error_message () {
-            const ERROR_KEY = 'first_name'
-            return this.errors[ERROR_KEY] ? this.errors[ERROR_KEY] : ''
-        },
-    },
     methods: {
+        getErrorMessage (DJANGO_ERROR) {
+            const OBJ = {
+                [constants.django.errors.blank]: this.$t('pages.register.errors.blank'),
+                [constants.django.errors.max_30_char]: this.$t('pages.register.errors.max_30_char'),
+            }
+
+            return OBJ[DJANGO_ERROR]
+        },
         register () {
+            this.errors = {}
             registerApi({
                 email: this.email,
                 first_name: this.first_name,
@@ -86,10 +87,16 @@ export default {
             })
                 .catch(ERROR => {
                     console.error('registerApi()', ERROR)
-                    Object.entries(ERROR.body).forEach(
-                        ([KEY, VALUE]) => this.$set(this.errors, KEY, VALUE[0]),
-                    )
+                    this.setErrors(ERROR.body)
                 })
+        },
+        setErrors (ERRORS) {
+            Object.entries(ERRORS).forEach(
+                ([KEY, VALUE]) => {
+                    const ERROR_MESSAGE = VALUE
+                    this.$set(this.errors, KEY, this.getErrorMessage(ERROR_MESSAGE[0]))
+                },
+            )
         },
     },
 }
