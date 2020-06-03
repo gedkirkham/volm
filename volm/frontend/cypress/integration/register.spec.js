@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 
-context('Registration', () => {
-    const ERROR_BLANK = 'This field may not be blank.'
-    const ERROR_30_MAX = 'Ensure this field has no more than 30 characters.'
+import constants from '../../src/constants.js'
+import i18n_en_us from '../../src/i18n/en-us/index.js'
 
+context('Registration', () => {
     beforeEach(() => {
       cy.visit('http://localhost:8080/#/auth/register')
     })
@@ -66,26 +66,66 @@ context('Registration', () => {
                 cy.wait('@registerApi').then((xhr) => {
                     assert.strictEqual(xhr.status, 400)
                     assert.strictEqual(xhr.response.body.first_name.length, 1)
-                    assert.strictEqual(xhr.response.body.first_name[0], ERROR_BLANK)
+                    assert.strictEqual(xhr.response.body.first_name[0], constants.django.errors.blank)
                 })
 
                 cy.registrationFirstNameWrapper()
-                    .contains(ERROR_BLANK)
+                    .contains(i18n_en_us.pages.register.errors.blank)
             })
 
             it('is over character limit', () => {
                 cy.registrationFirstNameInput()
+                    .clear()
                     .type('0123456789012345678901234567890{enter}')
 
                 cy.wait('@registerApi').then((xhr) => {
                     assert.strictEqual(xhr.status, 400)
                     assert.strictEqual(xhr.response.body.first_name.length, 1)
-                    assert.strictEqual(xhr.response.body.first_name[0], ERROR_30_MAX)
+                    assert.strictEqual(xhr.response.body.first_name[0], constants.django.errors.max_30_char)
                 })
 
                 cy.registrationFirstNameWrapper()
-                    .contains(ERROR_30_MAX)
+                    .contains(i18n_en_us.pages.register.errors.max_30_char)
             })
         })
     })
-  })
+
+    describe('error thrown and cleared for', () => {
+        let emailId = 0
+        beforeEach(() => {
+            cy.server()
+            cy.route({
+                method: 'POST',
+                url: '/api/register',
+            }).as('registerApi')
+
+            const CURRENT_DATE = new Date().getTime()
+            emailId = cy.registrationPopulateForm(CURRENT_DATE + ++emailId)
+        })
+
+        it('FirstName', () => {
+            cy.registrationFirstNameInput()
+                .clear()
+                .type('{enter}')
+
+            cy.wait('@registerApi').then((xhr) => {
+                assert.strictEqual(xhr.status, 400)
+                assert.strictEqual(xhr.response.body.first_name.length, 1)
+                assert.strictEqual(xhr.response.body.first_name[0], constants.django.errors.blank)
+            })
+
+            cy.registrationFirstNameWrapper()
+                .contains(i18n_en_us.pages.register.errors.blank)
+
+            cy.registrationFirstNameInput()
+                .type('John{enter}')
+
+            cy.wait('@registerApi').then((xhr) => {
+                assert.strictEqual(xhr.status, 201)
+            })
+
+            cy.registrationFirstNameWrapper()
+                .should('not.contain.text', i18n_en_us.pages.register.errors.blank)
+        })
+    })
+})
