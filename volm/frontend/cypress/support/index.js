@@ -23,8 +23,16 @@ Cypress.Commands.add('registrationFirstNameInput', () => {
     cy.get('.test-firstName input')
 })
 
+Cypress.Commands.add('registrationLastNameInput', () => {
+    cy.get('.test-lastName input')
+})
+
 Cypress.Commands.add('registrationFirstNameWrapper', () => {
     cy.get('.test-firstName')
+})
+
+Cypress.Commands.add('registrationLastNameWrapper', () => {
+    cy.get('.test-lastName')
 })
 
 Cypress.Commands.add('registrationPopulateForm', emailId => {

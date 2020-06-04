@@ -42,6 +42,12 @@ context('Registration', () => {
                 .clear()
                 .type('012345678901234567890123456789{enter}')
         })
+
+        it('if LastName is just under character limit', () => {
+            cy.registrationLastNameInput()
+                .clear()
+                .type('01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678{enter}')
+        })
     })
 
     describe('error thrown if', () => {
@@ -88,6 +94,38 @@ context('Registration', () => {
                     .contains(i18n_en_us.pages.register.errors.max_30_char)
             })
         })
+
+        describe('LastName', () => {
+            it('is not present', () => {
+                cy.registrationLastNameInput()
+                    .clear()
+                    .type('{enter}')
+
+                cy.wait('@registerApi').then((xhr) => {
+                    assert.strictEqual(xhr.status, 400)
+                    assert.strictEqual(xhr.response.body.last_name.length, 1)
+                    assert.strictEqual(xhr.response.body.last_name[0], constants.django.errors.blank)
+                })
+
+                cy.registrationLastNameWrapper()
+                    .contains(i18n_en_us.pages.register.errors.blank)
+            })
+
+            it('is over character limit', () => {
+                cy.registrationLastNameInput()
+                    .clear()
+                    .type('01234567890123456789012345678900123456789012345678901234567890012345678901234567890123456789001234567890123456789012345678900123456789012345678901234567890{enter}')
+
+                cy.wait('@registerApi').then((xhr) => {
+                    assert.strictEqual(xhr.status, 400)
+                    assert.strictEqual(xhr.response.body.last_name.length, 1)
+                    assert.strictEqual(xhr.response.body.last_name[0], constants.django.errors.max_150_char)
+                })
+
+                cy.registrationLastNameWrapper()
+                    .contains(i18n_en_us.pages.register.errors.max_150_char)
+            })
+        })
     })
 
     describe('error thrown and cleared for', () => {
@@ -125,6 +163,31 @@ context('Registration', () => {
             })
 
             cy.registrationFirstNameWrapper()
+                .should('not.contain.text', i18n_en_us.pages.register.errors.blank)
+        })
+
+        it('LastName', () => {
+            cy.registrationLastNameInput()
+                .clear()
+                .type('{enter}')
+
+            cy.wait('@registerApi').then((xhr) => {
+                assert.strictEqual(xhr.status, 400)
+                assert.strictEqual(xhr.response.body.last_name.length, 1)
+                assert.strictEqual(xhr.response.body.last_name[0], constants.django.errors.blank)
+            })
+
+            cy.registrationLastNameWrapper()
+                .contains(i18n_en_us.pages.register.errors.blank)
+
+            cy.registrationLastNameInput()
+                .type('Moore{enter}')
+
+            cy.wait('@registerApi').then((xhr) => {
+                assert.strictEqual(xhr.status, 201)
+            })
+
+            cy.registrationLastNameWrapper()
                 .should('not.contain.text', i18n_en_us.pages.register.errors.blank)
         })
     })
