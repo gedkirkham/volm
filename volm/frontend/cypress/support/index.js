@@ -27,6 +27,10 @@ Cypress.Commands.add('registrationLastNameInput', () => {
     cy.get('.test-lastName input')
 })
 
+Cypress.Commands.add('registrationEmailInput', () => {
+    cy.get('.test-email input')
+})
+
 Cypress.Commands.add('registrationFirstNameWrapper', () => {
     cy.get('.test-firstName')
 })
@@ -35,22 +39,31 @@ Cypress.Commands.add('registrationLastNameWrapper', () => {
     cy.get('.test-lastName')
 })
 
-Cypress.Commands.add('registrationPopulateForm', emailId => {
+Cypress.Commands.add('registrationEmailWrapper', () => {
+    cy.get('.test-email')
+})
+
+Cypress.Commands.add('populateRegistrationForm', emailId => {
     const FIRST_NAME = 'John'
     cy.registrationFirstNameInput()
         .type(FIRST_NAME).should('have.value', FIRST_NAME)
 
     const LAST_NAME = 'Moore'
-    cy.get('.test-lastName input')
-        .type(LAST_NAME).should('have.value', LAST_NAME)
+    cy.registrationLastNameInput()
+        .type(LAST_NAME)
+        .should('have.value', LAST_NAME)
 
-    cy.get('.test-email input')
-        .type(`${emailId}@test.com`).should('have.value', `${emailId}@test.com`)
+    const EMAIL = `${emailId}@test.com`
+    cy.registrationEmailInput()
+        .type(EMAIL)
+        .should('have.value', EMAIL)
 
     const PASSWORD = 'password123'
     cy.get('.test-password_1 input')
-        .type(PASSWORD).should('have.value', PASSWORD)
+        .type(PASSWORD)
+        .should('have.value', PASSWORD)
 
     cy.get('.test-password_2 input')
-        .type(PASSWORD).should('have.value', PASSWORD)
+        .type(PASSWORD)
+        .should('have.value', PASSWORD)
 })
