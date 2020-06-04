@@ -26,6 +26,8 @@
                     class="test-email q-pb-xl"
                     label="Email *"
                     outlined
+                    :error="!!errors.email"
+                    :error-message="errors.email"
                 />
                 <q-input
                     v-model="password_1"
@@ -75,6 +77,7 @@ export default {
                 [constants.django.errors.blank]: this.$t('pages.register.errors.blank'),
                 [constants.django.errors.max_30_char]: this.$t('pages.register.errors.max_30_char'),
                 [constants.django.errors.max_150_char]: this.$t('pages.register.errors.max_150_char'),
+                [constants.django.errors.invalid_email]: this.$t('pages.register.errors.invalid_email'),
             }
 
             return OBJ[DJANGO_ERROR]
