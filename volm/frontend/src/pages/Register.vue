@@ -18,6 +18,8 @@
                     class="test-lastName q-pb-xl"
                     label="Last name *"
                     outlined
+                    :error="!!errors.last_name"
+                    :error-message="errors.last_name"
                 />
                 <q-input
                     v-model="email"
@@ -72,6 +74,7 @@ export default {
             const OBJ = {
                 [constants.django.errors.blank]: this.$t('pages.register.errors.blank'),
                 [constants.django.errors.max_30_char]: this.$t('pages.register.errors.max_30_char'),
+                [constants.django.errors.max_150_char]: this.$t('pages.register.errors.max_150_char'),
             }
 
             return OBJ[DJANGO_ERROR]
