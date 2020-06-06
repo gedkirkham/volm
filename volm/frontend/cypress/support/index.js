@@ -19,6 +19,9 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
+import constants from '../../src/constants.js'
+import i18n_en_us from '../../src/i18n/en-us/index.js'
+
 Cypress.Commands.add('registrationFirstNameInput', () => {
     cy.get('.test-firstName input')
 })
@@ -31,6 +34,14 @@ Cypress.Commands.add('registrationEmailInput', () => {
     cy.get('.test-email input')
 })
 
+Cypress.Commands.add('registrationPassword1Input', () => {
+    cy.get('.test-password_1 input')
+})
+
+Cypress.Commands.add('registrationPassword2Input', () => {
+    cy.get('.test-password_2 input')
+})
+
 Cypress.Commands.add('registrationFirstNameWrapper', () => {
     cy.get('.test-firstName')
 })
@@ -41,6 +52,14 @@ Cypress.Commands.add('registrationLastNameWrapper', () => {
 
 Cypress.Commands.add('registrationEmailWrapper', () => {
     cy.get('.test-email')
+})
+
+Cypress.Commands.add('registrationPassword1Wrapper', () => {
+    cy.get('.test-password_1')
+})
+
+Cypress.Commands.add('registrationPassword2Wrapper', () => {
+    cy.get('.test-password_2')
 })
 
 Cypress.Commands.add('populateRegistrationForm', emailId => {
@@ -58,7 +77,7 @@ Cypress.Commands.add('populateRegistrationForm', emailId => {
         .type(EMAIL)
         .should('have.value', EMAIL)
 
-    const PASSWORD = 'password123'
+    const PASSWORD = '0123456a'
     cy.get('.test-password_1 input')
         .type(PASSWORD)
         .should('have.value', PASSWORD)
@@ -66,4 +85,54 @@ Cypress.Commands.add('populateRegistrationForm', emailId => {
     cy.get('.test-password_2 input')
         .type(PASSWORD)
         .should('have.value', PASSWORD)
+})
+
+Cypress.Commands.add('registrationBothPasswordFieldsInput', (_PASSWORD_1, _PASSWORD_2) => {
+    const PASSWORD_1 = _PASSWORD_1
+    const PASSWORD_2 = _PASSWORD_2 ? _PASSWORD_2 : PASSWORD_1
+
+    if (PASSWORD_1 === '') {
+        cy.registrationPassword1Input()
+            .clear()
+            .should('have.value', PASSWORD_1)
+
+        cy.registrationPassword2Input()
+            .clear()
+            .should('have.value', PASSWORD_2)
+            .type('{enter}')
+    } else {
+        cy.registrationPassword1Input()
+            .clear()
+            .type(PASSWORD_1)
+            .should('have.value', PASSWORD_1)
+
+        cy.registrationPassword2Input()
+            .clear()
+            .type(PASSWORD_2)
+            .should('have.value', PASSWORD_2)
+            .type('{enter}')
+    }
+})
+
+Cypress.Commands.add('registrationCheckPasswordFieldsContainError', KEY => {
+    cy.registrationPassword1Wrapper()
+        .contains(i18n_en_us.pages.register.errors[KEY])
+
+    cy.registrationPassword2Wrapper()
+        .contains(i18n_en_us.pages.register.errors[KEY])
+})
+
+Cypress.Commands.add('registrationAssertApiResponse', ({ field, key, length, status, }) => {
+    cy.server()
+    cy.route({
+        method: 'POST',
+        url: '/api/register',
+    }).as('registerApi')
+
+    cy.wait('@registerApi').then((xhr) => {
+        assert.strictEqual(xhr.status, status)
+        assert.strictEqual(xhr.response.body[field].length, length)
+        expect(xhr.response.body[field]).to.contain(constants.django.errors[key[0]])
+        if (length === 2) expect(xhr.response.body[field]).to.contain(constants.django.errors[key[1]])
+    })
 })
