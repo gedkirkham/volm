@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -20,13 +22,14 @@ class RegisterUserAPIView(APIView):
     authentication_classes = []
     permission_classes = []
 
-    def compare_passwords(this, password, password_2):
+    def compare_passwords(this, password, password_2, errors):
         if password and password_2 and password == password_2:
-            return True
+            return errors
         elif password and password_2 and password != password_2:
-            return False
-        return False
-
+            errors['password'] = ['Passwords do not match.']
+            return errors
+        return errors
+    
     def post(self, request, *args, **kwargs):
         data = request.data
         
@@ -36,9 +39,10 @@ class RegisterUserAPIView(APIView):
         serializer = RegistrationSerializer(data=data)
         errors = {}
 
-        data = request.data
-        passwords_match = self.compare_passwords(data['password'], password_2)
-        if serializer.is_valid() and passwords_match:
+        errors = self.validate_password(data['password'], errors)
+        errors = self.compare_passwords(data['password'], password_2, errors)
+        
+        if serializer.is_valid() and not errors:
             user = User.objects.create_user(
                     email=data['email'],
                     first_name=data['first_name'],
@@ -47,7 +51,13 @@ class RegisterUserAPIView(APIView):
                     username=data['email'],
                 )
             return Response(status=status.HTTP_201_CREATED)
-        if not passwords_match:
-            errors['password_mismatch'] = True
+        
         errors.update(serializer.errors)
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def validate_password(this, password, errors):
+        try:
+            validate_password(password)
+        except ValidationError as e:
+            errors['password'] = e
+        return errors

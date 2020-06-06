@@ -35,6 +35,8 @@
                     label="Password *"
                     type="password"
                     outlined
+                    :error="!!errors.password"
+                    :error-message="errors.password"
                 />
                 <q-input
                     v-model="password_2"
@@ -42,6 +44,8 @@
                     label="Confirm password *"
                     type="password"
                     outlined
+                    :error="!!errors.password"
+                    :error-message="errors.password"
                 />
 
                 <q-btn
@@ -76,8 +80,13 @@ export default {
             const OBJ = {
                 [constants.django.errors.blank]: this.$t('pages.register.errors.blank'),
                 [constants.django.errors.max_30_char]: this.$t('pages.register.errors.max_30_char'),
+                [constants.django.errors.max_128_char]: this.$t('pages.register.errors.max_128_char'),
                 [constants.django.errors.max_150_char]: this.$t('pages.register.errors.max_150_char'),
                 [constants.django.errors.invalid_email]: this.$t('pages.register.errors.invalid_email'),
+                [constants.django.errors.password_mismatch]: this.$t('pages.register.errors.password_mismatch'),
+                [constants.django.errors.password_min_8_char]: this.$t('pages.register.errors.password_min_8_char'),
+                [constants.django.errors.password_too_common]: this.$t('pages.register.errors.password_too_common'),
+                [constants.django.errors.password_entirely_numeric]: this.$t('pages.register.errors.password_entirely_numeric'),
             }
 
             return OBJ[DJANGO_ERROR]
@@ -99,8 +108,13 @@ export default {
         setErrors (ERRORS) {
             Object.entries(ERRORS).forEach(
                 ([KEY, VALUE]) => {
-                    const ERROR_MESSAGE = VALUE
-                    this.$set(this.errors, KEY, this.getErrorMessage(ERROR_MESSAGE[0]))
+                    const ERROR_MESSAGES = VALUE
+                    ERROR_MESSAGES.forEach(ERROR => {
+                        let error = ''
+                        if (this.errors[KEY]) error = `${this.errors[KEY]}. ${this.getErrorMessage(ERROR)}`
+                        else error = `${this.getErrorMessage(ERROR)}`
+                        this.$set(this.errors, KEY, error)
+                    })
                 },
             )
         },
