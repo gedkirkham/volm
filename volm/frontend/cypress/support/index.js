@@ -22,6 +22,10 @@ import './commands'
 import constants from '../../src/constants.js'
 import i18n_en_us from '../../src/i18n/en-us/index.js'
 
+Cypress.Commands.add('registrationSubmitButton', () => {
+    cy.get('#test-submit')
+})
+
 Cypress.Commands.add('registrationFirstNameInput', () => {
     cy.get('.test-firstName input')
 })
