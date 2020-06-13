@@ -1,20 +1,23 @@
 /// <reference types="cypress" />
 
-import constants from '../../src/constants.js'
+import constants from '../constants.js'
 import i18n_en_us from '../../src/i18n/en-us/index.js'
 
 context('Registration', () => {
     beforeEach(() => {
-    cy.server()
-        cy.route({
-            method: 'POST',
-            url: '/api/register',
-        }).as('registerApi')
-
-      cy.visit('http://localhost:8080/#/auth/register')
+        cy.visit('http://localhost:8080/#/auth/register')
     })
 
     it('can NOT fire multiple registration API calls before initial is resolved', () => {
+        cy.server()
+        cy.route(
+            {
+                method: 'POST',
+                url: '/api/register',
+                response: {},
+                delay: 3000,
+            }).as('registerApi')
+
         const CURRENT_DATE = new Date().getTime()
         cy.populateRegistrationForm(CURRENT_DATE)
 
@@ -28,9 +31,6 @@ context('Registration', () => {
 
         cy.get('@registerApi.all')
             .should('have.length', 1)
-            .then(xhrs => {
-                assert.strictEqual(xhrs[0].status, 201)
-            })
     })
 
     it('loading icon is displayed when the registration button has been clicked', () => {
@@ -49,6 +49,12 @@ context('Registration', () => {
 
     describe('can register successfully', () => {
         beforeEach(() => {
+            cy.server()
+            cy.route({
+                method: 'POST',
+                url: '/api/register',
+            }).as('registerApi')
+
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
         })
@@ -71,37 +77,39 @@ context('Registration', () => {
         })
 
         it('if FirstName is just under character limit', () => {
-            const FIRST_NAME_30_CHAR = '012345678901234567890123456789'
             cy.registrationFirstNameInput()
                 .clear()
-                .type(`${FIRST_NAME_30_CHAR}{enter}`)
-                .should('have.value', FIRST_NAME_30_CHAR)
+                .type(`${constants.FIRST_NAME_30_CHAR}{enter}`)
+                .should('have.value', constants.FIRST_NAME_30_CHAR)
         })
 
         it('if LastName is just under character limit', () => {
-            const FIRST_NAME_150_CHAR = '01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678'
             cy.registrationLastNameInput()
                 .clear()
-                .type(`${FIRST_NAME_150_CHAR}{enter}`)
-                .should('have.value', FIRST_NAME_150_CHAR)
+                .type(`${constants.LAST_NAME_150_CHAR}{enter}`)
+                .should('have.value', constants.LAST_NAME_150_CHAR)
         })
 
         it('if Email is just under character limit', () => {
-            const EMAIL_150_CHAR = '012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@test.com'
             cy.registrationLastNameInput()
                 .clear()
-                .type(`${EMAIL_150_CHAR}{enter}`)
-                .should('have.value', EMAIL_150_CHAR)
+                .type(`${constants.EMAIL_150_CHAR}{enter}`)
+                .should('have.value', constants.EMAIL_150_CHAR)
         })
 
         it('if Password is just under character limit', () => {
-            const PASSWORD_128_CHAR = '0123456789012345678901234567890012345678901234567890123456789001234567890123456789012345678900123456789012345678901234567890012a'
-            cy.registrationBothPasswordFieldsInput(PASSWORD_128_CHAR)
+            cy.registrationBothPasswordFieldsInput(constants.PASSWORD_128_CHAR)
         })
     })
 
     describe('error thrown if', () => {
         beforeEach(() => {
+            cy.server()
+            cy.route({
+                method: 'POST',
+                url: '/api/register',
+            }).as('registerApi')
+
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
         })
@@ -121,11 +129,10 @@ context('Registration', () => {
 
             it('is over character limit', () => {
                 const KEY = ['max_30_char']
-                const FIRST_NAME_31_CHAR = '0123456789012345678901234567890'
                 cy.registrationFirstNameInput()
                     .clear()
-                    .type(`${FIRST_NAME_31_CHAR}{enter}`)
-                    .should('have.value', FIRST_NAME_31_CHAR)
+                    .type(`${constants.FIRST_NAME_31_CHAR}{enter}`)
+                    .should('have.value', constants.FIRST_NAME_31_CHAR)
 
                 cy.registrationAssertApiResponse({ field: 'first_name', key: KEY, length: 1, status: 400 })
 
@@ -149,11 +156,10 @@ context('Registration', () => {
 
             it('is over character limit', () => {
                 const KEY = ['max_150_char']
-                const LAST_NAME_151_CHAR = '01234567890123456789012345678900123456789012345678901234567890012345678901234567890123456789001234567890123456789012345678900123456789012345678901234567890'
                 cy.registrationLastNameInput()
                     .clear()
-                    .type(`${LAST_NAME_151_CHAR}{enter}`)
-                    .should('have.value', LAST_NAME_151_CHAR)
+                    .type(`${constants.LAST_NAME_151_CHAR}{enter}`)
+                    .should('have.value', constants.LAST_NAME_151_CHAR)
 
                 cy.registrationAssertApiResponse({ field: 'last_name', key: KEY, length: 1, status: 400 })
 
@@ -177,11 +183,10 @@ context('Registration', () => {
 
             it('is over character limit', () => {
                 const KEY = ['max_150_char']
-                const EMAIL_151_CHAR = '0123456789012345678901234567890012345678901234567890123456789001234567890123456789012345678900123456789012345678901234567890012345678901234567890123@test.com'
                 cy.registrationEmailInput()
                     .clear()
-                    .type(`${EMAIL_151_CHAR}{enter}`)
-                    .should('have.value', EMAIL_151_CHAR)
+                    .type(`${constants.EMAIL_151_CHAR}{enter}`)
+                    .should('have.value', constants.EMAIL_151_CHAR)
 
                 cy.registrationAssertApiResponse({ field: 'email', key: KEY, length: 1, status: 400 })
 
@@ -237,8 +242,7 @@ context('Registration', () => {
 
             it('is over max-character limit', () => {
                 const KEY = ['max_128_char']
-                const PASSWORD_129_CHAR = '012345678901234567890123456789001234567890123456789012345678900123456789012345678901234567890012345678901234567890123456789001abc'
-                cy.registrationBothPasswordFieldsInput(PASSWORD_129_CHAR)
+                cy.registrationBothPasswordFieldsInput(constants.PASSWORD_129_CHAR)
                 cy.registrationAssertApiResponse({ field: 'password', key: KEY, length: 1, status: 400 })
                 cy.registrationCheckPasswordFieldsContainError(KEY)
             })
@@ -295,6 +299,12 @@ context('Registration', () => {
 
     describe('error thrown and cleared for', () => {
         beforeEach(() => {
+            cy.server()
+            cy.route({
+                method: 'POST',
+                url: '/api/register',
+            }).as('registerApi')
+
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
         })
