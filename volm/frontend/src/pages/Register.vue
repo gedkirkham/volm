@@ -53,6 +53,7 @@
                     color="primary"
                     label="Register"
                     type="submit"
+                    :loading="isLoading"
                 />
             </q-form>
         </div>
@@ -70,6 +71,7 @@ export default {
             errors: {},
             email: '',
             first_name: '',
+            isLoading: false,
             last_name: '',
             password_1: '',
             password_2: '',
@@ -87,12 +89,14 @@ export default {
                 [constants.django.errors.password_min_8_char]: this.$t('pages.register.errors.password_min_8_char'),
                 [constants.django.errors.password_too_common]: this.$t('pages.register.errors.password_too_common'),
                 [constants.django.errors.password_entirely_numeric]: this.$t('pages.register.errors.password_entirely_numeric'),
+                [constants.django.errors.username_already_exists]: this.$t('pages.register.errors.email_already_exists'),
             }
 
             return OBJ[DJANGO_ERROR]
         },
         register () {
             this.errors = {}
+            this.isLoading = true
             registerApi({
                 email: this.email,
                 first_name: this.first_name,
@@ -104,16 +108,18 @@ export default {
                     console.error('registerApi()', ERROR)
                     this.setErrors(ERROR.body)
                 })
+                .finally(() => { this.isLoading = false })
         },
         setErrors (ERRORS) {
             Object.entries(ERRORS).forEach(
                 ([KEY, VALUE]) => {
                     const ERROR_MESSAGES = VALUE
+                    const UPDATED_KEY = KEY === 'username' ? 'email' : KEY
                     ERROR_MESSAGES.forEach(ERROR => {
                         let error = ''
-                        if (this.errors[KEY]) error = `${this.errors[KEY]}. ${this.getErrorMessage(ERROR)}`
+                        if (this.errors[UPDATED_KEY]) error = `${this.errors[UPDATED_KEY]}. ${this.getErrorMessage(ERROR)}`
                         else error = `${this.getErrorMessage(ERROR)}`
-                        this.$set(this.errors, KEY, error)
+                        this.$set(this.errors, UPDATED_KEY, error)
                     })
                 },
             )

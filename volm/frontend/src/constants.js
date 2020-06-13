@@ -10,6 +10,7 @@ export default {
             password_min_8_char: 'This password is too short. It must contain at least 8 characters.',
             password_too_common: 'This password is too common.',
             password_entirely_numeric: 'This password is entirely numeric.',
+            username_already_exists: 'A user with that username already exists.',
         },
     },
 }
