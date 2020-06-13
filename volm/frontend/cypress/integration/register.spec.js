@@ -5,17 +5,36 @@ import i18n_en_us from '../../src/i18n/en-us/index.js'
 
 context('Registration', () => {
     beforeEach(() => {
+    cy.server()
+        cy.route({
+            method: 'POST',
+            url: '/api/register',
+        }).as('registerApi')
+
       cy.visit('http://localhost:8080/#/auth/register')
+    })
+
+    it('can NOT fire multiple registration API calls before initial is resolved', () => {
+            const CURRENT_DATE = new Date().getTime()
+            cy.populateRegistrationForm(CURRENT_DATE)
+
+            cy.get('#test-submit')
+                .click()
+
+            cy.get('#test-submit')
+                .click()
+
+            cy.wait('@registerApi')
+
+            cy.get('@registerApi.all')
+                .should('have.length', 1)
+                .then(xhrs => {
+                    assert.strictEqual(xhrs[0].status, 201)
+                })
     })
 
     describe('can register successfully', () => {
         beforeEach(() => {
-            cy.server()
-            cy.route({
-                method: 'POST',
-                url: '/api/register',
-            }).as('registerApi')
-
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
         })
@@ -68,12 +87,6 @@ context('Registration', () => {
 
     describe('error thrown if', () => {
         beforeEach(() => {
-            cy.server()
-            cy.route({
-                method: 'POST',
-                url: '/api/register',
-            }).as('registerApi')
-
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
         })
@@ -247,12 +260,6 @@ context('Registration', () => {
 
     describe('error thrown and cleared for', () => {
         beforeEach(() => {
-            cy.server()
-            cy.route({
-                method: 'POST',
-                url: '/api/register',
-            }).as('registerApi')
-
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
         })
