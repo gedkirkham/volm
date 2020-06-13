@@ -129,10 +129,12 @@ Cypress.Commands.add('registrationAssertApiResponse', ({ field, key, length, sta
         url: '/api/register',
     }).as('registerApi')
 
-    cy.wait('@registerApi').then((xhr) => {
-        assert.strictEqual(xhr.status, status)
-        assert.strictEqual(xhr.response.body[field].length, length)
-        expect(xhr.response.body[field]).to.contain(constants.django.errors[key[0]])
-        if (length === 2) expect(xhr.response.body[field]).to.contain(constants.django.errors[key[1]])
+    cy.wait('@registerApi').then(xhr => {
+        expect(xhr.method, 'response method').to.equal('POST')
+        expect(xhr.url, 'POST url').to.match(/\/api\/register\/$/)
+        expect(xhr.status, 'successful POST').to.equal(status)
+        expect(xhr.response.body[field].length, 'number of errors').to.equal(length)
+        expect(xhr.response.body[field], 'returned errors').to.contain(constants.django.errors[key[0]])
+        if (length === 2) expect(xhr.response.body[field], 'returned errors').to.contain(constants.django.errors[key[1]])
     })
 })
