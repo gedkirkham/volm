@@ -15,22 +15,36 @@ context('Registration', () => {
     })
 
     it('can NOT fire multiple registration API calls before initial is resolved', () => {
-            const CURRENT_DATE = new Date().getTime()
-            cy.populateRegistrationForm(CURRENT_DATE)
+        const CURRENT_DATE = new Date().getTime()
+        cy.populateRegistrationForm(CURRENT_DATE)
 
-            cy.get('#test-submit')
-                .click()
+        cy.registrationSubmitButton()
+            .click()
 
-            cy.get('#test-submit')
-                .click()
+        cy.registrationSubmitButton()
+            .click()
 
-            cy.wait('@registerApi')
+        cy.wait('@registerApi')
 
-            cy.get('@registerApi.all')
-                .should('have.length', 1)
-                .then(xhrs => {
-                    assert.strictEqual(xhrs[0].status, 201)
-                })
+        cy.get('@registerApi.all')
+            .should('have.length', 1)
+            .then(xhrs => {
+                assert.strictEqual(xhrs[0].status, 201)
+            })
+    })
+
+    it('loading icon is displayed when the registration button has been clicked', () => {
+        const CURRENT_DATE = new Date().getTime()
+        cy.populateRegistrationForm(CURRENT_DATE)
+
+        cy.get('#test-submit svg')
+            .should('not.exist')
+
+        cy.registrationSubmitButton()
+            .click()
+
+        cy.get('#test-submit svg')
+            .should('exist')
     })
 
     describe('can register successfully', () => {
@@ -40,13 +54,14 @@ context('Registration', () => {
         })
 
         afterEach(() => {
-            cy.wait('@registerApi').then(xhr => {
-                assert.strictEqual(xhr.status, 201)
-            })
+            cy.wait('@registerApi')
+                .then(xhr => {
+                    assert.strictEqual(xhr.status, 201)
+                })
         })
 
         it('by clicking the submit button', () => {
-            cy.get('#test-submit')
+            cy.registrationSubmitButton()
                 .click()
         })
 
@@ -186,6 +201,26 @@ context('Registration', () => {
 
                 cy.registrationEmailWrapper()
                     .contains(i18n_en_us.pages.register.errors.invalid_email)
+            })
+
+            it('has already been used', () => {
+                const KEY = ['username_already_exists']
+
+                cy.registrationSubmitButton()
+                    .click()
+
+                cy.wait('@registerApi')
+                    .then(xhr => {
+                        assert.strictEqual(xhr.status, 201)
+                    })
+
+                cy.registrationSubmitButton()
+                    .click()
+
+                cy.registrationAssertApiResponse({ field: 'username', key: KEY, length: 1, status: 400 })
+
+                cy.registrationEmailWrapper()
+                    .contains(i18n_en_us.pages.register.errors.email_already_exists)
             })
         })
 
