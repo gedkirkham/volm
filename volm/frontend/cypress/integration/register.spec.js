@@ -15,7 +15,7 @@ context('Registration', () => {
                 method: 'POST',
                 url: '/api/register',
                 response: {},
-                delay: 3000,
+                delay: 1000,
             }).as('registerApi')
 
         const CURRENT_DATE = new Date().getTime()
@@ -64,6 +64,9 @@ context('Registration', () => {
                 .then(xhr => {
                     assert.strictEqual(xhr.status, 201)
                 })
+
+            cy.hash()
+                .should('eq', '#/auth/confirm_email')
         })
 
         it('by clicking the submit button', () => {
