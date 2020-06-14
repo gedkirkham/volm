@@ -10,52 +10,65 @@
                     :style="!$q.screen.lt.sm ? 'min-width:400px;' : 'min-width:90vw;'"
                     @submit="register()"
                 >
-                    <q-input
-                        v-model="first_name"
-                        class="test-firstName q-pb-xl"
-                        label="First name *"
-                        outlined
-                        :error="!!errors.first_name"
-                        :error-message="errors.first_name"
-                    />
-                    <q-input
-                        v-model="last_name"
-                        class="test-lastName q-pb-xl"
-                        label="Last name *"
-                        outlined
-                        :error="!!errors.last_name"
-                        :error-message="errors.last_name"
-                    />
-                    <q-input
-                        v-model="email"
-                        class="test-email q-pb-xl"
-                        label="Email *"
-                        outlined
-                        :error="!!errors.email"
-                        :error-message="errors.email"
-                    />
-                    <q-input
-                        v-model="password_1"
-                        class="test-password_1 q-pb-xl"
-                        label="Password *"
-                        type="password"
-                        outlined
-                        :error="!!errors.password"
-                        :error-message="errors.password"
-                    />
-                    <q-input
-                        v-model="password_2"
-                        class="test-password_2 q-pb-xl"
-                        label="Confirm password *"
-                        type="password"
-                        outlined
-                        :error="!!errors.password"
-                        :error-message="errors.password"
-                    />
+                    <span data-cy="test-firstName">
+                        <q-input
+                            v-model="first_name"
+                            class="q-pb-xl"
+                            label="First name *"
+                            outlined
+                            :error="!!errors.first_name"
+                            :error-message="errors.first_name"
+                        />
+                    </span>
+                    <span data-cy="test-lastName">
+                        <q-input
+                            v-model="last_name"
+                            class="q-pb-xl"
+                            label="Last name *"
+                            outlined
+                            :error="!!errors.last_name"
+                            :error-message="errors.last_name"
+                        />
+                    </span>
+                    <span data-cy="test-email">
+                        <q-input
+                            v-model="email"
+                            class="q-pb-xl"
+                            data-cy="test-email"
+                            label="Email *"
+                            outlined
+                            :error="!!errors.email"
+                            :error-message="errors.email"
+                        />
+                    </span>
+                    <span data-cy="test-password_1">
+                        <q-input
+                            v-model="password_1"
+                            class="q-pb-xl"
+                            data-cy="test-password_1"
+                            label="Password *"
+                            type="password"
+                            outlined
+                            :error="!!errors.password"
+                            :error-message="errors.password"
+                        />
+                    </span>
+                    <span data-cy="test-password_2">
+                        <q-input
+                            v-model="password_2"
+                            class="q-pb-xl"
+                            data-cy="test-password_2"
+                            label="Confirm password *"
+                            type="password"
+                            outlined
+                            :error="!!errors.password"
+                            :error-message="errors.password"
+                        />
+                    </span>
 
                     <q-btn
-                        id="test-submit"
                         color="primary"
+                        data-cy="test-submit"
                         label="Submit"
                         type="submit"
                         :loading="isLoading"
