@@ -23,7 +23,7 @@ import constants from '../../src/constants.js'
 import i18n_en_us from '../../src/i18n/en-us/index.js'
 
 Cypress.Commands.add('registrationSubmitButton', () => {
-    cy.get('[data-cy=test-submit]')
+    cy.contains('Submit')
 })
 
 Cypress.Commands.add('registrationFirstNameInput', () => {
