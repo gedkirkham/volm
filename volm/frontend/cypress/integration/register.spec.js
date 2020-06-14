@@ -6,6 +6,9 @@ import i18n_en_us from '../../src/i18n/en-us/index.js'
 context('Registration', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8080/#/auth/register')
+
+        cy.get('header')
+            .contains('Register')
     })
 
     it('can NOT fire multiple registration API calls before initial is resolved', () => {
@@ -45,6 +48,15 @@ context('Registration', () => {
 
         cy.get('#test-submit svg')
             .should('exist')
+    })
+
+    it('user can navigate to the log-in page', () => {
+        cy.get('[data-cy=log-in]')
+            .contains('Log')
+            .click()
+
+        cy.hash()
+            .should('eq', '#/auth/login')
     })
 
     describe('can register successfully', () => {
