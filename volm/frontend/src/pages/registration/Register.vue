@@ -36,7 +36,6 @@
                         <q-input
                             v-model="email"
                             class="q-pb-xl"
-                            data-cy="test-email"
                             label="Email *"
                             outlined
                             :error="!!errors.email"
@@ -47,7 +46,6 @@
                         <q-input
                             v-model="password_1"
                             class="q-pb-xl"
-                            data-cy="test-password_1"
                             label="Password *"
                             type="password"
                             outlined
@@ -59,7 +57,6 @@
                         <q-input
                             v-model="password_2"
                             class="q-pb-xl"
-                            data-cy="test-password_2"
                             label="Confirm password *"
                             type="password"
                             outlined
