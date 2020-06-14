@@ -3,7 +3,9 @@
         <div class="column items-start">
             <section>
                 <header>
-                    <h1 class="text-h2 q-mb-none">Register</h1>
+                    <h1 class="text-h2 q-mb-none">
+                        Register
+                    </h1>
                 </header>
                 <q-form
                     class="q-mt-xl"
