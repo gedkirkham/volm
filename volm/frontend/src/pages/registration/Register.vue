@@ -104,6 +104,9 @@ export default {
                 password_1: this.password_1,
                 password_2: this.password_2,
             })
+                .then(() => {
+                    this.$router.push({ name: 'confirm_email' })
+                })
                 .catch(ERROR => {
                     console.error('registerApi()', ERROR)
                     this.setErrors(ERROR.body)

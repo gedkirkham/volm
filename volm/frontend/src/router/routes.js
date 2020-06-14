@@ -12,7 +12,12 @@ const routes = [
         component: () => import('layouts/BareLayout.vue'),
         children: [
             { path: 'login/', component: () => import('pages/Login.vue') },
-            { path: 'register/', component: () => import('pages/Register.vue') },
+            { path: 'register/', component: () => import('pages/registration/Register.vue') },
+            {
+                component: () => import('pages/registration/ConfirmEmail.vue'),
+                name: 'confirm_email',
+                path: 'confirm_email/',
+            },
         ],
     },
 ]
