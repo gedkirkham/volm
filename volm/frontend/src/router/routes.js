@@ -11,7 +11,11 @@ const routes = [
         path: '/auth/',
         component: () => import('layouts/BareLayout.vue'),
         children: [
-            { path: 'login/', component: () => import('pages/Login.vue') },
+            {
+                component: () => import('pages/Login.vue'),
+                name: 'login',
+                path: 'login/',
+            },
             { path: 'register/', component: () => import('pages/registration/Register.vue') },
             {
                 component: () => import('pages/registration/ConfirmEmail.vue'),

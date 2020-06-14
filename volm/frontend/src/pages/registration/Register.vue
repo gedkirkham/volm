@@ -1,61 +1,77 @@
 <template>
     <q-page class="flex flex-center">
         <div class="column items-start">
-            <q-form
-                style="min-width:400px;"
-                @submit="register()"
-            >
-                <q-input
-                    v-model="first_name"
-                    class="test-firstName q-pb-xl"
-                    label="First name *"
-                    outlined
-                    :error="!!errors.first_name"
-                    :error-message="errors.first_name"
-                />
-                <q-input
-                    v-model="last_name"
-                    class="test-lastName q-pb-xl"
-                    label="Last name *"
-                    outlined
-                    :error="!!errors.last_name"
-                    :error-message="errors.last_name"
-                />
-                <q-input
-                    v-model="email"
-                    class="test-email q-pb-xl"
-                    label="Email *"
-                    outlined
-                    :error="!!errors.email"
-                    :error-message="errors.email"
-                />
-                <q-input
-                    v-model="password_1"
-                    class="test-password_1 q-pb-xl"
-                    label="Password *"
-                    type="password"
-                    outlined
-                    :error="!!errors.password"
-                    :error-message="errors.password"
-                />
-                <q-input
-                    v-model="password_2"
-                    class="test-password_2 q-pb-xl"
-                    label="Confirm password *"
-                    type="password"
-                    outlined
-                    :error="!!errors.password"
-                    :error-message="errors.password"
-                />
+            <section>
+                <header>
+                    <h1 class="text-h2 q-mb-none">Register</h1>
+                </header>
+                <q-form
+                    class="q-mt-xl"
+                    :style="!$q.screen.lt.sm ? 'min-width:400px;' : 'min-width:90vw;'"
+                    @submit="register()"
+                >
+                    <q-input
+                        v-model="first_name"
+                        class="test-firstName q-pb-xl"
+                        label="First name *"
+                        outlined
+                        :error="!!errors.first_name"
+                        :error-message="errors.first_name"
+                    />
+                    <q-input
+                        v-model="last_name"
+                        class="test-lastName q-pb-xl"
+                        label="Last name *"
+                        outlined
+                        :error="!!errors.last_name"
+                        :error-message="errors.last_name"
+                    />
+                    <q-input
+                        v-model="email"
+                        class="test-email q-pb-xl"
+                        label="Email *"
+                        outlined
+                        :error="!!errors.email"
+                        :error-message="errors.email"
+                    />
+                    <q-input
+                        v-model="password_1"
+                        class="test-password_1 q-pb-xl"
+                        label="Password *"
+                        type="password"
+                        outlined
+                        :error="!!errors.password"
+                        :error-message="errors.password"
+                    />
+                    <q-input
+                        v-model="password_2"
+                        class="test-password_2 q-pb-xl"
+                        label="Confirm password *"
+                        type="password"
+                        outlined
+                        :error="!!errors.password"
+                        :error-message="errors.password"
+                    />
 
-                <q-btn
-                    id="test-submit"
-                    color="primary"
-                    label="Register"
-                    type="submit"
-                    :loading="isLoading"
-                />
-            </q-form>
+                    <q-btn
+                        id="test-submit"
+                        color="primary"
+                        label="Submit"
+                        type="submit"
+                        :loading="isLoading"
+                    />
+                </q-form>
+
+                <div class="q-my-lg">
+                    Already have an account?
+                    <router-link
+                        data-cy="log-in"
+                        :to="{ name: 'login' }"
+                    >
+                        Log-in
+                    </router-link>
+                </div>
+            </section>
         </div>
     </q-page>
 </template>
