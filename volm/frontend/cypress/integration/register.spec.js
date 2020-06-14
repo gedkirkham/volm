@@ -5,7 +5,7 @@ import i18n_en_us from '../../src/i18n/en-us/index.js'
 
 context('Registration', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8080/#/auth/register')
+        cy.visit('#/auth/register')
 
         cy.hash()
             .should('eq', '#/auth/register')
