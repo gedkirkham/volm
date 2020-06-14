@@ -7,6 +7,9 @@ context('Registration', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8080/#/auth/register')
 
+        cy.hash()
+            .should('eq', '#/auth/register')
+
         cy.get('header')
             .contains('Register')
     })
@@ -40,13 +43,13 @@ context('Registration', () => {
         const CURRENT_DATE = new Date().getTime()
         cy.populateRegistrationForm(CURRENT_DATE)
 
-        cy.get('#test-submit svg')
+        cy.get('[data-cy=test-submit] svg')
             .should('not.exist')
 
         cy.registrationSubmitButton()
             .click()
 
-        cy.get('#test-submit svg')
+        cy.get('[data-cy=test-submit] svg')
             .should('exist')
     })
 
@@ -87,7 +90,7 @@ context('Registration', () => {
         })
 
         it('by clicking "Enter" on the keyboard', () => {
-            cy.get('.test-password_2 input')
+            cy.registrationPassword2Input()
                 .type('{enter}')
         })
 

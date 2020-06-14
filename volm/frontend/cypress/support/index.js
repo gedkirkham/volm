@@ -23,47 +23,47 @@ import constants from '../../src/constants.js'
 import i18n_en_us from '../../src/i18n/en-us/index.js'
 
 Cypress.Commands.add('registrationSubmitButton', () => {
-    cy.get('#test-submit')
+    cy.get('[data-cy=test-submit]')
 })
 
 Cypress.Commands.add('registrationFirstNameInput', () => {
-    cy.get('.test-firstName input')
+    cy.get('[data-cy=test-firstName] input')
 })
 
 Cypress.Commands.add('registrationLastNameInput', () => {
-    cy.get('.test-lastName input')
+    cy.get('[data-cy=test-lastName] input')
 })
 
 Cypress.Commands.add('registrationEmailInput', () => {
-    cy.get('.test-email input')
+    cy.get('[data-cy=test-email] input')
 })
 
 Cypress.Commands.add('registrationPassword1Input', () => {
-    cy.get('.test-password_1 input')
+    cy.get('[data-cy=test-password_1] input')
 })
 
 Cypress.Commands.add('registrationPassword2Input', () => {
-    cy.get('.test-password_2 input')
+    cy.get('[data-cy=test-password_2] input')
 })
 
 Cypress.Commands.add('registrationFirstNameWrapper', () => {
-    cy.get('.test-firstName')
+    cy.get('[data-cy=test-firstName]')
 })
 
 Cypress.Commands.add('registrationLastNameWrapper', () => {
-    cy.get('.test-lastName')
+    cy.get('[data-cy=test-lastName]')
 })
 
 Cypress.Commands.add('registrationEmailWrapper', () => {
-    cy.get('.test-email')
+    cy.get('[data-cy=test-email]')
 })
 
 Cypress.Commands.add('registrationPassword1Wrapper', () => {
-    cy.get('.test-password_1')
+    cy.get('[data-cy=test-password_1]')
 })
 
 Cypress.Commands.add('registrationPassword2Wrapper', () => {
-    cy.get('.test-password_2')
+    cy.get('[data-cy=test-password_2]')
 })
 
 Cypress.Commands.add('populateRegistrationForm', emailId => {
@@ -82,11 +82,11 @@ Cypress.Commands.add('populateRegistrationForm', emailId => {
         .should('have.value', EMAIL)
 
     const PASSWORD = '0123456a'
-    cy.get('.test-password_1 input')
+    cy.registrationPassword1Input()
         .type(PASSWORD)
         .should('have.value', PASSWORD)
 
-    cy.get('.test-password_2 input')
+    cy.registrationPassword2Input()
         .type(PASSWORD)
         .should('have.value', PASSWORD)
 })
