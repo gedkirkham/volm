@@ -4,14 +4,30 @@ import constants from '../constants.js'
 import i18n_en_us from '../../src/i18n/en-us/index.js'
 
 context('Registration', () => {
-    beforeEach(() => {
-        cy.visit('#/auth/register')
+    let email_address
+    before(() => {
+        cy.navigateToRegistrationPage()
+
+        cy.createRegisterApiRoute()
+
+        const CURRENT_DATE = new Date().getTime()
+        cy.populateRegistrationForm(CURRENT_DATE)
+        email_address = `${CURRENT_DATE}@test.com`
+
+        cy.registrationSubmitButton()
+            .click()
+
+        cy.wait('@registerApi')
+            .then(xhr => {
+                assert.strictEqual(xhr.status, 201)
+            })
 
         cy.hash()
-            .should('eq', '#/auth/register')
+            .should('eq', '#/auth/confirm_email')
+    })
 
-        cy.get('header')
-            .contains('Register')
+    beforeEach(() => {
+        cy.navigateToRegistrationPage()
     })
 
     it('can NOT fire multiple registration API calls before initial is resolved', () => {
@@ -64,11 +80,7 @@ context('Registration', () => {
 
     describe('can register successfully', () => {
         beforeEach(() => {
-            cy.server()
-            cy.route({
-                method: 'POST',
-                url: '/api/register',
-            }).as('registerApi')
+            cy.createRegisterApiRoute()
 
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
@@ -122,11 +134,7 @@ context('Registration', () => {
 
     describe('error thrown if', () => {
         beforeEach(() => {
-            cy.server()
-            cy.route({
-                method: 'POST',
-                url: '/api/register',
-            }).as('registerApi')
+            cy.createRegisterApiRoute()
 
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
@@ -229,13 +237,10 @@ context('Registration', () => {
             it('has already been used', () => {
                 const KEY = ['username_already_exists']
 
-                cy.registrationSubmitButton()
-                    .click()
-
-                cy.wait('@registerApi')
-                    .then(xhr => {
-                        assert.strictEqual(xhr.status, 201)
-                    })
+                cy.registrationEmailInput()
+                    .clear()
+                    .type(email_address)
+                    .should('have.value', email_address)
 
                 cy.registrationSubmitButton()
                     .click()
@@ -317,11 +322,7 @@ context('Registration', () => {
 
     describe('error thrown and cleared for', () => {
         beforeEach(() => {
-            cy.server()
-            cy.route({
-                method: 'POST',
-                url: '/api/register',
-            }).as('registerApi')
+            cy.createRegisterApiRoute()
 
             const CURRENT_DATE = new Date().getTime()
             cy.populateRegistrationForm(CURRENT_DATE)
