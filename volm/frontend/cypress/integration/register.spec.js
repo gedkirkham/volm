@@ -8,19 +8,12 @@ context('Registration', () => {
     before(() => {
         cy.navigateToRegistrationPage()
 
-        cy.createRegisterApiRoute()
-
         const CURRENT_DATE = new Date().getTime()
         cy.populateRegistrationForm(CURRENT_DATE)
         email_address = `${CURRENT_DATE}@test.com`
 
         cy.registrationSubmitButton()
             .click()
-
-        cy.wait('@registerApi')
-            .then(xhr => {
-                assert.strictEqual(xhr.status, 201)
-            })
 
         cy.hash()
             .should('eq', '#/auth/confirm_email')
