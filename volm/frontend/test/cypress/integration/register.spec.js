@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import constants from '../constants.js'
-import i18n_en_us from '../../src/i18n/en-us/index.js'
+import i18n_en_us from '../../../src/i18n/en-us/index.js'
 
 context('Registration', () => {
     let email_address

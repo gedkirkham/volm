@@ -1,5 +1,5 @@
-import constants from '../../src/constants.js'
-import i18n_en_us from '../../src/i18n/en-us/index.js'
+import constants from '../../../src/constants.js'
+import i18n_en_us from '../../../src/i18n/en-us/index.js'
 
 Cypress.Commands.add('registrationSubmitButton', () => {
     cy.contains('Submit')
@@ -123,7 +123,7 @@ Cypress.Commands.add('registrationAssertApiResponse', ({ field, key, length, sta
 })
 
 Cypress.Commands.add('navigateToRegistrationPage', () => {
-    cy.visit('#/auth/register')
+    cy.visit('/#/auth/register')
 
     cy.hash()
         .should('eq', '#/auth/register')

@@ -15,6 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import './registration'
 
 const resizeObserverLoopError = 'ResizeObserver loop limit exceeded'
 
