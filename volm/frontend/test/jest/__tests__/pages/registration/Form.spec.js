@@ -29,8 +29,12 @@ describe('Registration From', () => {
     })
     const vm = wrapper.vm
 
-    it.only('passes the sanity check and creates a wrapper', () => {
+    it('passes the sanity check and creates a wrapper', () => {
         expect(wrapper).toBeTruthy()
+    })
+
+    it.only('renders correctly', () => {
+        expect(wrapper).toMatchSnapshot()
     })
 
     it('has a created hook', () => {
