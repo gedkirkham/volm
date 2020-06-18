@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Registration From renders correctly 1`] = `
+<q-page-stub class="flex flex-center">
+  <div class="column items-start">
+    <section>
+      <header>
+        <h1 class="text-h2 q-mb-none">
+          Register
+        </h1>
+      </header>
+      <q-form-stub class="q-mt-xl" style="min-width: 400px;"><span data-cy="test-firstName"><q-input-stub value="" label="First name *" outlined="true" type="text" class="q-pb-xl"></q-input-stub></span> <span data-cy="test-lastName"><q-input-stub value="" label="Last name *" outlined="true" type="text" class="q-pb-xl"></q-input-stub></span> <span data-cy="test-email"><q-input-stub value="" label="Email *" outlined="true" type="text" class="q-pb-xl"></q-input-stub></span> <span data-cy="test-password_1"><q-input-stub value="" label="Password *" outlined="true" type="password" class="q-pb-xl"></q-input-stub></span> <span data-cy="test-password_2"><q-input-stub value="" label="Confirm password *" outlined="true" type="password" class="q-pb-xl"></q-input-stub></span>
+        <q-btn-stub ripple="true" align="center" type="submit" label="Submit" color="primary" data-cy="test-submit"></q-btn-stub>
+      </q-form-stub>
+      <div class="q-my-lg">
+        Already have an account?
+        <a data-cy="log-in">
+          Log-in
+        </a></div>
+    </section>
+  </div>
+</q-page-stub>
+`;
