@@ -3,9 +3,10 @@
  * @jest-environment jsdom
  */
 
-import { mount, createLocalVue, shallowMount, RouterLinkStub } from '@vue/test-utils'
+import { mount, createLocalVue, shallowMount } from '@vue/test-utils'
 import Form from 'src/pages/registration/Form.vue'
 import * as All from 'quasar'
+import VueRouter from 'vue-router'
 // import langEn from 'quasar/lang/en-us' // change to any language you wish! => this breaks wallaby :(
 const { Quasar, date } = All
 
@@ -20,12 +21,13 @@ const components = Object.keys(All).reduce((object, key) => {
 describe('Registration From', () => {
     const localVue = createLocalVue()
     localVue.use(Quasar, { components }) // , lang: langEn
+    localVue.use(VueRouter)
+
+    const router = new VueRouter()
 
     const wrapper = shallowMount(Form, {
         localVue,
-        stubs: {
-            RouterLink: RouterLinkStub,
-        },
+        router,
     })
     const vm = wrapper.vm
 
