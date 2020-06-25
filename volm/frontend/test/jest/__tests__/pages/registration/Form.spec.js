@@ -11,7 +11,7 @@ import Form from 'src/pages/registration/Form.vue'
 import * as All from 'quasar'
 import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
-import { createShallowWrapper } from '../../../utils/index.js'
+import { createShallowWrapper } from 'jest/utils/index.js'
 // import langEn from 'quasar/lang/en-us' // change to any language you wish! => this breaks wallaby :(
 const { Quasar, date } = All
 
