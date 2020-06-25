@@ -6,13 +6,12 @@
 import {
     createLocalVue,
     enableAutoDestroy,
-    mount,
-    shallowMount,
 } from '@vue/test-utils'
 import Form from 'src/pages/registration/Form.vue'
 import * as All from 'quasar'
 import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
+import { createShallowWrapper } from '../../../utils/index.js'
 // import langEn from 'quasar/lang/en-us' // change to any language you wish! => this breaks wallaby :(
 const { Quasar, date } = All
 
@@ -30,12 +29,12 @@ const components = Object.keys(All).reduce((object, key) => {
 enableAutoDestroy(afterEach)
 
 describe('Registration From', () => {
+    let wrapper
+
     const localVue = createLocalVue()
     localVue.use(Quasar, { components }) // , lang: langEn
     localVue.use(VueRouter)
     localVue.use(VueI18n)
-
-    const router = new VueRouter()
 
     const i18n = new VueI18n({
         locale: 'en-us',
@@ -43,12 +42,24 @@ describe('Registration From', () => {
         messages,
     })
 
-    const wrapper = shallowMount(Form, {
-        i18n,
-        localVue,
-        router,
+    beforeEach(() => {
+        wrapper = createShallowWrapper({
+            component: Form,
+            i18n,
+            localVue,
+            options: {
+                mocks: {
+                    $q: {
+                        screen: {
+                            lt: {
+                                sm: jest.mock()
+                            }
+                        }
+                    }
+                }
+            }
+        })
     })
-    const vm = wrapper.vm
 
     it('passes the sanity check and creates a wrapper', () => {
         expect(wrapper.exists()).toBe(true)
@@ -61,7 +72,7 @@ describe('Registration From', () => {
     describe('methods', () => {
         describe('getErrorMessage()', () => {
             it('is a function', () => {
-                expect(typeof vm.getErrorMessage).toBe('function')
+                expect(typeof wrapper.vm.getErrorMessage).toBe('function')
             })
 
             it('returns correct error message', () => {
@@ -74,30 +85,5 @@ describe('Registration From', () => {
                 expect(ERROR).toBe(i18n.t('pages.register.errors.field_contains_errors'))
             })
         })
-    })
-
-    it('accesses the shallowMount', () => {
-        expect(vm.$el.textContent).toContain('rocket muffin')
-        expect(wrapper.text()).toContain('rocket muffin') // easier
-        expect(wrapper.find('p').text()).toContain('rocket muffin')
-    })
-
-    it('sets the correct default data', () => {
-        expect(typeof vm.counter).toBe('number')
-        const defaultData2 = QBUTTON.data()
-        expect(defaultData2.counter).toBe(0)
-    })
-
-    it('correctly updates data when button is pressed', () => {
-        const button = wrapper.find('button')
-        button.trigger('click')
-        expect(vm.counter).toBe(1)
-    })
-
-    it('formats a date without throwing exception', () => {
-        // test will automatically fail if an exception is thrown
-        // MMMM and MMM require that a language is 'installed' in Quasar
-        let formattedString = date.formatDate(Date.now(), 'YYYY MMMM MMM DD')
-        console.log('formattedString', formattedString)
     })
 })

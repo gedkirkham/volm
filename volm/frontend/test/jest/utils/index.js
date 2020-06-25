@@ -68,3 +68,21 @@ export const mountQuasar = (component, options = {}) => {
     }
   })
 }
+
+export const createShallowWrapper = ({
+    component,
+    i18n,
+    localVue,
+    options = {},
+ }) => {
+
+    const router = new VueRouter()
+    const wrapper = shallowMount(component, {
+        i18n,
+        localVue,
+        ...options,
+        router,
+    })
+
+    return wrapper
+}
