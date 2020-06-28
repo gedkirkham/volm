@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink'
-import HeaderBar from 'components/HeaderBar.vue'
+import EssentialLink from 'src/components/EssentialLink'
+import HeaderBar from 'src/components/HeaderBar.vue'
 
 export default {
     name: 'MainLayout',

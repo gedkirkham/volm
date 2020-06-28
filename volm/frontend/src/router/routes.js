@@ -1,27 +1,30 @@
 
 const routes = [
     {
+        component: () => import('src/layouts/MainLayout.vue'),
         path: '/',
-        component: () => import('layouts/MainLayout.vue'),
         children: [
-            { path: '', component: () => import('pages/Index.vue') },
+            {
+                component: () => import('src/pages/Index.vue'),
+                path: '',
+            },
         ],
     },
     {
+        component: () => import('src/layouts/BareLayout.vue'),
         path: '/auth/',
-        component: () => import('layouts/BareLayout.vue'),
         children: [
             {
-                component: () => import('pages/Login.vue'),
+                component: () => import('src/pages/Login.vue'),
                 name: 'login',
                 path: 'login/',
             },
             {
-                component: () => import('pages/registration/Form.vue'),
+                component: () => import('src/pages/registration/Form.vue'),
                 path: 'register/',
             },
             {
-                component: () => import('pages/registration/ConfirmEmail.vue'),
+                component: () => import('src/pages/registration/ConfirmEmail.vue'),
                 name: 'confirm_email',
                 path: 'confirm_email/',
             },
