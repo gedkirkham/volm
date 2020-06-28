@@ -11,7 +11,10 @@ import Form from 'src/pages/registration/Form.vue'
 import * as All from 'quasar'
 import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
-import { createShallowWrapper } from 'jest/utils/index.js'
+import {
+    createShallowWrapper,
+    createMountedWrapper,
+} from 'jest/utils/index.js'
 // import langEn from 'quasar/lang/en-us' // change to any language you wish! => this breaks wallaby :(
 const { Quasar, date } = All
 
@@ -29,7 +32,8 @@ const components = Object.keys(All).reduce((object, key) => {
 enableAutoDestroy(afterEach)
 
 describe('Registration From', () => {
-    let wrapper
+    let mountedWrapper
+    let shallowWrapper
 
     const localVue = createLocalVue()
     localVue.use(Quasar, { components }) // , lang: langEn
@@ -43,7 +47,7 @@ describe('Registration From', () => {
     })
 
     beforeEach(() => {
-        wrapper = createShallowWrapper({
+        shallowWrapper = createShallowWrapper({
             component: Form,
             i18n,
             localVue,
@@ -52,37 +56,101 @@ describe('Registration From', () => {
                     $q: {
                         screen: {
                             lt: {
-                                sm: jest.mock()
-                            }
-                        }
-                    }
-                }
-            }
+                                sm: jest.mock(),
+                            },
+                        },
+                    },
+                },
+            },
+        })
+
+        mountedWrapper = createMountedWrapper({
+            component: Form,
+            i18n,
+            localVue,
+            options: {
+                provide: {
+                    layout: {
+                        footer: {},
+                        header: {},
+                        left: {},
+                        right: {},
+                    },
+                    pageContainer: true,
+                },
+            },
         })
     })
 
     it('passes the sanity check and creates a wrapper', () => {
-        expect(wrapper.exists()).toBe(true)
+        expect(shallowWrapper.exists()).toBe(true)
     })
 
     it('renders correctly', () => {
-        expect(wrapper).toMatchSnapshot()
+        expect(shallowWrapper).toMatchSnapshot()
     })
 
     describe('methods', () => {
         describe('getErrorMessage()', () => {
             it('is a function', () => {
-                expect(typeof wrapper.vm.getErrorMessage).toBe('function')
+                expect(typeof shallowWrapper.vm.getErrorMessage).toBe('function')
             })
 
             it('returns correct error message', () => {
-                const ERROR = wrapper.vm.getErrorMessage(constants.django.errors.blank)
+                const ERROR = shallowWrapper.vm.getErrorMessage(constants.django.errors.blank)
                 expect(ERROR).toBe(i18n.t('pages.register.errors.blank'))
             })
 
             it('returns default error message', () => {
-                const ERROR = wrapper.vm.getErrorMessage('random error message')
+                const ERROR = shallowWrapper.vm.getErrorMessage('random error message')
                 expect(ERROR).toBe(i18n.t('pages.register.errors.field_contains_errors'))
+            })
+        })
+
+        describe('register()', () => {})
+
+        describe('setErrors()', () => {
+            it('can set a single error and the component state updates correctly', () => {
+                expect(shallowWrapper.vm.errors).toStrictEqual({})
+                const ERROR = {
+                    'first_name': [constants.django.errors.blank],
+                }
+                shallowWrapper.vm.setErrors(ERROR)
+                expect(shallowWrapper.vm.errors).toStrictEqual({
+                    'first_name': i18n.t('pages.register.errors.blank'),
+                })
+            })
+
+            it('can set a multiple errors', () => {
+                expect(shallowWrapper.vm.errors).toStrictEqual({})
+                const ERRORS = {
+                    'first_name': [constants.django.errors.blank, constants.django.errors.max_30_char],
+                }
+                shallowWrapper.vm.setErrors(ERRORS)
+                expect(shallowWrapper.vm.errors).toStrictEqual({
+                    'first_name': `${i18n.t('pages.register.errors.blank')}. ${i18n.t('pages.register.errors.max_30_char')}`,
+                })
+            })
+
+            it('errors are displayed correctly', async () => {
+                await mountedWrapper.setData({
+                    errors: {
+                        first_name: 'This is my test error!',
+                    },
+                })
+                const element = mountedWrapper.find('[data-cy=firstName]')
+                expect(element).toMatchSnapshot()
+            })
+
+            it('"username" key is translated to "email"', () => {
+                expect(shallowWrapper.vm.errors).toStrictEqual({})
+                const ERROR = {
+                    'username': [constants.django.errors.blank],
+                }
+                shallowWrapper.vm.setErrors(ERROR)
+                expect(shallowWrapper.vm.errors).toStrictEqual({
+                    'email': i18n.t('pages.register.errors.blank'),
+                })
             })
         })
     })
