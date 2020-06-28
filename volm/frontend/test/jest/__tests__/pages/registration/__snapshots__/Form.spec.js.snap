@@ -16,7 +16,7 @@ exports[`Registration From renders correctly 1`] = `
       </q-form-stub>
       <div class="q-my-lg">
         Already have an account?
-        <router-link-stub to="[object Object]" tag="a" ariacurrentvalue="page" event="click" date-test="log-in">
+        <router-link-stub to="[object Object]" tag="a" ariacurrentvalue="page" event="click" data-test="log-in">
           Log-in
         </router-link-stub>
       </div>
