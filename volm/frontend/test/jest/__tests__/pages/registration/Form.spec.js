@@ -138,7 +138,7 @@ describe('Registration From', () => {
                         first_name: 'This is my test error!',
                     },
                 })
-                const element = mountedWrapper.find('[data-cy=firstName]')
+                const element = mountedWrapper.find('[data-test=firstName]')
                 expect(element).toMatchSnapshot()
             })
 

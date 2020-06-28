@@ -12,7 +12,7 @@
                     :style="!$q.screen.lt.sm ? 'min-width:400px;' : 'min-width:90vw;'"
                     @submit="register()"
                 >
-                    <span date-test="firstName">
+                    <span data-test="firstName">
                         <q-input
                             v-model="first_name"
                             class="q-pb-xl"
@@ -87,7 +87,7 @@
                 <div class="q-my-lg">
                     Already have an account?
                     <router-link
-                        date-test="log-in"
+                        data-test="log-in"
                         :to="{ name: 'login' }"
                     >
                         Log-in
