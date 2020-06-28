@@ -93,7 +93,7 @@ import { registerApi } from 'src/api/auth.js'
 import constants from 'src/constants.js'
 
 export default {
-    name: 'RegisterPage',
+    name: 'RegistrationPage',
     data () {
         return {
             errors: {},
