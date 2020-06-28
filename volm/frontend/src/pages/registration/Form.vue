@@ -12,40 +12,48 @@
                     :style="!$q.screen.lt.sm ? 'min-width:400px;' : 'min-width:90vw;'"
                     @submit="register()"
                 >
-                    <span data-cy="test-firstName">
+                    <span date-test="firstName">
                         <q-input
                             v-model="first_name"
                             class="q-pb-xl"
+                            for="test-first_name"
+                            id="test-first_name"
                             label="First name *"
                             outlined
                             :error="!!errors.first_name"
                             :error-message="errors.first_name"
                         />
                     </span>
-                    <span data-cy="test-lastName">
+                    <span data-test="lastName">
                         <q-input
                             v-model="last_name"
                             class="q-pb-xl"
+                            for="test-last_name"
+                            id="test-last_name"
                             label="Last name *"
                             outlined
                             :error="!!errors.last_name"
                             :error-message="errors.last_name"
                         />
                     </span>
-                    <span data-cy="test-email">
+                    <span data-test="email">
                         <q-input
                             v-model="email"
                             class="q-pb-xl"
+                            for="test-email"
+                            id="test-email"
                             label="Email *"
                             outlined
                             :error="!!errors.email"
                             :error-message="errors.email"
                         />
                     </span>
-                    <span data-cy="test-password_1">
+                    <span data-test="password_1">
                         <q-input
                             v-model="password_1"
                             class="q-pb-xl"
+                            for="test-password_1"
+                            id="test-password_1"
                             label="Password *"
                             type="password"
                             outlined
@@ -53,10 +61,12 @@
                             :error-message="errors.password"
                         />
                     </span>
-                    <span data-cy="test-password_2">
+                    <span data-test="password_2">
                         <q-input
                             v-model="password_2"
                             class="q-pb-xl"
+                            for="test-password_2"
+                            id="test-password_2"
                             label="Confirm password *"
                             type="password"
                             outlined
@@ -67,7 +77,7 @@
 
                     <q-btn
                         color="primary"
-                        data-cy="test-submit"
+                        data-test="submit"
                         label="Submit"
                         type="submit"
                         :loading="isLoading"
@@ -77,7 +87,7 @@
                 <div class="q-my-lg">
                     Already have an account?
                     <router-link
-                        data-cy="log-in"
+                        date-test="log-in"
                         :to="{ name: 'login' }"
                     >
                         Log-in
