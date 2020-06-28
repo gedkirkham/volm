@@ -120,6 +120,75 @@ describe('Registration From', () => {
             it('is a function', () => {
                 expect(typeof shallowWrapper.vm.register).toBe('function')
             })
+
+            it('is called when the form is submitted', async () => {
+                mountedWrapper.vm.register = jest.fn()
+                expect(mountedWrapper.vm.register).toHaveBeenCalledTimes(0)
+                await mountedWrapper.get('form').trigger('submit')
+                expect(mountedWrapper.vm.register).toHaveBeenCalledTimes(1)
+            })
+
+            it('sets "isLoading" to true', async () => {
+                registerApi.mockResolvedValueOnce()
+                expect(shallowWrapper.vm.isLoading).toBe(false)
+                shallowWrapper.vm.register()
+                expect(shallowWrapper.vm.isLoading).toBe(true)
+            })
+
+            it('sets "errors" to empty object', async () => {
+                registerApi.mockResolvedValueOnce()
+                const ERROR = 'Error message'
+                await shallowWrapper.setData({
+                    errors: {
+                        first_name: ERROR,
+                    },
+                })
+                expect(shallowWrapper.vm.errors).toStrictEqual({
+                    first_name: ERROR,
+                })
+                shallowWrapper.vm.register()
+                expect(shallowWrapper.vm.errors).toStrictEqual({})
+            })
+
+            it('calls registerApi with the correct params', () => {
+                registerApi.mockResolvedValueOnce()
+                shallowWrapper.vm.register()
+                expect(registerApi).toBeCalledWith({
+                    email: '',
+                    first_name: '',
+                    last_name: '',
+                    password_1: '',
+                    password_2: '',
+                })
+            })
+
+            describe('registerApi', () => {
+                it('upon success, pushes new route', async () => {
+                    registerApi.mockResolvedValue()
+                    shallowWrapper.vm.$router.push = jest.fn()
+                    expect(shallowWrapper.vm.$router.push).toHaveBeenCalledTimes(0)
+                    await shallowWrapper.vm.register()
+                    expect(shallowWrapper.vm.$router.push).toHaveBeenCalledTimes(1)
+                    expect(shallowWrapper.vm.$router.push).toHaveBeenCalledWith({ name: 'confirm_email' })
+                })
+
+                it('upon failure, calls "setErrors" with correct params', async () => {
+                    global.console = { error: jest.fn() }
+                    shallowWrapper.vm.setErrors = jest.fn()
+                    registerApi.mockRejectedValue({ body: 'Error message' })
+                    expect(shallowWrapper.vm.setErrors).toBeCalledTimes(0)
+                    await shallowWrapper.vm.register()
+                    expect(shallowWrapper.vm.setErrors).toBeCalledTimes(1)
+                    expect(console.error).toBeCalledTimes(1)
+                })
+
+                it('upon response, sets "isLoading" to false', async () => {
+                    registerApi.mockResolvedValue()
+                    expect(shallowWrapper.vm.isLoading).toBe(false)
+                    await shallowWrapper.vm.register()
+                    expect(shallowWrapper.vm.isLoading).toBe(false)
+                })
+            })
         })
 
         describe('setErrors()', () => {
