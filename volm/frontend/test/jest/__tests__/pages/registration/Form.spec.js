@@ -107,9 +107,17 @@ describe('Registration From', () => {
             })
         })
 
-        describe('register()', () => {})
+        describe('register()', () => {
+            it('is a function', () => {
+                expect(typeof shallowWrapper.vm.register).toBe('function')
+            })
+        })
 
         describe('setErrors()', () => {
+            it('is a function', () => {
+                expect(typeof shallowWrapper.vm.setErrors).toBe('function')
+            })
+
             it('can set a single error and the component state updates correctly', () => {
                 expect(shallowWrapper.vm.errors).toStrictEqual({})
                 const ERROR = {
