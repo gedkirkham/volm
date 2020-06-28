@@ -16,7 +16,10 @@ const routes = [
                 name: 'login',
                 path: 'login/',
             },
-            { path: 'register/', component: () => import('pages/registration/Register.vue') },
+            {
+                component: () => import('pages/registration/Form.vue'),
+                path: 'register/',
+            },
             {
                 component: () => import('pages/registration/ConfirmEmail.vue'),
                 name: 'confirm_email',
