@@ -81,7 +81,7 @@ export const createShallowWrapper = ({
     options = {},
  }) => {
 
-    const router = new VueRouter()
+    const router = new VueRouter({ routes })
     const wrapper = shallowMount(component, {
         i18n,
         localVue,

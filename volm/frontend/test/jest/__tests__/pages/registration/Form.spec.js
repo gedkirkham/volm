@@ -31,6 +31,13 @@ const components = Object.keys(All).reduce((object, key) => {
 
 enableAutoDestroy(afterEach)
 
+
+import { registerApi } from 'src/api/auth.js'
+
+jest.mock('src/api/auth.js', () => ({
+    registerApi: jest.fn()
+}))
+
 describe('Registration From', () => {
     let mountedWrapper
     let shallowWrapper
@@ -45,6 +52,16 @@ describe('Registration From', () => {
         fallbackLocale: 'en-us',
         messages,
     })
+
+    const PROVIDE = {
+        layout: {
+            footer: {},
+            header: {},
+            left: {},
+            right: {},
+        },
+        pageContainer: true,
+    }
 
     beforeEach(() => {
         shallowWrapper = createShallowWrapper({
@@ -69,15 +86,7 @@ describe('Registration From', () => {
             i18n,
             localVue,
             options: {
-                provide: {
-                    layout: {
-                        footer: {},
-                        header: {},
-                        left: {},
-                        right: {},
-                    },
-                    pageContainer: true,
-                },
+                provide: PROVIDE,
             },
         })
     })
