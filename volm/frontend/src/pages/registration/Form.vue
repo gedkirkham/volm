@@ -118,10 +118,10 @@ export default {
                 [constants.django.errors.password_too_common]: this.$t('pages.register.errors.password_too_common'),
                 [constants.django.errors.password_entirely_numeric]: this.$t('pages.register.errors.password_entirely_numeric'),
                 [constants.django.errors.username_already_exists]: this.$t('pages.register.errors.email_already_exists'),
-                'default': this.$t('pages.register.errors.field_contains_errors'),
+                default: this.$t('pages.register.errors.field_contains_errors'),
             }
 
-            return (OBJ[DJANGO_ERROR] || OBJ['default'])
+            return (OBJ[DJANGO_ERROR] || OBJ.default)
         },
         register () {
             this.errors = {}
