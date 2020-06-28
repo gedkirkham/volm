@@ -1,9 +1,14 @@
 // this is mapped in jest.config.js to resolve @vue/test-utils
-import { createLocalVue, shallowMount } from 'test-utils'
-
+import {
+    createLocalVue,
+    mount,
+    shallowMount,
+} from 'test-utils'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import Quasar, { Cookies } from 'quasar'
+
+import routes from 'src/router/routes.js'
 
 const mockSsrContext = () => {
   return {
@@ -78,6 +83,24 @@ export const createShallowWrapper = ({
 
     const router = new VueRouter()
     const wrapper = shallowMount(component, {
+        i18n,
+        localVue,
+        ...options,
+        router,
+    })
+
+    return wrapper
+}
+
+export const createMountedWrapper = ({
+    component,
+    i18n,
+    localVue,
+    options = {},
+ }) => {
+
+    const router = new VueRouter({ routes })
+    const wrapper = mount(component, {
         i18n,
         localVue,
         ...options,
