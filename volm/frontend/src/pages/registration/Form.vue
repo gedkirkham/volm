@@ -16,8 +16,8 @@
                         <q-input
                             v-model="first_name"
                             class="q-pb-xl"
-                            for="test-first_name"
                             id="test-first_name"
+                            for="test-first_name"
                             label="First name *"
                             outlined
                             :error="!!errors.first_name"
@@ -28,8 +28,8 @@
                         <q-input
                             v-model="last_name"
                             class="q-pb-xl"
-                            for="test-last_name"
                             id="test-last_name"
+                            for="test-last_name"
                             label="Last name *"
                             outlined
                             :error="!!errors.last_name"
@@ -40,8 +40,8 @@
                         <q-input
                             v-model="email"
                             class="q-pb-xl"
-                            for="test-email"
                             id="test-email"
+                            for="test-email"
                             label="Email *"
                             outlined
                             :error="!!errors.email"
@@ -52,8 +52,8 @@
                         <q-input
                             v-model="password_1"
                             class="q-pb-xl"
-                            for="test-password_1"
                             id="test-password_1"
+                            for="test-password_1"
                             label="Password *"
                             type="password"
                             outlined
@@ -65,8 +65,8 @@
                         <q-input
                             v-model="password_2"
                             class="q-pb-xl"
-                            for="test-password_2"
                             id="test-password_2"
+                            for="test-password_2"
                             label="Confirm password *"
                             type="password"
                             outlined
