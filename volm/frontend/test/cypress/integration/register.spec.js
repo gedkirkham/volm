@@ -52,18 +52,18 @@ context('Registration', () => {
         const CURRENT_DATE = new Date().getTime()
         cy.populateRegistrationForm(CURRENT_DATE)
 
-        cy.get('[data-cy=test-submit] svg')
+        cy.get('[data-test=submit] svg')
             .should('not.exist')
 
         cy.registrationSubmitButton()
             .click()
 
-        cy.get('[data-cy=test-submit] svg')
+        cy.get('[data-test=submit] svg')
             .should('exist')
     })
 
     it('user can navigate to the log-in page', () => {
-        cy.get('[data-cy=log-in]')
+        cy.get('[data-test=log-in]')
             .contains('Log')
             .click()
 

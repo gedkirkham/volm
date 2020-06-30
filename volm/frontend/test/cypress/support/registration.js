@@ -6,43 +6,43 @@ Cypress.Commands.add('registrationSubmitButton', () => {
 })
 
 Cypress.Commands.add('registrationFirstNameInput', () => {
-    cy.get('[data-cy=test-firstName] input')
+    cy.get('[data-test=firstName] input')
 })
 
 Cypress.Commands.add('registrationLastNameInput', () => {
-    cy.get('[data-cy=test-lastName] input')
+    cy.get('[data-test=lastName] input')
 })
 
 Cypress.Commands.add('registrationEmailInput', () => {
-    cy.get('[data-cy=test-email] input')
+    cy.get('[data-test=email] input')
 })
 
 Cypress.Commands.add('registrationPassword1Input', () => {
-    cy.get('[data-cy=test-password_1] input')
+    cy.get('[data-test=password_1] input')
 })
 
 Cypress.Commands.add('registrationPassword2Input', () => {
-    cy.get('[data-cy=test-password_2] input')
+    cy.get('[data-test=password_2] input')
 })
 
 Cypress.Commands.add('registrationFirstNameWrapper', () => {
-    cy.get('[data-cy=test-firstName]')
+    cy.get('[data-test=firstName]')
 })
 
 Cypress.Commands.add('registrationLastNameWrapper', () => {
-    cy.get('[data-cy=test-lastName]')
+    cy.get('[data-test=lastName]')
 })
 
 Cypress.Commands.add('registrationEmailWrapper', () => {
-    cy.get('[data-cy=test-email]')
+    cy.get('[data-test=email]')
 })
 
 Cypress.Commands.add('registrationPassword1Wrapper', () => {
-    cy.get('[data-cy=test-password_1]')
+    cy.get('[data-test=password_1]')
 })
 
 Cypress.Commands.add('registrationPassword2Wrapper', () => {
-    cy.get('[data-cy=test-password_2]')
+    cy.get('[data-test=password_2]')
 })
 
 Cypress.Commands.add('populateRegistrationForm', emailId => {
