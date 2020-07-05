@@ -240,4 +240,49 @@ describe('Registration From', () => {
             })
         })
     })
+
+    describe.only('state correctly updates when user enters data for', () => {
+        beforeEach(() => {
+            expect(mountedWrapper.vm.first_name).toBe('')
+            expect(mountedWrapper.vm.last_name).toBe('')
+            expect(mountedWrapper.vm.email).toBe('')
+            expect(mountedWrapper.vm.password_1).toBe('')
+            expect(mountedWrapper.vm.password_2).toBe('')
+        })
+
+        it('first name form field', () => {
+            const VALUE = 'John'
+            const INPUT_FIELD = mountedWrapper.find('[data-test=firstName] input')
+            INPUT_FIELD.setValue(VALUE)
+            expect(mountedWrapper.vm.first_name).toBe(VALUE)
+        })
+
+        it('last name form field', () => {
+            const VALUE = 'Moore'
+            const INPUT_FIELD = mountedWrapper.find('[data-test=lastName] input')
+            INPUT_FIELD.setValue(VALUE)
+            expect(mountedWrapper.vm.last_name).toBe(VALUE)
+        })
+
+        it('email form field', () => {
+            const VALUE = 'test@test.com'
+            const INPUT_FIELD = mountedWrapper.find('[data-test=email] input')
+            INPUT_FIELD.setValue(VALUE)
+            expect(mountedWrapper.vm.email).toBe(VALUE)
+        })
+
+        it('password form field', () => {
+            const VALUE = 'password123'
+            const INPUT_FIELD = mountedWrapper.find('[data-test=password_1] input')
+            INPUT_FIELD.setValue(VALUE)
+            expect(mountedWrapper.vm.password_1).toBe(VALUE)
+        })
+
+        it('confirm password form field', () => {
+            const VALUE = 'password1234'
+            const INPUT_FIELD = mountedWrapper.find('[data-test=password_2] input')
+            INPUT_FIELD.setValue(VALUE)
+            expect(mountedWrapper.vm.password_2).toBe(VALUE)
+        })
+    })
 })
