@@ -241,7 +241,7 @@ describe('Registration From', () => {
         })
     })
 
-    describe.only('state correctly updates when user enters data for', () => {
+    describe('state correctly updates when user enters data for', () => {
         beforeEach(() => {
             expect(mountedWrapper.vm.first_name).toBe('')
             expect(mountedWrapper.vm.last_name).toBe('')
@@ -283,6 +283,90 @@ describe('Registration From', () => {
             const INPUT_FIELD = mountedWrapper.find('[data-test=password_2] input')
             INPUT_FIELD.setValue(VALUE)
             expect(mountedWrapper.vm.password_2).toBe(VALUE)
+        })
+    })
+
+    describe('constants exist', () => {
+        it('constants.django.errors.blank', () => {
+            expect(constants.django.errors.blank).toBeTruthy()
+        })
+
+        it('constants.django.errors.max_30_char', () => {
+            expect(constants.django.errors.max_30_char).toBeTruthy()
+        })
+
+        it('constants.django.errors.max_128_char', () => {
+            expect(constants.django.errors.max_128_char).toBeTruthy()
+        })
+
+        it('constants.django.errors.max_150_char', () => {
+            expect(constants.django.errors.max_150_char).toBeTruthy()
+        })
+
+        it('constants.django.errors.invalid_email', () => {
+            expect(constants.django.errors.invalid_email).toBeTruthy()
+        })
+
+        it('constants.django.errors.password_mismatch', () => {
+            expect(constants.django.errors.password_mismatch).toBeTruthy()
+        })
+
+        it('constants.django.errors.password_min_8_char', () => {
+            expect(constants.django.errors.password_min_8_char).toBeTruthy()
+        })
+
+        it('constants.django.errors.password_too_common', () => {
+            expect(constants.django.errors.password_too_common).toBeTruthy()
+        })
+
+        it('constants.django.errors.password_entirely_numeric', () => {
+            expect(constants.django.errors.password_entirely_numeric).toBeTruthy()
+        })
+
+        it('constants.django.errors.username_already_exists', () => {
+            expect(constants.django.errors.username_already_exists).toBeTruthy()
+        })
+    })
+
+    describe('i18 values exist', () => {
+        it('pages.register.errors.blank', () => {
+            expect(messages['en-us'].pages.register.errors.blank).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.max_30_char', () => {
+            expect(messages['en-us'].pages.register.errors.max_30_char).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.max_128_char', () => {
+            expect(messages['en-us'].pages.register.errors.max_128_char).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.max_150_char', () => {
+            expect(messages['en-us'].pages.register.errors.max_150_char).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.invalid_email', () => {
+            expect(messages['en-us'].pages.register.errors.invalid_email).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.password_mismatch', () => {
+            expect(messages['en-us'].pages.register.errors.password_mismatch).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.password_min_8_char', () => {
+            expect(messages['en-us'].pages.register.errors.password_min_8_char).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.password_too_common', () => {
+            expect(messages['en-us'].pages.register.errors.password_too_common).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.password_entirely_numeric', () => {
+            expect(messages['en-us'].pages.register.errors.password_entirely_numeric).not.toBeUndefined()
+        })
+
+        it('pages.register.errors.username_already_exists', () => {
+            expect(messages['en-us'].pages.register.errors.email_already_exists).not.toBeUndefined()
         })
     })
 })
