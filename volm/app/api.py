@@ -33,14 +33,11 @@ class RegisterUserAPIView(APIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         
-        password_2 = data['password_2']
-        data.pop('password_2')
-
         serializer = RegistrationSerializer(data=data)
         errors = {}
 
         errors = self.validate_password(data['password'], errors)
-        errors = self.compare_passwords(data['password'], password_2, errors)
+        errors = self.compare_passwords(data['password'], data['password_2'], errors)
         
         if serializer.is_valid() and not errors:
             user = User.objects.create_user(
