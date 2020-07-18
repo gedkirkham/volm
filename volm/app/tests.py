@@ -1,11 +1,10 @@
 from django.urls import reverse
 from django.test import Client, TestCase
 from rest_framework import status
+from rest_framework.test import APITestCase
 
-class RegisterUserAPIView(TestCase):
+class RegisterUserAPIView(APITestCase):
     def setUp(self):
-        # Every test needs a client.
-        self.client = Client()
         self.data = data = {
             "email": "test@test.com",
             "first_name":"Ged",
