@@ -14,7 +14,11 @@ class RegisterUserAPIView(APITestCase):
             "username": "test@test.com",
         }
 
-    def test_200_success(self):
+    def test_200_success_with_url_string(self):
+        response = self.client.post('/api/register/', self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_200_success_with_url_name(self):
         url = reverse('register_user')
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
