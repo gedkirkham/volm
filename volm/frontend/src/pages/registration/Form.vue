@@ -19,6 +19,7 @@
                             id="test-first_name"
                             for="test-first_name"
                             label="First name *"
+                            autofocus
                             outlined
                             :error="!!errors.first_name"
                             :error-message="errors.first_name"
@@ -110,6 +111,7 @@ export default {
             email: '',
             first_name: '',
             isLoading: false,
+            isFocused: true,
             last_name: '',
             password_1: '',
             password_2: '',
