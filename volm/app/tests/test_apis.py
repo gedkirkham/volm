@@ -10,7 +10,6 @@ class RegisterUserAPIView(APITestCase):
             "first_name":"Ged",
             "last_name": "Kirkham",
             "password": "Pass123456",
-            "password_2": "Pass123456",
             "username": "test@test.com",
         }
 
@@ -23,19 +22,11 @@ class RegisterUserAPIView(APITestCase):
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_400_password_mismatch(self):
-        url = reverse('register_user')
-        self.data['password'] = 'helloWorld1234'
-        response = self.client.post(url, self.data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['password'][0], 'Passwords do not match.')
-
     def test_400_first_name_blank(self):
         url = reverse('register_user')
         self.data['first_name'] = ''
         response = self.client.post(url, self.data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['first_name'][0], 'This field may not be blank.')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
     
     def test_400_first_name_max_30_char(self):
         url = reverse('register_user')
@@ -48,8 +39,7 @@ class RegisterUserAPIView(APITestCase):
         url = reverse('register_user')
         self.data['last_name'] = ''
         response = self.client.post(url, self.data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['last_name'][0], 'This field may not be blank.')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
     
     def test_400_last_name_max_150_char(self):
         url = reverse('register_user')
@@ -85,7 +75,6 @@ class RegisterUserAPIView(APITestCase):
         url = reverse('register_user')
         password = ''
         self.data['password'] = password
-        self.data['password_2'] = password
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['password'][0], 'This field may not be blank.')
@@ -94,7 +83,6 @@ class RegisterUserAPIView(APITestCase):
         url = reverse('register_user')
         password = '012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345hel'
         self.data['password'] = password
-        self.data['password_2'] = password
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['password'][0], 'Ensure this field has no more than 128 characters.')
@@ -103,7 +91,6 @@ class RegisterUserAPIView(APITestCase):
         url = reverse('register_user')
         password = 'hellowo'
         self.data['password'] = password
-        self.data['password_2'] = password
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(str(response.data['password']), "['This password is too short. It must contain at least 8 characters.']")
@@ -112,7 +99,6 @@ class RegisterUserAPIView(APITestCase):
         url = reverse('register_user')
         password = 'password'
         self.data['password'] = password
-        self.data['password_2'] = password
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(str(response.data['password']), "['This password is too common.']")
@@ -121,7 +107,6 @@ class RegisterUserAPIView(APITestCase):
         url = reverse('register_user')
         password = '01234567890123456789'
         self.data['password'] = password
-        self.data['password_2'] = password
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(str(response.data['password']), "['This password is entirely numeric.']")
