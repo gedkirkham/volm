@@ -40,7 +40,7 @@ context('Registration', () => {
             .click()
 
         cy.registrationSubmitButton()
-            .click()
+            .click({ force: true })
 
         cy.wait('@registerApi')
 
@@ -95,33 +95,49 @@ context('Registration', () => {
         })
 
         it('by clicking "Enter" on the keyboard', () => {
-            cy.registrationPassword2Input()
+            cy.registrationPasswordInput()
                 .type('{enter}')
         })
 
-        it('if FirstName is just under character limit', () => {
-            cy.registrationFirstNameInput()
-                .clear()
-                .type(`${constants.FIRST_NAME_30_CHAR}{enter}`)
-                .should('have.value', constants.FIRST_NAME_30_CHAR)
+        describe('if FirstName', () => {
+            it('is empty string', () => {
+                cy.registrationFirstNameInput()
+                    .clear()
+            })
+
+            it('is just under character limit', () => {
+                cy.registrationFirstNameInput()
+                    .clear()
+                    .type(`${constants.FIRST_NAME_30_CHAR}{enter}`)
+                    .should('have.value', constants.FIRST_NAME_30_CHAR)
+            })
         })
 
-        it('if LastName is just under character limit', () => {
-            cy.registrationLastNameInput()
-                .clear()
-                .type(`${constants.LAST_NAME_150_CHAR}{enter}`)
-                .should('have.value', constants.LAST_NAME_150_CHAR)
+        describe('if LastName', () => {
+            it('is an empty string', () => {
+                cy.registrationLastNameInput()
+                    .clear()
+            })
+
+            it('is just under character limit', () => {
+                cy.registrationLastNameInput()
+                    .clear()
+                    .type(`${constants.LAST_NAME_150_CHAR}{enter}`)
+                    .should('have.value', constants.LAST_NAME_150_CHAR)
+            })
         })
 
         it('if Email is just under character limit', () => {
+            const NOW = new Date().getTime()
+
             cy.registrationLastNameInput()
                 .clear()
-                .type(`${constants.EMAIL_150_CHAR}{enter}`)
-                .should('have.value', constants.EMAIL_150_CHAR)
+                .type(`${NOW}${constants.EMAIL_150_CHAR}{enter}`)
+                .should('have.value', NOW + constants.EMAIL_150_CHAR)
         })
 
         it('if Password is just under character limit', () => {
-            cy.registrationBothPasswordFieldsInput(constants.PASSWORD_128_CHAR)
+            cy.registrationPasswordInputValue(constants.PASSWORD_128_CHAR)
         })
     })
 
@@ -134,97 +150,64 @@ context('Registration', () => {
         })
 
         describe('FirstName', () => {
-            it('is not present', () => {
-                const KEY = ['blank']
-                cy.registrationFirstNameInput()
-                    .clear()
-                    .type('{enter}')
-
-                cy.registrationAssertApiResponse({ field: 'first_name', key: KEY, length: 1, status: 400 })
-
-                cy.registrationFirstNameWrapper()
-                    .contains(i18n_en_us.pages.register.errors.blank)
-            })
-
             it('is over character limit', () => {
-                const KEY = ['max_30_char']
                 cy.registrationFirstNameInput()
                     .clear()
                     .type(`${constants.FIRST_NAME_31_CHAR}{enter}`)
-                    .should('have.value', constants.FIRST_NAME_31_CHAR)
+                    .should('have.value', constants.FIRST_NAME_31_CHAR.slice(0, constants.FIRST_NAME_31_CHAR.length - 1))
 
-                cy.registrationAssertApiResponse({ field: 'first_name', key: KEY, length: 1, status: 400 })
-
-                cy.registrationFirstNameWrapper()
-                    .contains(i18n_en_us.pages.register.errors.max_30_char)
+                cy.wait('@registerApi').then((xhr) => {
+                    assert.strictEqual(xhr.status, 201)
+                })
             })
         })
 
         describe('LastName', () => {
-            it('is not present', () => {
-                const KEY = ['blank']
-                cy.registrationLastNameInput()
-                    .clear()
-                    .type('{enter}')
-
-                cy.registrationAssertApiResponse({ field: 'last_name', key: KEY, length: 1, status: 400 })
-
-                cy.registrationLastNameWrapper()
-                    .contains(i18n_en_us.pages.register.errors.blank)
-            })
 
             it('is over character limit', () => {
-                const KEY = ['max_150_char']
                 cy.registrationLastNameInput()
                     .clear()
                     .type(`${constants.LAST_NAME_151_CHAR}{enter}`)
-                    .should('have.value', constants.LAST_NAME_151_CHAR)
+                    .should('have.value', constants.LAST_NAME_151_CHAR.slice(0, constants.LAST_NAME_151_CHAR.length - 1))
 
-                cy.registrationAssertApiResponse({ field: 'last_name', key: KEY, length: 1, status: 400 })
-
-                cy.registrationLastNameWrapper()
-                    .contains(i18n_en_us.pages.register.errors.max_150_char)
+                cy.wait('@registerApi').then((xhr) => {
+                    assert.strictEqual(xhr.status, 201)
+                })
             })
         })
 
         describe('Email', () => {
             it('is not present', () => {
-                const KEY = ['blank']
                 cy.registrationEmailInput()
                     .clear()
                     .type('{enter}')
 
-                cy.registrationAssertApiResponse({ field: 'email', key: KEY, length: 1, status: 400 })
-
-                cy.registrationEmailWrapper()
-                    .contains(i18n_en_us.pages.register.errors.blank)
+                cy.get('@registerApi.all')
+                    .should('have.length', 0)
             })
 
             it('is over character limit', () => {
-                const KEY = ['max_150_char']
+                const NOW = new Date().getTime()
                 cy.registrationEmailInput()
                     .clear()
-                    .type(`${constants.EMAIL_151_CHAR}{enter}`)
-                    .should('have.value', constants.EMAIL_151_CHAR)
+                    .type(`${NOW}${constants.EMAIL_151_CHAR}{enter}`)
+                    .should('have.value', NOW + constants.EMAIL_151_CHAR.slice(0, constants.EMAIL_151_CHAR.length - 1))
 
-                cy.registrationAssertApiResponse({ field: 'email', key: KEY, length: 1, status: 400 })
-
-                cy.registrationEmailWrapper()
-                    .contains(i18n_en_us.pages.register.errors.max_150_char)
+                cy.wait('@registerApi').then((xhr) => {
+                    assert.strictEqual(xhr.status, 201)
+                })
             })
 
             it('is not a valid email', () => {
-                const KEY = ['invalid_email']
                 const INVALID_EMAIL = 'test&test.com'
                 cy.registrationEmailInput()
                     .clear()
-                    .type(`${INVALID_EMAIL}{enter}`)
+                    .type(`${INVALID_EMAIL}`)
                     .should('have.value', INVALID_EMAIL)
+                    .type('{enter}')
 
-                cy.registrationAssertApiResponse({ field: 'email', key: KEY, length: 1, status: 400 })
-
-                cy.registrationEmailWrapper()
-                    .contains(i18n_en_us.pages.register.errors.invalid_email)
+                cy.get('@registerApi.all')
+                    .should('have.length', 0)
             })
 
             it('has already been used', () => {
@@ -247,168 +230,51 @@ context('Registration', () => {
 
         describe('Password', () => {
             it('is not present', () => {
-                const KEY = ['blank']
-                cy.registrationPassword1Input()
+                cy.registrationPasswordInput()
                     .clear()
                     .type('{enter}')
 
-                cy.registrationAssertApiResponse({ field: 'password', key: KEY, length: 1, status: 400 })
-                cy.registrationCheckPasswordFieldsContainError(KEY)
+                cy.get('@registerApi.all')
+                    .should('have.length', 0)
             })
 
             it('is over max-character limit', () => {
-                const KEY = ['max_128_char']
-                cy.registrationBothPasswordFieldsInput(constants.PASSWORD_129_CHAR)
-                cy.registrationAssertApiResponse({ field: 'password', key: KEY, length: 1, status: 400 })
-                cy.registrationCheckPasswordFieldsContainError(KEY)
+                const ORIG_PASSWORD = constants.PASSWORD_129_CHAR
+                const TRUNCATED_PASSWORD = ORIG_PASSWORD.slice(0, ORIG_PASSWORD.length - 1)
+                cy.registrationPasswordInput()
+                    .clear()
+                    .type(ORIG_PASSWORD)
+                    .should('have.value', TRUNCATED_PASSWORD)
+                    .type('{enter}')
+
+                cy.wait('@registerApi').then((xhr) => {
+                    assert.strictEqual(xhr.status, 201)
+                })
             })
 
             it('is under min-character limit', () => {
-                const KEY = ['password_min_8_char']
-                cy.registrationBothPasswordFieldsInput('012345a')
-                cy.registrationAssertApiResponse({ field: 'password', key: KEY, length: 1, status: 400 })
-                cy.registrationCheckPasswordFieldsContainError(KEY)
-            })
+                const PASSWORD = '012345a'
+                cy.registrationPasswordInputValue(PASSWORD)
 
-            it('do not match', () => {
-                const KEY = ['password_mismatch']
-                const PASSWORD = '012345abc'
-                cy.registrationBothPasswordFieldsInput(PASSWORD, PASSWORD + 'd')
-                cy.registrationAssertApiResponse({ field: 'password', key: KEY, length: 1, status: 400 })
-                cy.registrationCheckPasswordFieldsContainError(KEY)
+                cy.get('@registerApi.all')
+                    .should('have.length', 0)
             })
 
             it('is too common', () => {
                 const KEY = ['password_too_common']
                 const PASSWORD = 'password'
-                cy.registrationBothPasswordFieldsInput(PASSWORD)
+                cy.registrationPasswordInputValue(PASSWORD)
                 cy.registrationAssertApiResponse({ field: 'password', key: KEY, length: 1, status: 400 })
-                cy.registrationCheckPasswordFieldsContainError(KEY)
+                cy.registrationCheckPasswordFieldContainError(KEY)
             })
 
             it('is entirely numeric', () => {
-                const KEY = ['password_entirely_numeric']
                 const PASSWORD = '84750183'
-                cy.registrationBothPasswordFieldsInput(PASSWORD)
-                cy.registrationAssertApiResponse({ field: 'password', key: KEY, length: 1, status: 400 })
-                cy.registrationCheckPasswordFieldsContainError(KEY)
+                cy.registrationPasswordInputValue(PASSWORD)
+
+                cy.get('@registerApi.all')
+                    .should('have.length', 0)
             })
-
-            it('is entirely numeric and passwords do not match', () => {
-                const KEY = ['password_mismatch']
-                const PASSWORD = '84750183'
-                cy.registrationBothPasswordFieldsInput(PASSWORD, PASSWORD + '0')
-                cy.registrationAssertApiResponse({ field: 'password', key: KEY, length: 1, status: 400 })
-                cy.registrationCheckPasswordFieldsContainError(KEY)
-            })
-
-            it('is entirely numeric and too common', () => {
-                const KEY = ['password_entirely_numeric', 'password_too_common']
-                const PASSWORD = '01234567'
-                cy.registrationBothPasswordFieldsInput(PASSWORD)
-                cy.registrationAssertApiResponse({ field: 'password', status: 400, length: 2, key: KEY })
-                cy.registrationCheckPasswordFieldsContainError(KEY[0])
-                cy.registrationCheckPasswordFieldsContainError(KEY[1])
-            })
-        })
-    })
-
-    describe('error thrown and cleared for', () => {
-        beforeEach(() => {
-            cy.createRegisterApiRoute()
-
-            const CURRENT_DATE = new Date().getTime()
-            cy.populateRegistrationForm(CURRENT_DATE)
-        })
-
-        it('FirstName', () => {
-            const KEY = ['blank']
-            cy.registrationFirstNameInput()
-                .clear()
-                .type('{enter}')
-
-            cy.registrationAssertApiResponse({ field: 'first_name', key: KEY, length: 1, status: 400 })
-
-            cy.registrationFirstNameWrapper()
-                .contains(i18n_en_us.pages.register.errors.blank)
-
-            cy.registrationFirstNameInput()
-                .type('John{enter}')
-
-            cy.wait('@registerApi').then((xhr) => {
-                assert.strictEqual(xhr.status, 201)
-            })
-
-            cy.registrationFirstNameWrapper()
-                .should('not.contain.text', i18n_en_us.pages.register.errors.blank)
-        })
-
-        it('LastName', () => {
-            const KEY = ['blank']
-            cy.registrationLastNameInput()
-                .clear()
-                .type('{enter}')
-
-            cy.registrationAssertApiResponse({ field: 'last_name', key: KEY, length: 1, status: 400 })
-
-            cy.registrationLastNameWrapper()
-                .contains(i18n_en_us.pages.register.errors.blank)
-
-            const LAST_NAME = 'Moore'
-            cy.registrationLastNameInput()
-                .type(`${LAST_NAME}{enter}`)
-                .should('have.value', LAST_NAME)
-
-            cy.wait('@registerApi').then((xhr) => {
-                assert.strictEqual(xhr.status, 201)
-            })
-
-            cy.registrationLastNameWrapper()
-                .should('not.contain.text', i18n_en_us.pages.register.errors.blank)
-        })
-
-        it('Email', () => {
-            const KEY = ['blank']
-            cy.registrationEmailInput()
-                .clear()
-                .type('{enter}')
-
-            cy.registrationAssertApiResponse({ field: 'email', key: KEY, length: 1, status: 400 })
-
-            cy.registrationEmailWrapper()
-                .contains(i18n_en_us.pages.register.errors.blank)
-
-            const CURRENT_DATE = new Date().getTime()
-            const EMAIL = `${CURRENT_DATE}@test.com`
-            cy.registrationEmailInput()
-                .type(`${EMAIL}{enter}`)
-                .should('have.value', EMAIL)
-
-            cy.wait('@registerApi').then((xhr) => {
-                assert.strictEqual(xhr.status, 201)
-            })
-
-            cy.registrationEmailWrapper()
-                .should('not.contain.text', i18n_en_us.pages.register.errors.blank)
-        })
-
-        it('Password', () => {
-            const KEY = ['blank']
-            cy.registrationBothPasswordFieldsInput('')
-            cy.registrationAssertApiResponse({ field: 'password', status: 400, length: 1, key: KEY})
-            cy.registrationCheckPasswordFieldsContainError(KEY)
-
-            cy.registrationBothPasswordFieldsInput('01234567a')
-
-            cy.wait('@registerApi').then((xhr) => {
-                assert.strictEqual(xhr.status, 201)
-            })
-
-            cy.registrationPassword1Wrapper()
-                .should('not.contain.text', i18n_en_us.pages.register.errors[KEY])
-
-            cy.registrationPassword2Wrapper()
-                .should('not.contain.text', i18n_en_us.pages.register.errors[KEY])
         })
     })
 })
