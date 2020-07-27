@@ -22,14 +22,6 @@ class RegisterUserAPIView(APIView):
     authentication_classes = []
     permission_classes = []
 
-    def compare_passwords(this, password, password_2, errors):
-        if password and password_2 and password == password_2:
-            return errors
-        elif password and password_2 and password != password_2:
-            errors['password'] = ['Passwords do not match.']
-            return errors
-        return errors
-    
     def post(self, request, *args, **kwargs):
         data = request.data
         
@@ -37,7 +29,6 @@ class RegisterUserAPIView(APIView):
         errors = {}
 
         errors = self.validate_password(data['password'], errors)
-        errors = self.compare_passwords(data['password'], data['password_2'], errors)
         
         if serializer.is_valid() and not errors:
             user = User.objects.create_user(

@@ -27,8 +27,7 @@ export function registerApi (OBJ) {
             email: OBJ.email,
             first_name: OBJ.first_name,
             last_name: OBJ.last_name,
-            password: OBJ.password_1,
-            password_2: OBJ.password_2,
+            password: OBJ.password,
             username: OBJ.email,
         })
         .finally(() => { registerApiLoading = false })
