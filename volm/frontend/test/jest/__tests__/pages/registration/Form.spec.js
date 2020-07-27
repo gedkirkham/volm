@@ -106,8 +106,8 @@ describe('Registration From', () => {
             })
 
             it('returns correct error message', () => {
-                const ERROR = shallowWrapper.vm.getErrorMessage(constants.django.errors.blank)
-                expect(ERROR).toBe(i18n.t('pages.register.errors.blank'))
+                const ERROR = shallowWrapper.vm.getErrorMessage(constants.django.errors.max_30_char)
+                expect(ERROR).toBe(i18n.t('pages.register.errors.max_30_char'))
             })
 
             it('returns default error message', () => {
@@ -121,11 +121,24 @@ describe('Registration From', () => {
                 expect(typeof shallowWrapper.vm.register).toBe('function')
             })
 
-            it('is called when the form is submitted', async () => {
+            it('is called when the form is submitted with populated data', async () => {
                 mountedWrapper.vm.register = jest.fn()
+                await mountedWrapper.setData({
+                    form: {
+                        email: 'test@test.com',
+                        password: 'password',
+                    },
+                })
                 expect(mountedWrapper.vm.register).toHaveBeenCalledTimes(0)
                 await mountedWrapper.get('form').trigger('submit')
                 expect(mountedWrapper.vm.register).toHaveBeenCalledTimes(1)
+            })
+
+            it('is NOT called when the form is submitted with NO data', async () => {
+                mountedWrapper.vm.register = jest.fn()
+                expect(mountedWrapper.vm.register).toHaveBeenCalledTimes(0)
+                await mountedWrapper.get('form').trigger('submit')
+                expect(mountedWrapper.vm.register).toHaveBeenCalledTimes(0)
             })
 
             it('sets "isLoading" to true', async () => {
@@ -157,8 +170,7 @@ describe('Registration From', () => {
                     email: '',
                     first_name: '',
                     last_name: '',
-                    password_1: '',
-                    password_2: '',
+                    password: '',
                 })
             })
 
@@ -199,22 +211,22 @@ describe('Registration From', () => {
             it('can set a single error and the component state updates correctly', () => {
                 expect(shallowWrapper.vm.errors).toStrictEqual({})
                 const ERROR = {
-                    'first_name': [constants.django.errors.blank],
+                    'first_name': [constants.django.errors.max_30_char],
                 }
                 shallowWrapper.vm.setErrors(ERROR)
                 expect(shallowWrapper.vm.errors).toStrictEqual({
-                    'first_name': i18n.t('pages.register.errors.blank'),
+                    'first_name': i18n.t('pages.register.errors.max_30_char'),
                 })
             })
 
             it('can set a multiple errors', () => {
                 expect(shallowWrapper.vm.errors).toStrictEqual({})
                 const ERRORS = {
-                    'first_name': [constants.django.errors.blank, constants.django.errors.max_30_char],
+                    'first_name': [constants.django.errors.max_30_char, constants.django.errors.max_128_char],
                 }
                 shallowWrapper.vm.setErrors(ERRORS)
                 expect(shallowWrapper.vm.errors).toStrictEqual({
-                    'first_name': `${i18n.t('pages.register.errors.blank')}. ${i18n.t('pages.register.errors.max_30_char')}`,
+                    'first_name': `${i18n.t('pages.register.errors.max_30_char')}. ${i18n.t('pages.register.errors.max_128_char')}`,
                 })
             })
 
@@ -231,58 +243,95 @@ describe('Registration From', () => {
             it('"username" key is translated to "email"', () => {
                 expect(shallowWrapper.vm.errors).toStrictEqual({})
                 const ERROR = {
-                    'username': [constants.django.errors.blank],
+                    'username': [constants.django.errors.max_30_char],
                 }
                 shallowWrapper.vm.setErrors(ERROR)
                 expect(shallowWrapper.vm.errors).toStrictEqual({
-                    'email': i18n.t('pages.register.errors.blank'),
+                    'email': i18n.t('pages.register.errors.max_30_char'),
                 })
+            })
+        })
+
+        describe('validateInput()', () => {
+            it('is a function', () => {
+                expect(typeof mountedWrapper.vm.validateInput).toBe('function')
+            })
+
+            it('errors are displayed correctly', async () => {
+                await mountedWrapper.setData({
+                    form: {
+                        password: '01234567',
+                    },
+                })
+                await mountedWrapper.get('form').trigger('submit')
+                const element = mountedWrapper.find('[data-test=password]')
+                expect(element).toMatchSnapshot()
+            })
+
+            describe('returns correct error message when', () => {
+                describe('password', () => {
+                    it('is below 8 char', () => {
+                        const ERROR_MESSAGE = mountedWrapper.vm.validateInput({
+                            TYPE: 'password',
+                            VALUE: '012345a',
+                        })
+                        expect(ERROR_MESSAGE).toBe(messages['en-us'].pages.register.errors.password_min_8_char)
+                    })
+
+                    it('does not contain a non-numeric character', () => {
+                        const ERROR_MESSAGE = mountedWrapper.vm.validateInput({
+                            TYPE: 'password',
+                            VALUE: '01234567',
+                        })
+                        expect(ERROR_MESSAGE).toBe(messages['en-us'].pages.register.errors.password_entirely_numeric)
+                    })
+                })
+            })
+
+            it('returns default error message', () => {
+                const ERROR_MESSAGE = mountedWrapper.vm.validateInput({
+                    TYPE: 'random string',
+                    VALUE: '01234567',
+                })
+                expect(ERROR_MESSAGE).toBe(messages['en-us'].pages.register.errors.field_contains_errors)
             })
         })
     })
 
     describe('state correctly updates when user enters data for', () => {
         beforeEach(() => {
-            expect(mountedWrapper.vm.first_name).toBe('')
-            expect(mountedWrapper.vm.last_name).toBe('')
-            expect(mountedWrapper.vm.email).toBe('')
-            expect(mountedWrapper.vm.password_1).toBe('')
-            expect(mountedWrapper.vm.password_2).toBe('')
+            expect(mountedWrapper.vm.form.first_name).toBe('')
+            expect(mountedWrapper.vm.form.last_name).toBe('')
+            expect(mountedWrapper.vm.form.email).toBe('')
+            expect(mountedWrapper.vm.form.password).toBe('')
         })
 
         it('first name form field', () => {
             const VALUE = 'John'
             const INPUT_FIELD = mountedWrapper.find('[data-test=firstName] input')
             INPUT_FIELD.setValue(VALUE)
-            expect(mountedWrapper.vm.first_name).toBe(VALUE)
+            expect(mountedWrapper.vm.form.first_name).toBe(VALUE)
         })
 
         it('last name form field', () => {
             const VALUE = 'Moore'
             const INPUT_FIELD = mountedWrapper.find('[data-test=lastName] input')
             INPUT_FIELD.setValue(VALUE)
-            expect(mountedWrapper.vm.last_name).toBe(VALUE)
+            expect(mountedWrapper.vm.form.last_name).toBe(VALUE)
         })
 
         it('email form field', () => {
             const VALUE = 'test@test.com'
             const INPUT_FIELD = mountedWrapper.find('[data-test=email] input')
             INPUT_FIELD.setValue(VALUE)
-            expect(mountedWrapper.vm.email).toBe(VALUE)
+            expect(mountedWrapper.vm.form.email).toBe(VALUE)
         })
 
         it('password form field', () => {
             const VALUE = 'password123'
-            const INPUT_FIELD = mountedWrapper.find('[data-test=password_1] input')
+            const INPUT_FIELD = mountedWrapper.find('[data-test=password] input')
             INPUT_FIELD.setValue(VALUE)
-            expect(mountedWrapper.vm.password_1).toBe(VALUE)
-        })
-
-        it('confirm password form field', () => {
-            const VALUE = 'password1234'
-            const INPUT_FIELD = mountedWrapper.find('[data-test=password_2] input')
-            INPUT_FIELD.setValue(VALUE)
-            expect(mountedWrapper.vm.password_2).toBe(VALUE)
+            expect(mountedWrapper.vm.form.password).toBe(VALUE)
         })
     })
 
@@ -305,10 +354,6 @@ describe('Registration From', () => {
 
         it('constants.django.errors.invalid_email', () => {
             expect(constants.django.errors.invalid_email).toBeTruthy()
-        })
-
-        it('constants.django.errors.password_mismatch', () => {
-            expect(constants.django.errors.password_mismatch).toBeTruthy()
         })
 
         it('constants.django.errors.password_min_8_char', () => {
@@ -347,10 +392,6 @@ describe('Registration From', () => {
 
         it('pages.register.errors.invalid_email', () => {
             expect(messages['en-us'].pages.register.errors.invalid_email).not.toBeUndefined()
-        })
-
-        it('pages.register.errors.password_mismatch', () => {
-            expect(messages['en-us'].pages.register.errors.password_mismatch).not.toBeUndefined()
         })
 
         it('pages.register.errors.password_min_8_char', () => {

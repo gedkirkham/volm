@@ -18,8 +18,7 @@ const PAY_LOAD = {
     email: 'test@test.com',
     first_name: 'John',
     last_name: 'Moore',
-    password_1: 'password123',
-    password_2: 'password1234',
+    password: 'password123',
 }
 
 describe('api/auth.js ', () => {
@@ -51,8 +50,7 @@ describe('api/auth.js ', () => {
                 email: PAY_LOAD.email,
                 first_name: PAY_LOAD.first_name,
                 last_name: PAY_LOAD.last_name,
-                password: PAY_LOAD.password_1,
-                password_2: PAY_LOAD.password_2,
+                password: PAY_LOAD.password,
                 username: PAY_LOAD.email,
             })
         })
