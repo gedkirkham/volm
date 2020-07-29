@@ -79,7 +79,10 @@ context('Registration', () => {
             cy.populateRegistrationForm(CURRENT_DATE)
         })
 
-        afterEach(() => {
+        it('by clicking the submit button', () => {
+            cy.registrationSubmitButton()
+                .click()
+
             cy.wait('@registerApi')
                 .then(xhr => {
                     assert.strictEqual(xhr.status, 201)
@@ -89,20 +92,32 @@ context('Registration', () => {
                 .should('eq', '#/auth/confirm_email')
         })
 
-        it('by clicking the submit button', () => {
-            cy.registrationSubmitButton()
-                .click()
-        })
-
         it('by clicking "Enter" on the keyboard', () => {
             cy.registrationPasswordInput()
                 .type('{enter}')
+
+            cy.wait('@registerApi')
+                .then(xhr => {
+                    assert.strictEqual(xhr.status, 201)
+                })
+
+            cy.hash()
+                .should('eq', '#/auth/confirm_email')
         })
 
         describe('if FirstName', () => {
-            it('is empty string', () => {
+            it('is an empty string', () => {
                 cy.registrationFirstNameInput()
                     .clear()
+                    .type('{enter}')
+
+                cy.wait('@registerApi')
+                    .then(xhr => {
+                        assert.strictEqual(xhr.status, 201)
+                    })
+
+                cy.hash()
+                    .should('eq', '#/auth/confirm_email')
             })
 
             it('is just under character limit', () => {
@@ -110,6 +125,14 @@ context('Registration', () => {
                     .clear()
                     .type(`${constants.FIRST_NAME_30_CHAR}{enter}`)
                     .should('have.value', constants.FIRST_NAME_30_CHAR)
+
+                cy.wait('@registerApi')
+                    .then(xhr => {
+                        assert.strictEqual(xhr.status, 201)
+                    })
+
+                cy.hash()
+                    .should('eq', '#/auth/confirm_email')
             })
         })
 
@@ -117,6 +140,15 @@ context('Registration', () => {
             it('is an empty string', () => {
                 cy.registrationLastNameInput()
                     .clear()
+                    .type('{enter}')
+
+                cy.wait('@registerApi')
+                    .then(xhr => {
+                        assert.strictEqual(xhr.status, 201)
+                    })
+
+                cy.hash()
+                    .should('eq', '#/auth/confirm_email')
             })
 
             it('is just under character limit', () => {
@@ -124,6 +156,14 @@ context('Registration', () => {
                     .clear()
                     .type(`${constants.LAST_NAME_150_CHAR}{enter}`)
                     .should('have.value', constants.LAST_NAME_150_CHAR)
+
+                cy.wait('@registerApi')
+                    .then(xhr => {
+                        assert.strictEqual(xhr.status, 201)
+                    })
+
+                cy.hash()
+                    .should('eq', '#/auth/confirm_email')
             })
         })
 
@@ -134,10 +174,26 @@ context('Registration', () => {
                 .clear()
                 .type(`${NOW}${constants.EMAIL_150_CHAR}{enter}`)
                 .should('have.value', NOW + constants.EMAIL_150_CHAR)
+
+            cy.wait('@registerApi')
+                .then(xhr => {
+                    assert.strictEqual(xhr.status, 201)
+                })
+
+            cy.hash()
+                .should('eq', '#/auth/confirm_email')
         })
 
         it('if Password is just under character limit', () => {
             cy.registrationPasswordInputValue(constants.PASSWORD_128_CHAR)
+
+            cy.wait('@registerApi')
+                .then(xhr => {
+                    assert.strictEqual(xhr.status, 201)
+                })
+
+            cy.hash()
+                .should('eq', '#/auth/confirm_email')
         })
     })
 
