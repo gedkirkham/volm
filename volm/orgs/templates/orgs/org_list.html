@@ -1,0 +1,23 @@
+{% extends 'orgs/org_base.html' %}
+
+{% block org_content %}
+    {% for org in object_list %}
+        <section>
+            <header>
+                <h1>
+                    <a href="{% url 'orgs:org_detail' pk=org.pk %}">
+                        {{ org.name }}
+                    </a>
+                </h1>
+            </header>
+
+            {% if org.published %}
+            <div>
+                <p>
+                    Published on: {{ org.published|date:"D M Y" }}
+                </p>
+            </div>
+            {% endif %}
+        </section>
+    {% endfor %}
+{% endblock %}

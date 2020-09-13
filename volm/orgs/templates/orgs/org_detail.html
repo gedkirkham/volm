@@ -1,0 +1,34 @@
+{% extends 'orgs/org_base.html' %}
+
+{% block preorg %}
+    <section>
+        <header>
+            <h1>
+                {{ org.name|safe|linebreaksbr }}
+            </h1>
+        </header>
+{% endblock %}
+
+{% block org_content %}
+        <p>
+            {{ org.long_bio }}
+        </p>
+
+        {% if org.published %}
+            Published on: {{ org.published|date:"D M Y" }}
+        {% else %}
+            {% if user.is_authenticated %}
+                <button>
+                    <a href="{% url 'orgs:org_publish' pk=org.pk %}">Publish</a>
+                </button>
+            {% endif %}
+        {% endif %}
+{% endblock %}
+
+{% block postorg %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'orgs:org_update' pk=org.pk %}">Update</a>
+            <a href="{% url 'orgs:org_delete' pk=org.pk %}">Delete</a>
+        {% endif %}
+    </section>
+{% endblock %}

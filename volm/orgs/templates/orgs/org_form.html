@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Create a new organisation:</h2>
+
+    <form 
+        action="{% url 'orgs:org_new' %}"
+        method="POST"
+    >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button 
+            type="submit"
+            href="{% url 'orgs:org_new' %}"
+        >
+            Create
+        </button>
+    </form>
+{% endblock %}

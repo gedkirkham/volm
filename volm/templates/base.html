@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Volm</title>
+
+        <link rel="stylesheet" href="{% static 'volm/css/master.css' %}" />
+    </head>
+
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'home' %}">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'orgs:org_list' %}">
+                        Organisations
+                    </a>
+                </li>
+            </ul>
+
+            <ul>
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="{% url 'orgs:org_new' %}">
+                        New Org
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'orgs:org_list' %}">
+                        My Org's
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'orgs:org_drafts' %}">
+                        Draft Org's
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'accounts:logout' %}">
+                        Log Out
+                    </a>
+                </li>
+                <li>
+                    Welcome {{ user.username }}
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'login' %}">
+                        Log-in
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </body>
+</html>
