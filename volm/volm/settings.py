@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'orgs',
+    'tailwind',
+    'theme',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +127,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = 'test'
 LOGOUT_REDIRECT_URL = 'thanks'
+
+TAILWIND_APP_NAME = 'theme'
