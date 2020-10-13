@@ -6,7 +6,7 @@ module.exports = {
     '../../templates/**/*.html',
   ],
   target: 'relaxed',
-  prefix: '',
+  prefix: 'tw-',
   important: false,
   separator: ':',
   theme: {
