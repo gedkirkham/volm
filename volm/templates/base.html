@@ -19,42 +19,63 @@
     </head>
 
     <body class="tw-container tw-mx-auto">
-        <nav class="tw-h-16 tw-py-4 tw-mb-16">
+        <nav class="tw-py-4 tw-mb-16">
             <ul>
-                <li class="tw-inline tw-p-4 tw-pl-0 tw-text-4xl">
-                    <a href="{% url 'home' %}">
+                <li class="tw-inline">
+                    <a 
+                        class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        href="{% url 'home' %}"
+                    >
                         Volm
                     </a>
                 </li>
-                <li class="tw-inline tw-p-4">
-                    <a href="{% url 'home' %}">
+                <li class="tw-inline">
+                    <a 
+                        class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        href="{% url 'home' %}"
+                    >
                         Home
                     </a>
                 </li>
-                <li class="tw-inline tw-p-4">
-                    <a href="{% url 'orgs:org_list' %}">
+                <li class="tw-inline">
+                    <a 
+                        class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        href="{% url 'orgs:org_list' %}"
+                    >
                         Organisations
                     </a>
                 </li>
 
                 {% if user.is_authenticated %}
-                    <li class="tw-inline tw-p-4">
-                        <a href="{% url 'orgs:org_new' %}">
+                    <li class="tw-inline">
+                        <a 
+                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            href="{% url 'orgs:org_new' %}"
+                        >
                             New Org
                         </a>
                     </li>
-                    <li class="tw-inline tw-p-4">
-                        <a href="{% url 'orgs:org_list' %}">
+                    <li class="tw-inline">
+                        <a 
+                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            href="{% url 'orgs:org_list' %}"
+                        >
                             My Org's
                         </a>
                     </li>
-                    <li class="tw-inline tw-p-4">
-                        <a href="{% url 'orgs:org_drafts' %}">
+                    <li class="tw-inline">
+                        <a 
+                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            href="{% url 'orgs:org_drafts' %}"
+                        >
                             Draft Org's
                         </a>
                     </li>
-                    <li class="tw-inline tw-p-4">
-                        <a href="{% url 'accounts:logout' %}">
+                    <li class="tw-inline">
+                        <a 
+                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            href="{% url 'accounts:logout' %}"
+                        >
                             Log Out
                         </a>
                     </li>
@@ -62,11 +83,14 @@
                         Welcome {{ user.username }}
                     </li>
                 {% else %}
-                        <li class="tw-inline tw-p-4 tw-float-right">
-                            <a href="{% url 'login' %}">
-                                Log-in
-                            </a>
-                        </li>
+                    <li class="tw-inline tw-float-right">
+                        <a 
+                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            href="{% url 'login' %}"
+                        >
+                            Log-in
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </nav>
