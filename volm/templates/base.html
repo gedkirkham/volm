@@ -7,55 +7,66 @@
         <meta charset="utf-8">
         <title>Volm</title>
 
-        <link rel="stylesheet" href="{% static 'volm/css/master.css' %}" />
+        <link
+            rel="stylesheet"
+            href="{% static 'css/styles.css' %}"
+            type="text/css"
+        />
+        <link 
+            rel="stylesheet" 
+            href="{% static 'volm/css/master.css' %}" 
+        />
     </head>
 
-    <body>
-        <nav>
+    <body class="tw-container tw-mx-auto">
+        <nav class="tw-h-16 tw-py-4 tw-mb-16">
             <ul>
-                <li>
+                <li class="tw-inline tw-p-4 tw-pl-0 tw-text-4xl">
+                    <a href="{% url 'home' %}">
+                        Volm
+                    </a>
+                </li>
+                <li class="tw-inline tw-p-4">
                     <a href="{% url 'home' %}">
                         Home
                     </a>
                 </li>
-                <li>
+                <li class="tw-inline tw-p-4">
                     <a href="{% url 'orgs:org_list' %}">
                         Organisations
                     </a>
                 </li>
-            </ul>
 
-            <ul>
                 {% if user.is_authenticated %}
-                <li>
-                    <a href="{% url 'orgs:org_new' %}">
-                        New Org
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'orgs:org_list' %}">
-                        My Org's
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'orgs:org_drafts' %}">
-                        Draft Org's
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'accounts:logout' %}">
-                        Log Out
-                    </a>
-                </li>
-                <li>
-                    Welcome {{ user.username }}
-                </li>
+                    <li class="tw-inline tw-p-4">
+                        <a href="{% url 'orgs:org_new' %}">
+                            New Org
+                        </a>
+                    </li>
+                    <li class="tw-inline tw-p-4">
+                        <a href="{% url 'orgs:org_list' %}">
+                            My Org's
+                        </a>
+                    </li>
+                    <li class="tw-inline tw-p-4">
+                        <a href="{% url 'orgs:org_drafts' %}">
+                            Draft Org's
+                        </a>
+                    </li>
+                    <li class="tw-inline tw-p-4">
+                        <a href="{% url 'accounts:logout' %}">
+                            Log Out
+                        </a>
+                    </li>
+                    <li class="tw-inline tw-p-4">
+                        Welcome {{ user.username }}
+                    </li>
                 {% else %}
-                <li>
-                    <a href="{% url 'login' %}">
-                        Log-in
-                    </a>
-                </li>
+                        <li class="tw-inline tw-p-4 tw-float-right">
+                            <a href="{% url 'login' %}">
+                                Log-in
+                            </a>
+                        </li>
                 {% endif %}
             </ul>
         </nav>
