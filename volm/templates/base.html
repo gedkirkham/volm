@@ -20,10 +20,10 @@
 
     <body class="tw-container tw-mx-auto">
         <nav class="tw-mb-16">
-            <ul class="tw-py-4">
+            <ul class="tw-py-4 tw-text-3xl">
                 <li class="tw-inline">
                     <a 
-                        class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        class="tw-rounded tw-p-4 hover:tw-bg-yellow-300"
                         href="{% url 'home' %}"
                     >
                         Volm
@@ -31,7 +31,7 @@
                 </li>
                 <li class="tw-inline">
                     <a 
-                        class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        class="tw-rounded tw-p-4 hover:tw-bg-yellow-300"
                         href="{% url 'home' %}"
                     >
                         Home
@@ -39,7 +39,7 @@
                 </li>
                 <li class="tw-inline">
                     <a 
-                        class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        class="tw-rounded tw-p-4 hover:tw-bg-yellow-300"
                         href="{% url 'orgs:org_list' %}"
                     >
                         Organisations
@@ -49,7 +49,7 @@
                 {% if user.is_authenticated %}
                     <li class="tw-inline">
                         <a 
-                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-300"
                             href="{% url 'orgs:org_new' %}"
                         >
                             New Org
@@ -57,7 +57,7 @@
                     </li>
                     <li class="tw-inline">
                         <a 
-                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-300"
                             href="{% url 'orgs:org_list' %}"
                         >
                             My Org's
@@ -65,7 +65,7 @@
                     </li>
                     <li class="tw-inline">
                         <a 
-                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-300"
                             href="{% url 'orgs:org_drafts' %}"
                         >
                             Draft Org's
@@ -73,7 +73,7 @@
                     </li>
                     <li class="tw-inline">
                         <a 
-                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-300"
                             href="{% url 'accounts:logout' %}"
                         >
                             Log Out
@@ -85,7 +85,7 @@
                 {% else %}
                     <li class="tw-inline tw-float-right">
                         <a 
-                            class="hover:tw-border-blue-500 tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-300"
                             href="{% url 'login' %}"
                         >
                             Log-in
@@ -94,7 +94,7 @@
                 {% endif %}
             </ul>
 
-            <hr />
+            <hr class="tw-bg-yellow-300 tw-h-1" />
         </nav>
 
         <main>
