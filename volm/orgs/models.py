@@ -24,6 +24,7 @@ class Org(models.Model):
     published = models.DateTimeField(null=True)
     slug = models.SlugField(allow_unicode=True, unique=True)
     short_bio = models.CharField(max_length=1000)
+    tags = models.ManyToManyField('OrgTags', related_name='tags', null=True)
     tag_line = models.CharField(max_length=100)
     objects = OrgManager()
 
@@ -47,6 +48,17 @@ class Org(models.Model):
 class OrgMembers(models.Model):
     org = models.ForeignKey('Org', on_delete=models.CASCADE, related_name='memberships')
     user = models.ManyToManyField(User, related_name="users_orgs")
+
+class OrgTags(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    created = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        verbose_name_plural = 'OrgTags'
+
+    def __str__(self):
+        return self.name
 
 def org_directory_path(instance, filename):
     org = Org.objects.filter(user_profile=instance.user.id)
