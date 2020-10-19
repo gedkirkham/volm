@@ -24,7 +24,7 @@ class Org(models.Model):
     published = models.DateTimeField(null=True)
     slug = models.SlugField(allow_unicode=True, unique=True)
     short_bio = models.CharField(max_length=1000)
-    tags = models.ManyToManyField('OrgTags', related_name='tags', null=True)
+    tags = models.ManyToManyField('OrgTags', related_name='tags')
     tag_line = models.CharField(max_length=100)
     objects = OrgManager()
 
