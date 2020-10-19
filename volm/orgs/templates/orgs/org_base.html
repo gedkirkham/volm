@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 
-{% block content %}
-    {% block preorg %}{% endblock %}
-    {% block org_content %}{% endblock %}
-    {% block postorg %}{% endblock %}
-{% endblock %}
+<section>
+    {% block content %}
+        <header>
+            {% block preorg %}{% endblock %}
+        </header>
+
+        {% block org_content %}{% endblock %}
+
+        <footer>
+            {% block postorg %}{% endblock %}
+        </footer>
+    {% endblock %}
+</section>
