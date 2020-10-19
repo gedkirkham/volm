@@ -1,34 +1,39 @@
 {% extends 'orgs/org_base.html' %}
 
 {% block preorg %}
-    <section>
-        <header>
-            <h1>
-                {{ org.name|safe|linebreaksbr }}
-            </h1>
-        </header>
-{% endblock %}
+    <h1>
+        {{ org.name|safe|linebreaksbr }}
+    </h1>
+
+    <hr />
+{% endblock preorg %}
 
 {% block org_content %}
-        <p>
-            {{ org.long_bio }}
-        </p>
-
-        {% if org.published %}
-            Published on: {{ org.published|date:"D M Y" }}
-        {% else %}
-            {% if user.is_authenticated %}
-                <button>
-                    <a href="{% url 'orgs:org_publish' pk=org.pk %}">Publish</a>
-                </button>
-            {% endif %}
-        {% endif %}
-{% endblock %}
+    <p class="tw-text-gray-700">
+        {{ org.long_bio }}
+    </p>
+{% endblock org_content %}
 
 {% block postorg %}
+    {% if not org.published %}
+        <p>
+            Published on: {{ org.published|date:"D M Y" }}
+        </p>
+    {% else %}
         {% if user.is_authenticated %}
-            <a href="{% url 'orgs:org_update' pk=org.pk %}">Update</a>
-            <a href="{% url 'orgs:org_delete' pk=org.pk %}">Delete</a>
+            <button class="tw-block">
+                <a href="{% url 'orgs:org_publish' pk=org.pk %}">Publish</a>
+            </button>
         {% endif %}
-    </section>
-{% endblock %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <button class="tw-block tw_neutral_button">
+            <a href="{% url 'orgs:org_update' pk=org.pk %}">Update</a>
+        </button>
+
+        <button class="tw-block">
+            <a href="{% url 'orgs:org_delete' pk=org.pk %}">Delete</a>
+        </button>
+    {% endif %}
+{% endblock postorg %}
