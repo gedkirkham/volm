@@ -9,4 +9,10 @@
     .tw_neutral_button:hover {
         @apply tw-bg-opacity-75 tw-text-gray-700;
     }
+    .tw_danger_button {
+        @apply tw-bg-red-500 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded;
+    }
+    .tw_danger_button:hover {
+        @apply tw-bg-opacity-75;
+    }
 }

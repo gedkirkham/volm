@@ -1,7 +1,7 @@
 {% extends 'orgs/org_base.html' %}
 
 {% block preorg %}
-    <h1>
+    <h1 class="tw-text-5xl">
         {{ org.name|safe|linebreaksbr }}
     </h1>
 
@@ -9,7 +9,7 @@
 {% endblock preorg %}
 
 {% block org_content %}
-    <p class="tw-text-gray-700">
+    <p class="tw-text-gray-700 tw-my-8">
         {{ org.long_bio }}
     </p>
 {% endblock org_content %}
@@ -21,19 +21,23 @@
         </p>
     {% else %}
         {% if user.is_authenticated %}
-            <button class="tw-block">
+            <button class="tw-inline-block tw_neutral_button">
                 <a href="{% url 'orgs:org_publish' pk=org.pk %}">Publish</a>
             </button>
         {% endif %}
     {% endif %}
 
     {% if user.is_authenticated %}
-        <button class="tw-block tw_neutral_button">
-            <a href="{% url 'orgs:org_update' pk=org.pk %}">Update</a>
+        <button class="tw-inline-block tw_neutral_button">
+            <a href="{% url 'orgs:org_update' pk=org.pk %}">
+                Update
+            </a>
         </button>
 
-        <button class="tw-block">
-            <a href="{% url 'orgs:org_delete' pk=org.pk %}">Delete</a>
+        <button class="tw-inline-block tw_danger_button">
+            <a href="{% url 'orgs:org_delete' pk=org.pk %}">
+                Delete
+            </a>
         </button>
     {% endif %}
 {% endblock postorg %}
