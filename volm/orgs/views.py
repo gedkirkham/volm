@@ -38,6 +38,7 @@ class OrgListView(ListView):
 
 class OrgUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
+    template_name = 'orgs/org_update.html'
     redirect_field_name = 'orgs/org_detail.html'
     model = Org
     form_class = OrgForm
