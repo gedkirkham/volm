@@ -22,7 +22,9 @@
     {% else %}
         {% if user.is_authenticated %}
             <button class="tw-inline-block tw_neutral_button">
-                <a href="{% url 'orgs:org_publish' pk=org.pk %}">Publish</a>
+                <a href="{% url 'orgs:org_publish' pk=org.pk %}">
+                    Publish
+                </a>
             </button>
         {% endif %}
     {% endif %}
