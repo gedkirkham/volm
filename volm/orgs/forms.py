@@ -2,8 +2,8 @@ from django import forms
 from .models import Org
 
 class OrgForm(forms.ModelForm):
-    error_css_class = 'tw-bg-red-500'
-    required_css_class = 'tw-bg-yellow-500'
+    error_css_class = 'tw-text-red-500'
+    required_css_class = 'tw-bg-blue-500'
 
     class Meta():
         model = Org
