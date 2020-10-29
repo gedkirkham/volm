@@ -10,17 +10,28 @@
             <hr />
 
             <div class="tw-my-8">
-                {% for field in form %}
+                
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+
+                {% for field in form.visible_fields %}
+
                     {{ field.errors }}
+                    
                     <label 
                         for="{{ field.id_for_label }}"
                         class="tw-text-gray-800"
                     >
                         {{ field.label }}:
                     </label>
+
                     {{ field }}
+                    
                     {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
+                        <p>
+                            {{ field.help_text|safe }}
+                        </p>
                     {% endif %}
                 {% endfor %}
             </div>
