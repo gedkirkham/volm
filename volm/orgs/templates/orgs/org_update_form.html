@@ -1,7 +1,9 @@
 {% extends 'orgs/org_base.html' %}
 
 {% block org_content %}
-    <form>
+    <form method="POST">
+        {% csrf_token %}
+        
         <fieldset>
             <legend class="tw-text-3xl">
                 Update:
