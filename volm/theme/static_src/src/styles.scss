@@ -15,4 +15,10 @@
     .tw_danger_button:hover {
         @apply tw-bg-opacity-75;
     }
+    .tw_input {
+        @apply tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-mb-3 tw-leading-tight;
+    }
+    .tw_input:focus {
+        @apply tw-outline-none tw-shadow-outline;
+    }
 }
