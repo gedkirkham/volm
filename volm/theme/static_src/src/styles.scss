@@ -4,21 +4,30 @@
 
 @layer components {
     .tw_neutral_button {
-        @apply tw-bg-yellow-500 tw-text-gray-900 tw-font-bold tw-py-2 tw-px-4 tw-rounded;
+        @apply tw-bg-orange-500 tw-text-white tw-font-bold tw-rounded;
     }
     .tw_neutral_button:hover {
         @apply tw-bg-opacity-75 tw-text-gray-700;
     }
     .tw_danger_button {
-        @apply tw-bg-red-500 tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded;
+        @apply tw-bg-red-500 tw-text-white tw-font-bold tw-rounded;
     }
     .tw_danger_button:hover {
         @apply tw-bg-opacity-75;
     }
     .tw_input {
-        @apply tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-mb-3 tw-leading-tight;
+        @apply tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-leading-tight;
     }
     .tw_input:focus {
         @apply tw-outline-none tw-shadow-outline;
+    }
+    .tw_button_anchor {
+        @apply tw-inline-block tw-py-2 tw-px-4;
+    }
+    .tw_main_nav_a {
+        @apply tw-rounded tw-p-4;
+    }
+    .tw_main_nav_a:hover {
+        @apply tw-bg-orange-500 tw-text-white;
     }
 }

@@ -22,7 +22,10 @@
     {% else %}
         {% if user.is_authenticated %}
             <button class="tw-inline-block tw_neutral_button">
-                <a href="{% url 'orgs:org_publish' pk=org.pk %}">
+                <a
+                    class="tw_button_anchor"
+                    href="{% url 'orgs:org_publish' pk=org.pk %}"
+                >
                     Publish
                 </a>
             </button>
@@ -31,13 +34,19 @@
 
     {% if user.is_authenticated %}
         <button class="tw-inline-block tw_neutral_button">
-            <a href="{% url 'orgs:org_update' pk=org.pk %}">
+            <a
+                class="tw_button_anchor" 
+                href="{% url 'orgs:org_update' pk=org.pk %}"
+            >
                 Update
             </a>
         </button>
 
         <button class="tw-inline-block tw_danger_button">
-            <a href="{% url 'orgs:org_delete' pk=org.pk %}">
+            <a 
+                class="tw_button_anchor"
+                href="{% url 'orgs:org_delete' pk=org.pk %}"
+            >
                 Delete
             </a>
         </button>

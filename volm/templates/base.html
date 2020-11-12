@@ -23,7 +23,7 @@
             <ul class="tw-py-4 tw-text-3xl">
                 <li class="tw-inline">
                     <a 
-                        class="tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        class="tw_main_nav_a"
                         href="{% url 'home' %}"
                     >
                         Volm
@@ -31,7 +31,7 @@
                 </li>
                 <li class="tw-inline">
                     <a 
-                        class="tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        class="tw_main_nav_a"
                         href="{% url 'home' %}"
                     >
                         Home
@@ -39,7 +39,7 @@
                 </li>
                 <li class="tw-inline">
                     <a 
-                        class="tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                        class="tw_main_nav_a"
                         href="{% url 'orgs:org_list' %}"
                     >
                         Organisations
@@ -49,7 +49,7 @@
                 {% if user.is_authenticated %}
                     <li class="tw-inline">
                         <a 
-                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw_main_nav_a"
                             href="{% url 'orgs:org_new' %}"
                         >
                             New Org
@@ -57,7 +57,7 @@
                     </li>
                     <li class="tw-inline">
                         <a 
-                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw_main_nav_a"
                             href="{% url 'orgs:org_list' %}"
                         >
                             My Org's
@@ -65,7 +65,7 @@
                     </li>
                     <li class="tw-inline">
                         <a 
-                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw_main_nav_a"
                             href="{% url 'orgs:org_drafts' %}"
                         >
                             Draft Org's
@@ -73,19 +73,19 @@
                     </li>
                     <li class="tw-inline">
                         <a 
-                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw_main_nav_a"
                             href="{% url 'accounts:logout' %}"
                         >
                             Log Out
                         </a>
                     </li>
-                    <li class="tw-inline tw-p-4">
+                    <li class="tw-inline-block tw-p-4">
                         Welcome {{ user.username }}
                     </li>
                 {% else %}
                     <li class="tw-inline tw-float-right">
                         <a 
-                            class="tw-rounded tw-p-4 hover:tw-bg-yellow-500"
+                            class="tw_main_nav_a"
                             href="{% url 'login' %}"
                         >
                             Log-in
@@ -94,7 +94,7 @@
                 {% endif %}
             </ul>
 
-            <hr class="tw-bg-yellow-500 tw-h-1" />
+            <hr />
         </nav>
 
         <main>
