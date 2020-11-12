@@ -1,9 +1,12 @@
 {% extends 'orgs/org_base.html' %}
 
 {% block org_content %}
-    <form method="POST">
+    <form 
+        enctype="multipart/form-data"
+        method="POST" 
+    >
         {% csrf_token %}
-        
+
         <fieldset>
             <legend class="tw-text-3xl">
                 Update:
@@ -11,37 +14,43 @@
 
             <hr />
 
-            <div class="tw-my-8">
+            <div class="tw-divide-y-2">
                 
                 {% for hidden in form.hidden_fields %}
                     {{ hidden }}
                 {% endfor %}
 
                 {% for field in form.visible_fields %}
+                    <div class="tw-py-8">
 
-                    {{ field.errors }}
-                    
-                    <label 
-                        for="{{ field.id_for_label }}"
-                        class="tw-text-gray-800"
-                    >
-                        {{ field.label }}:
-                    </label>
+                        <label 
+                            for="{{ field.id_for_label }}"
+                            class="tw-text-gray-800 tw-text-xl tw-block"
+                        >
+                            {{ field.label }}:
+                        </label>
 
-                    {{ field }}
-                    
-                    {% if field.help_text %}
-                        <p>
-                            {{ field.help_text|safe }}
-                        </p>
-                    {% endif %}
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <p class="tw-text-gray-600">
+                                {{ field.help_text|safe }}
+                            </p>
+                        {% endif %}
+
+                        {% for err in field.errors %}
+                            <p class="tw-text-red-600">
+                                {{ err }}
+                            </p>
+                        {% endfor %}
+                    </div>
                 {% endfor %}
             </div>
 
             {{ form.non_field_errors }}
 
             <button 
-                class="tw_neutral_button"
+                class="tw_neutral_button tw_button_anchor"
                 type="submit"
             >
                 SUBMIT
