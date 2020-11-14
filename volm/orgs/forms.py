@@ -1,18 +1,35 @@
 from django import forms
 from .models import Org
+from django.utils.translation import gettext_lazy as _
 
 class OrgForm(forms.ModelForm):
-    error_css_class = 'tw-text-red-500'
-    required_css_class = 'tw-bg-blue-500'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['active'].widget.attrs.update({ 'class': 'tw-shadow tw-border tw-block' })
+        self.fields['banner_image'].widget.attrs.update({ 'class': 'tw-block' })
+        self.fields['charity_id'].widget.attrs.update({ 'class': 'tw_input' })
+        self.fields['tag_line'].widget.attrs.update({ 'class': 'tw_input' })
+        self.fields['name'].widget.attrs.update({ 'class': 'tw_input' })
 
     class Meta():
         model = Org
-        fields = ('charity_id', 'short_bio', 'long_bio', 'tag_line', 'name')
-        widgets = {
-            'charity_id': forms.TextInput(attrs={'class': 'tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-mb-3 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline'}),
-            'short_bio': forms.TextInput(attrs={'class': 'tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-mb-3 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline'}),
-            'long_bio': forms.TextInput(attrs={'class': 'tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-mb-3 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline'}),
-            'tag_line': forms.TextInput(attrs={'class': 'tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-mb-3 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline'}),
-            'name': forms.TextInput(attrs={'class': 'tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-700 tw-mb-3 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline'}),
+        fields = ['active', 'banner_image', 'charity_id', 'logo', 'long_bio', 'members', 'name', 'short_bio', 'tags', 'tag_line']
+
+        help_texts = {
+            'active': _('If the charity is active, it is visible to the public'),
+            'banner_image': _('Must be 250px x 700px'),
+            'charity_id': _('The registered charity ID'),
+            'logo': _('Must be 250px x 250px'),
+            'long_bio': _('Displayed on the charities details page'),
+            'name': _('The charities name'),
+            'members': _('Select the working members of the charity'),
+            'short_bio': _('Displayed in the pages listing'),
+            'tags': _('Words to identify the charity'),
+            'tag_line': _('A catchy tag line that will is displayed under the charities name'),
         }
-        
+
+        widgets = {
+            'short_bio': forms.Textarea(attrs={'class': 'tw_input'}),
+            'long_bio': forms.Textarea(attrs={'class': 'tw_input'}),
+        }

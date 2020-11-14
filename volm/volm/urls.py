@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.auth import urls as auth_urls
+from django.conf.urls.static import static
 from django.urls import path, include
 from .views import HomePage, ThanksPage, TestPage
+from volm import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +28,5 @@ urlpatterns = [
     path('orgs/', include('orgs.urls', namespace='orgs')),
     path('thanks/', ThanksPage.as_view(), name='thanks'),
     path('test/', TestPage.as_view(), name='test'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ 
