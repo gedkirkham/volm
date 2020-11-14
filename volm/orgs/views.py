@@ -11,7 +11,8 @@ class OrgCreateView(CreateView, LoginRequiredMixin):
     redirect_field_name = 'orgs/org_detail.html'
     model = Org
     form_class = OrgForm
-
+    template_name_suffix = '_update_create_form'
+    
 class OrgDetailView(DetailView):
     model = Org
     template_name = 'orgs/org_detail.html'
@@ -38,7 +39,7 @@ class OrgListView(ListView):
 
 class OrgUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
-    template_name_suffix = '_update_form'
+    template_name_suffix = '_update_create_form'
     model = Org
     form_class = OrgForm
 
