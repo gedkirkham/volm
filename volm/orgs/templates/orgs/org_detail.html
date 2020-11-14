@@ -15,7 +15,7 @@
 {% endblock org_content %}
 
 {% block postorg %}
-    {% if not org.published %}
+    {% if org.published %}
         <p>
             Published on: {{ org.published|date:"D M Y" }}
         </p>
