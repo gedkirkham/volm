@@ -24,7 +24,7 @@ class OrgDeleteView(LoginRequiredMixin, DeleteView):
 
 class OrgDraftListView(LoginRequiredMixin, ListView):
     login_url = '/login/'
-    template_name = 'orgs/org_draft_list.html'
+    template_name = 'orgs/org_list.html'
     model = Org
 
     def get_queryset(self):
