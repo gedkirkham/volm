@@ -3,44 +3,42 @@
 
 {% block org_content %}
     {% for org in object_list %}
-        {% if org.published %}
-            <section class="tw-max-w-sm tw-w-full sm:tw-max-w-full sm:tw-flex tw-mb-4">
-                <div
-                    class="tw-h-48 sm:tw-h-auto sm:tw-w-48 tw-flex-none tw-bg-cover tw-rounded-t sm:tw-rounded-t-none sm:tw-rounded-l tw-text-center tw-overflow-hidden" 
-                    style="background-image: url('{% static 'images/card-left.jpg' %}')" 
-                    title="Woman holding a mug"
-                >
-                        <a 
-                            class="tw-w-full tw-h-full tw-inline-block"
-                            href="{% url 'orgs:org_detail' pk=org.pk %}"
-                        >
-                        </a>
+        <section class="tw-max-w-sm tw-w-full sm:tw-max-w-full sm:tw-flex tw-mb-4">
+            <div
+                class="tw-h-48 sm:tw-h-auto sm:tw-w-48 tw-flex-none tw-bg-cover tw-rounded-t sm:tw-rounded-t-none sm:tw-rounded-l tw-text-center tw-overflow-hidden" 
+                style="background-image: url('{% static 'images/card-left.jpg' %}')" 
+                title="Woman holding a mug"
+            >
+                    <a 
+                        class="tw-w-full tw-h-full tw-inline-block"
+                        href="{% url 'orgs:org_detail' pk=org.pk %}"
+                    >
+                    </a>
+            </div>
+
+            <div class="tw-border-r tw-border-b tw-border-l tw-border-yellow-400 sm:tw-border-l-0 sm:tw-border-t tw-bg-white tw-rounded-b sm:tw-rounded-b-none sm:tw-rounded-r tw-p-4 tw-flex tw-flex-col tw-justify-between tw-leading-normal tw-w-full">
+                <div class="tw-mb-8">
+                    <header class="tw-text-gray-900 tw-font-bold tw-text-3xl tw-mb-2">
+                        <h1>
+                            <a href="{% url 'orgs:org_detail' pk=org.pk %}">
+                                {{ org.name }}
+                            </a>
+                        </h1>
+                    </header>
+
+                    <p class="tw-text-gray-700">
+                        {{ org.long_bio|truncatechars_html:200 }}
+                    </p>
                 </div>
 
-                <div class="tw-border-r tw-border-b tw-border-l tw-border-yellow-400 sm:tw-border-l-0 sm:tw-border-t tw-bg-white tw-rounded-b sm:tw-rounded-b-none sm:tw-rounded-r tw-p-4 tw-flex tw-flex-col tw-justify-between tw-leading-normal tw-w-full">
-                    <div class="tw-mb-8">
-                        <header class="tw-text-gray-900 tw-font-bold tw-text-3xl tw-mb-2">
-                            <h1>
-                                <a href="{% url 'orgs:org_detail' pk=org.pk %}">
-                                    {{ org.name }}
-                                </a>
-                            </h1>
-                        </header>
-
-                        <p class="tw-text-gray-700">
-                            {{ org.long_bio|truncatechars_html:200 }}
-                        </p>
-                    </div>
-
-                    <div class="tw-flex tw-items-center tw-space-x-2">
-                        {% for tag in org.tags.all %}
-                            <div class="tw-border-solid tw-border-2 tw-border-yellow-300 tw-bg-transparent tw-p-1 tw-px-2 tw-rounded-full tw-text-xs tw-text-gray-800 tw-inline-block">
-                                #{{ tag }}
-                            </div>
-                        {% endfor %}
-                    </div>
+                <div class="tw-flex tw-items-center tw-space-x-2">
+                    {% for tag in org.tags.all %}
+                        <div class="tw-border-solid tw-border-2 tw-border-yellow-300 tw-bg-transparent tw-p-1 tw-px-2 tw-rounded-full tw-text-xs tw-text-gray-800 tw-inline-block">
+                            #{{ tag }}
+                        </div>
+                    {% endfor %}
                 </div>
-            </section>
-        {% endif %}
+            </div>
+        </section>
     {% endfor %}
 {% endblock %}
