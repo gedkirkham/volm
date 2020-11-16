@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+<section>
+    {% block content %}
+        <header>
+            {% block preworker %}{% endblock %}
+        </header>
+
+        {% block worker_content %}{% endblock %}
+
+        <footer class="tw-mt-8">
+            {% block postworker %}{% endblock %}
+        </footer>
+    {% endblock %}
+</section>

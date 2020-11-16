@@ -1,0 +1,37 @@
+{% extends 'workers/worker_base.html' %}
+
+{% block preworker %}
+    <h1 class="tw-text-5xl">
+        {{ worker.user.username|safe|linebreaksbr }}
+    </h1>
+
+    <hr />
+{% endblock preworker %}
+
+{% block worker_content %}
+    <p class="tw-text-gray-700 tw-my-8">
+        {{ worker.long_bio }}
+    </p>
+{% endblock worker_content %}
+
+{% block postworker %}
+    {% if user.is_authenticated %}
+        {% comment %} <button class="tw-inline-block tw_neutral_button">
+            <a
+                class="tw_button_anchor" 
+                href="{% url 'workers:worker_update' pk=worker.pk %}"
+            >
+                Update
+            </a>
+        </button>
+
+        <button class="tw-inline-block tw_danger_button">
+            <a 
+                class="tw_button_anchor"
+                href="{% url 'workers:worker_delete' pk=worker.pk %}"
+            >
+                Delete
+            </a>
+        </button> {% endcomment %}
+    {% endif %}
+{% endblock postworker %}
