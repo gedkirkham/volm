@@ -16,7 +16,7 @@
 
 {% block postworker %}
     {% if user.is_authenticated %}
-        {% comment %} <button class="tw-inline-block tw_neutral_button">
+        <button class="tw-inline-block tw_neutral_button">
             <a
                 class="tw_button_anchor" 
                 href="{% url 'workers:worker_update' pk=worker.pk %}"
@@ -32,6 +32,6 @@
             >
                 Delete
             </a>
-        </button> {% endcomment %}
+        </button>
     {% endif %}
 {% endblock postworker %}

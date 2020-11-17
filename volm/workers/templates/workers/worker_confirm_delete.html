@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section>
+        <form method="POST">
+            {% csrf_token %}
+            <p>
+                Are you sure you want to delete {{ object }}?
+            </p>
+            
+            <button
+                class="tw_danger_button tw-px-8 tw-py-4"
+                type="submit"
+            >
+                Delete
+            </button>
+        </form>
+    </section>
+{% endblock %}
