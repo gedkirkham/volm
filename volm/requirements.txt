@@ -9,7 +9,7 @@ contextlib2==0.6.0
 coverage==5.2
 distlib==0.3.0
 distro==1.4.0
-Django==3.0.6
+Django==3.0.7
 django-cors-headers==3.2.1
 django-tailwind==0.10.0
 django-widget-tweaks==1.4.8
