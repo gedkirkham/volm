@@ -53,6 +53,14 @@
                         Sign-up
                     </a>
                 </li>
+                <li class="tw-inline">
+                    <a 
+                        class="tw_main_nav_a"
+                        href="{% url 'contact:contact_email' %}"
+                    >
+                        Contact
+                    </a>
+                </li>
 
                 {% if user.is_authenticated %}
                     <li class="tw-inline">

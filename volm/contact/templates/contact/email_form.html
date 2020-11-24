@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+
+        <fieldset>
+            <legend class="tw-text-3xl">
+                Email:
+            </legend>
+
+            <hr />
+
+            <div class="tw-py-4">
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+
+                <div class="tw-py-2">
+
+                    <div>
+                        {{ form.subject.errors }}
+                        <label 
+                            for="{{ form.subject.id_for_label }}"
+                            class="tw-text-gray-800 tw-text-xl tw-block"
+                        >
+                            Email subject:
+                        </label>
+                        {{ form.subject|add_class:"tw_input" }}
+                    </div>
+
+                    <div>
+                        {{ form.message.errors }}
+                        <label 
+                            for="{{ form.name.id_for_label }}"
+                            class="tw-text-gray-800 tw-text-xl tw-block"
+                        >
+                            Your name:
+                        </label>
+                        {{ form.name|add_class:"tw_input" }}
+                    </div>
+
+                    <div>
+                        {{ form.message.errors }}
+                        <label 
+                            for="{{ form.message.id_for_label }}"
+                            class="tw-text-gray-800 tw-text-xl tw-block"
+                        >
+                            Your message:
+                        </label>
+                        {{ form.message|add_class:"tw_input" }}
+                    </div>
+
+                    <div>
+                        {{ form.sender.errors }}
+                        <label 
+                            for="{{ form.sender.id_for_label }}"
+                            class="tw-text-gray-800 tw-text-xl tw-block"
+                        >
+                            Your email address:
+                        </label>
+                        {{ form.sender|add_class:"tw_input" }}
+                    </div>
+                </div>
+            </div>
+
+            {{ form.non_field_errors }}
+
+            <button 
+                class="tw_neutral_button tw_button_anchor"
+                type="submit"
+            >
+                SEND
+            </button>
+        </fieldset>
+    </form>
+{% endblock content %}

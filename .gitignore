@@ -3,3 +3,4 @@ db.sqlite3
 .vscode/settings.json
 volm/static
 */media/uploads/*
+local.py

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from .local import EMAIL_HOST_PASSWORD
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -136,3 +137,15 @@ LOGIN_REDIRECT_URL = 'test'
 LOGOUT_REDIRECT_URL = 'thanks'
 
 TAILWIND_APP_NAME = 'theme'
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST='smtp.gmail.com' 
+    EMAIL_PORT=587
+    EMAIL_HOST_USER='volmcontactemail@gmail.com'
+    EMAIL_USE_TLS=True
+
+EMAIL_FROM = 'gedkirkham@protonmail.com'
+
