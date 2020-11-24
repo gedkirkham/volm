@@ -4,7 +4,7 @@
 
 @layer components {
     .tw_neutral_button {
-        @apply tw-bg-yellow-500 tw-text-white tw-font-bold tw-rounded;
+        @apply tw-bg-orange-500 tw-text-white tw-font-bold tw-rounded;
     }
     .tw_neutral_button:hover {
         @apply tw-bg-opacity-75 tw-text-gray-700;
@@ -28,6 +28,6 @@
         @apply tw-rounded tw-p-4;
     }
     .tw_main_nav_a:hover {
-        @apply tw-bg-yellow-500 tw-text-white;
+        @apply tw-bg-orange-500 tw-text-white;
     }
 }
