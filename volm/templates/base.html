@@ -48,6 +48,14 @@
                 <li class="tw-inline">
                     <a 
                         class="tw_main_nav_a"
+                        href="{% url 'workers:worker_list' %}"
+                    >
+                        Workers
+                    </a>
+                </li>
+                <li class="tw-inline">
+                    <a 
+                        class="tw_main_nav_a"
                         href="{% url 'accounts:signup' %}"
                     >
                         Sign-up
@@ -90,9 +98,9 @@
                     <li class="tw-inline">
                         <a 
                             class="tw_main_nav_a"
-                            href="{% url 'workers:worker_list' %}"
+                            href="{% url 'workers:worker_new' %}"
                         >
-                            Workers
+                            New Worker
                         </a>
                     </li>
                     <li class="tw-inline">
