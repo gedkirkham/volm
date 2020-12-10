@@ -19,6 +19,7 @@ class WorkerDetailView(DetailView):
 class WorkerUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "workers/worker_update_create_form.html"
     model = Worker
+    fields = ['user', 'address', 'contact']
 
 class WorkerDeleteView(LoginRequiredMixin, DeleteView):
     login_url = '/login/'
