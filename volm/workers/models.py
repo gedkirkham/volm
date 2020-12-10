@@ -24,6 +24,9 @@ class Worker(models.Model):
     class Meta:
         ordering = ['user']
 
+    def __str__(self):
+        return self.user.username
+
     def get_absolute_url(self):
         return reverse("workers:worker_detail", kwargs={ 'pk': self.pk })
 
