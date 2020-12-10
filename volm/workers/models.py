@@ -16,8 +16,7 @@ class Worker(models.Model):
     contact = models.ForeignKey(ContactInfo, on_delete=models.SET_NULL, null=True, related_name='contact_details')
     created =  models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True)
-    orgs = models.ManyToManyField(Org, related_name='associated_organisation')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_account')
+    tags = models.ManyToManyField('WorkerTags', related_name='tags', help_text="Worker skill identifiers")
     objects = WorkerManager()
 
     class Meta:
