@@ -30,4 +30,11 @@
     .tw_main_nav_a:hover {
         @apply tw-bg-orange-500 tw-text-white;
     }
+    
+    .tw_tags-wrapper {
+        @apply tw-flex tw-items-center tw-space-x-2;
+    }
+    .tw_tags_button {
+        @apply tw-border-solid tw-border-2 tw-border-yellow-300 tw-p-1 tw-px-2 tw-rounded-full tw-text-xs tw-text-gray-800 tw-inline-block;
+    }
 }

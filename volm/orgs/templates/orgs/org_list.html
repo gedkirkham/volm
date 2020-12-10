@@ -31,9 +31,9 @@
                     </p>
                 </div>
 
-                <div class="tw-flex tw-items-center tw-space-x-2">
+                <div class="tw_tags-wrapper">
                     {% for tag in org.tags.all %}
-                        <div class="tw-border-solid tw-border-2 tw-border-yellow-300 tw-bg-transparent tw-p-1 tw-px-2 tw-rounded-full tw-text-xs tw-text-gray-800 tw-inline-block">
+                        <div class="tw_tags_button">
                             #{{ tag }}
                         </div>
                     {% endfor %}
