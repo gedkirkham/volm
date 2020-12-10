@@ -10,7 +10,7 @@
 
 {% block worker_content %}
     <p class="tw-text-gray-700 tw-my-8">
-        {{ worker.long_bio }}
+        {{ worker.long_bio|safe|linebreaksbr }}
     </p>
 
     <div class="tw_tags-wrapper">

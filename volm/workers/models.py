@@ -15,6 +15,8 @@ class Worker(models.Model):
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, related_name='address')
     contact = models.ForeignKey(ContactInfo, on_delete=models.SET_NULL, null=True, related_name='contact_details')
     created =  models.DateTimeField(auto_now_add=True, editable=False)
+    short_bio = models.TextField(max_length=1000, blank=True, help_text="Workers short bio")
+    long_bio = models.TextField(max_length=10000, help_text="Workers long bio")
     modified = models.DateTimeField(auto_now=True)
     orgs = models.ManyToManyField(Org, related_name='associated_organisation', help_text="Organisations that the worker is linked to")
     tags = models.ManyToManyField('WorkerTags', related_name='tags', help_text="Worker skill identifiers")
