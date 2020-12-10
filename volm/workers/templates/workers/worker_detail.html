@@ -12,6 +12,14 @@
     <p class="tw-text-gray-700 tw-my-8">
         {{ worker.long_bio }}
     </p>
+
+    <div class="tw_tags-wrapper">
+        {% for tag in worker.tags.all %}
+            <div class="tw_tags_button">
+                #{{ tag }}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock worker_content %}
 
 {% block postworker %}

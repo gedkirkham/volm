@@ -25,3 +25,14 @@ class Worker(models.Model):
 
     def get_absolute_url(self):
         return reverse("workers:worker_detail", kwargs={ 'pk': self.pk })
+
+class WorkerTags(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    created = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        verbose_name_plural = 'WorkerTags'
+
+    def __str__(self):
+        return self.name
