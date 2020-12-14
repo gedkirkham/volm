@@ -12,7 +12,8 @@
             </h2>
             
             <h3>
-                Chester, England, United Kingdom
+                {{ worker.address.city }}{% if worker.address.city %},{% endif %}
+                {{ worker.address.country }}
             </h3>
 
             <div class="tw_tags-wrapper">
