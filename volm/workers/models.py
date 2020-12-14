@@ -20,6 +20,7 @@ class Worker(models.Model):
     modified = models.DateTimeField(auto_now=True)
     orgs = models.ManyToManyField(Org, related_name='associated_organisation', help_text="Organisations that the worker is linked to")
     tags = models.ManyToManyField('WorkerTags', related_name='tags', help_text="Worker skill identifiers")
+    title = models.CharField(max_length=100, help_text="Short title")
     user = models.ForeignKey(User, help_text="Workers associated user account", on_delete=models.CASCADE, related_name='user_account')
     objects = WorkerManager()
 
