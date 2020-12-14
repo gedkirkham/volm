@@ -1,25 +1,218 @@
 {% extends 'workers/worker_base.html' %}
 
 {% block preworker %}
-    <h1 class="tw-text-5xl">
-        {{ worker.user.username|safe|linebreaksbr }}
-    </h1>
+    <div class="tw-flex">
+        <div class="tw-flex-grow">
+            <h1>
+                {{ worker.user.first_name|safe }} {{ worker.user.last_name|safe }}
+            </h1>
+
+            <h2>
+                {{ worker.title|safe }}
+            </h2>
+            
+            <h3>
+                Chester, England, United Kingdom
+            </h3>
+
+            <div class="tw_tags-wrapper">
+                {% for tag in worker.tags.all %}
+                    <div class="tw_tags_button">
+                        #{{ tag }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="tw-flex-auto">
+            <ul class="tw-float-right">
+                <li>
+                    Share
+                </li>
+                <li>
+                    Message
+                </li>
+                <li>
+                    Save
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <hr />
 {% endblock preworker %}
 
 {% block worker_content %}
-    <p class="tw-text-gray-700 tw-my-8">
-        {{ worker.long_bio|safe|linebreaksbr }}
-    </p>
+    <section>
+        <h2>
+            About
+        </h2>
 
-    <div class="tw_tags-wrapper">
-        {% for tag in worker.tags.all %}
-            <div class="tw_tags_button">
-                #{{ tag }}
+        <p class="tw-text-gray-700">
+            {{ worker.long_bio|safe|linebreaksbr }}
+        </p>
+    </section>
+
+    <hr />
+
+    <section>
+        <h2>
+            Availability
+        </h2>
+
+        <div class="tw-space-y-4">
+            <div>
+                <h3>
+                    Monday
+                </h3>
+                <h4>
+                    17:00-21:00 UTC
+                </h4>
             </div>
-        {% endfor %}
-    </div>
+
+            <div>
+                <h3>
+                    Sunday
+                </h3>
+                <h4>
+                    11:00-16:00 UTC
+                </h4>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            Experience
+        </h2>
+
+        <div class="tw-space-y-4">
+            <div>
+                <h3>
+                    Software enginner
+                </h3>
+                <h4>
+                    Xact Packing & Marking
+                </h4>
+                <h5>
+                    Apr 2020 - Present (9 months)
+                </h5>
+            </div>
+
+            <div>
+                <h3>
+                    Web developer
+                </h3>
+                <h4>
+                    tuli.health
+                </h4>
+                <h5>
+                    Jan 2017 - May 2019 (2 years, 5 months)
+                </h5>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            Volunteer Experience
+        </h2>
+
+        <div class="tw-space-y-4">
+            <div>
+                <h3>
+                    General Volunteer
+                </h3>
+                <h4>
+                    Leicester LGB&T Centre
+                </h4>
+                <h5>
+                    March 2015 - July 2015 - 5 months
+                </h5>
+                <p>
+                    Working for the Leicester 'LGB&T' Centre allowed me to learn how various parts of an organisation operate, and the requirement for people to adapt themselves to varying situations. Each day brought new challenges that had to be understood and addressed appropriately. 
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            Education
+        </h2>
+
+        <div class="tw-space-y-4">
+            <div>
+                <h3>
+                    The University of Huddersfield
+                </h3>
+                <h4>
+                    Bachelor of Science (BSc) - Music Technology and Audio Systems - First
+                </h4>
+                <h5>
+                    2012 - 2016
+                </h5>
+                <p>
+                    A wide range of topics have been covered during my four years at the University of Huddersfield.
+                    <br>
+                    <br>
+                    Coding languages such as 'C', 'C++', 'CSS3' and 'HTML5' were used to create websites, design digital audio filters and to create software programs to control MIDI hardware and software. Creative use of 'Max/MSP TM' to create varying computer compositions, and the ability to create computer graphics using the 'OpenGL' API was understood and executed.
+                    <br>
+                    <br>
+                    An understanding of audio technology hardware and software, and an understanding of basic filter design and implementation was gained through laboratory work. An ability to record and mix varying genres of music with 'Pro Tools TM' on both analogue and digital desks. An understanding of the music industry from a business perspective, and the ability to work as part of a team to create a viable business plan was fulfilled. Live audio PA system design and real-world use was understood and applied. 
+                </p>
+            </div>
+
+            <div>
+                <h3>
+                    Web developer
+                </h3>
+                <h4>
+                    tuli.health
+                </h4>
+                <h5>
+                    Jan 2017 - May 2019 (2 years, 5 months)
+                </h5>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            Licenses & Certifications
+        </h2>
+
+        <div class="tw-space-y-4">
+            <div>
+                <h3>
+                    Derivatives Operations
+                </h3>
+                <h4>
+                    The Chartered Institute for Securities & Investment (The CISI)
+                </h4>
+                <h5>
+                    Issued Nov 2017
+                </h5>
+                <p>
+                    Credential ID 12023357
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            Languages
+        </h2>
+
+        <div class="tw-space-y-4">
+            <div>
+                <h3>
+                    English, Romanian
+                </h3>
+            </div>
+        </div>
+    </section>
 {% endblock worker_content %}
 
 {% block postworker %}
