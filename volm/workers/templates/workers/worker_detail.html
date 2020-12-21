@@ -1,219 +1,245 @@
 {% extends 'workers/worker_base.html' %}
 
 {% block preworker %}
-    <div class="tw-flex">
-        <div class="tw-flex-grow">
-            <h1>
+    <div class="tw-flex-grow">
+        <div class="tw-flex">
+            <h1 class="tw-flex-grow tw-font-black">
                 {{ worker.user.first_name|safe }} {{ worker.user.last_name|safe }}
             </h1>
 
-            <h2>
-                {{ worker.title|safe }}
-            </h2>
-            
-            <h3>
-                {{ worker.address.city }}{% if worker.address.city %},{% endif %}
-                {{ worker.address.country }}
-            </h3>
-
-            <div class="tw_tags-wrapper">
-                {% for tag in worker.tags.all %}
-                    <div class="tw_tags_button">
-                        #{{ tag }}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="tw-flex-auto">
-            <ul class="tw-float-right">
-                <li>
-                    Share
+            <ul class="tw-float-right tw-flex tw-justify-center tw-items-center tw-space-x-4">
+                <li class="tw-inline tw-cursor-pointer hover:tw-text-blue-500">
+                    <svg
+                        class="tw-inline tw-fill-current tw-text-blue-500 hover:tw-text-black"
+                        aria-label="share" 
+                        focusable="false" 
+                        role="img" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 448 512"
+                        width="25"
+                    >
+                        <path d="M352 320c-22.608 0-43.387 7.819-59.79 20.895l-102.486-64.054a96.551 96.551 0 0 0 0-41.683l102.486-64.054C308.613 184.181 329.392 192 352 192c53.019 0 96-42.981 96-96S405.019 0 352 0s-96 42.981-96 96c0 7.158.79 14.13 2.276 20.841L155.79 180.895C139.387 167.819 118.608 160 96 160c-53.019 0-96 42.981-96 96s42.981 96 96 96c22.608 0 43.387-7.819 59.79-20.895l102.486 64.054A96.301 96.301 0 0 0 256 416c0 53.019 42.981 96 96 96s96-42.981 96-96-42.981-96-96-96z"/>
+                    </svg>
                 </li>
-                <li>
-                    Message
+                <li class="tw-inline tw-cursor-pointer">
+                    <svg
+                        class="tw-inline tw-fill-current tw-text-blue-500 hover:tw-text-black"
+                        aria-label="message" 
+                        focusable="false" 
+                        role="img" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 512 512"
+                        width="25"
+                    >
+                        <path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/>
+                    </svg>
                 </li>
-                <li>
-                    Save
+                <li class="tw-inline tw-cursor-pointer">
+                    <svg
+                        class="tw-inline tw-fill-current tw-text-blue-500 hover:tw-text-black"
+                        aria-label="save"
+                        focusable="false" 
+                        role="img" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 576 512"
+                        width="25"
+                    >
+                        <path d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"/>
+                    </svg>
                 </li>
             </ul>
         </div>
-    </div>
 
-    <hr />
+        <h2>
+            {{ worker.title|safe }}
+        </h2>
+        
+        <h3>
+            {{ worker.address.city }}{% if worker.address.city %},{% endif %}
+            {{ worker.address.country }}
+        </h3>
+
+        <div class="tw_tags-wrapper tw-my-4">
+            {% for tag in worker.tags.all %}
+                <div class="tw_tags_button">
+                    #{{ tag }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock preworker %}
 
 {% block worker_content %}
-    <section>
-        <h2>
-            About
-        </h2>
+    <div class="tw-space-y-8">
+        <section>
+            <h2 class="tw-font-black">
+                About
+            </h2>
 
-        <p class="tw-text-gray-700">
-            {{ worker.long_bio|safe|linebreaksbr }}
-        </p>
-    </section>
+            <p class="tw-text-gray-700">
+                {{ worker.long_bio|safe|linebreaksbr }}
+            </p>
+        </section>
 
-    <hr />
+        <section class="tw-block tw-my-8">
+            <h2 class="tw-font-black">
+                Availability
+            </h2>
 
-    <section>
-        <h2>
-            Availability
-        </h2>
+            <div class="tw-space-y-4">
+                <div>
+                    <h3>
+                        Monday
+                    </h3>
+                    <p>
+                        17:00-21:00 UTC
+                    </p>
+                </div>
 
-        <div class="tw-space-y-4">
-            <div>
-                <h3>
-                    Monday
-                </h3>
-                <h4>
-                    17:00-21:00 UTC
-                </h4>
+                <div>
+                    <h3>
+                        Sunday
+                    </h3>
+                    <p>
+                        11:00-16:00 UTC
+                    </p>
+                </div>
             </div>
+        </section>
 
-            <div>
-                <h3>
-                    Sunday
-                </h3>
-                <h4>
-                    11:00-16:00 UTC
-                </h4>
+        <section>
+            <h2 class="tw-font-black">
+                Experience
+            </h2>
+
+            <div class="tw-space-y-4">
+                <div>
+                    <h3>
+                        Software enginner
+                    </h3>
+                    <h4>
+                        Xact Packing & Marking
+                    </h4>
+                    <h5>
+                        Apr 2020 - Present (9 months)
+                    </h5>
+                </div>
+
+                <div>
+                    <h3>
+                        Web developer
+                    </h3>
+                    <h4>
+                        tuli.health
+                    </h4>
+                    <h5>
+                        Jan 2017 - May 2019 (2 years, 5 months)
+                    </h5>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <h2>
-            Experience
-        </h2>
+        <section>
+            <h2 class="tw-font-black">
+                Volunteer Experience
+            </h2>
 
-        <div class="tw-space-y-4">
-            <div>
-                <h3>
-                    Software enginner
-                </h3>
-                <h4>
-                    Xact Packing & Marking
-                </h4>
-                <h5>
-                    Apr 2020 - Present (9 months)
-                </h5>
+            <div class="tw-space-y-4">
+                <div>
+                    <h3>
+                        General Volunteer
+                    </h3>
+                    <h4>
+                        Leicester LGB&T Centre
+                    </h4>
+                    <h5>
+                        March 2015 - July 2015 - 5 months
+                    </h5>
+                    <p>
+                        Working for the Leicester 'LGB&T' Centre allowed me to learn how various parts of an organisation operate, and the requirement for people to adapt themselves to varying situations. Each day brought new challenges that had to be understood and addressed appropriately. 
+                    </p>
+                </div>
             </div>
+        </section>
 
-            <div>
-                <h3>
-                    Web developer
-                </h3>
-                <h4>
-                    tuli.health
-                </h4>
-                <h5>
-                    Jan 2017 - May 2019 (2 years, 5 months)
-                </h5>
+        <section>
+            <h2 class="tw-font-black">
+                Education
+            </h2>
+
+            <div class="tw-space-y-4">
+                <div>
+                    <h3>
+                        The University of Huddersfield
+                    </h3>
+                    <h4>
+                        Bachelor of Science (BSc) - Music Technology and Audio Systems - First
+                    </h4>
+                    <h5>
+                        2012 - 2016
+                    </h5>
+                    <p>
+                        A wide range of topics have been covered during my four years at the University of Huddersfield.
+                        <br>
+                        <br>
+                        Coding languages such as 'C', 'C++', 'CSS3' and 'HTML5' were used to create websites, design digital audio filters and to create software programs to control MIDI hardware and software. Creative use of 'Max/MSP TM' to create varying computer compositions, and the ability to create computer graphics using the 'OpenGL' API was understood and executed.
+                        <br>
+                        <br>
+                        An understanding of audio technology hardware and software, and an understanding of basic filter design and implementation was gained through laboratory work. An ability to record and mix varying genres of music with 'Pro Tools TM' on both analogue and digital desks. An understanding of the music industry from a business perspective, and the ability to work as part of a team to create a viable business plan was fulfilled. Live audio PA system design and real-world use was understood and applied. 
+                    </p>
+                </div>
+
+                <div>
+                    <h3>
+                        Web developer
+                    </h3>
+                    <h4>
+                        tuli.health
+                    </h4>
+                    <h5>
+                        Jan 2017 - May 2019 (2 years, 5 months)
+                    </h5>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <h2>
-            Volunteer Experience
-        </h2>
+        <section>
+            <h2 class="tw-font-black">
+                Licenses & Certifications
+            </h2>
 
-        <div class="tw-space-y-4">
-            <div>
-                <h3>
-                    General Volunteer
-                </h3>
-                <h4>
-                    Leicester LGB&T Centre
-                </h4>
-                <h5>
-                    March 2015 - July 2015 - 5 months
-                </h5>
-                <p>
-                    Working for the Leicester 'LGB&T' Centre allowed me to learn how various parts of an organisation operate, and the requirement for people to adapt themselves to varying situations. Each day brought new challenges that had to be understood and addressed appropriately. 
-                </p>
+            <div class="tw-space-y-4">
+                <div>
+                    <h3>
+                        Derivatives Operations
+                    </h3>
+                    <h4>
+                        The Chartered Institute for Securities & Investment (The CISI)
+                    </h4>
+                    <h5>
+                        Issued Nov 2017
+                    </h5>
+                    <p>
+                        Credential ID 12023357
+                    </p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <h2>
-            Education
-        </h2>
+        <section>
+            <h2 class="tw-font-black">
+                Languages
+            </h2>
 
-        <div class="tw-space-y-4">
-            <div>
-                <h3>
-                    The University of Huddersfield
-                </h3>
-                <h4>
-                    Bachelor of Science (BSc) - Music Technology and Audio Systems - First
-                </h4>
-                <h5>
-                    2012 - 2016
-                </h5>
-                <p>
-                    A wide range of topics have been covered during my four years at the University of Huddersfield.
-                    <br>
-                    <br>
-                    Coding languages such as 'C', 'C++', 'CSS3' and 'HTML5' were used to create websites, design digital audio filters and to create software programs to control MIDI hardware and software. Creative use of 'Max/MSP TM' to create varying computer compositions, and the ability to create computer graphics using the 'OpenGL' API was understood and executed.
-                    <br>
-                    <br>
-                    An understanding of audio technology hardware and software, and an understanding of basic filter design and implementation was gained through laboratory work. An ability to record and mix varying genres of music with 'Pro Tools TM' on both analogue and digital desks. An understanding of the music industry from a business perspective, and the ability to work as part of a team to create a viable business plan was fulfilled. Live audio PA system design and real-world use was understood and applied. 
-                </p>
+            <div class="tw-space-y-4">
+                <div>
+                    <h3>
+                        English, Romanian
+                    </h3>
+                </div>
             </div>
-
-            <div>
-                <h3>
-                    Web developer
-                </h3>
-                <h4>
-                    tuli.health
-                </h4>
-                <h5>
-                    Jan 2017 - May 2019 (2 years, 5 months)
-                </h5>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2>
-            Licenses & Certifications
-        </h2>
-
-        <div class="tw-space-y-4">
-            <div>
-                <h3>
-                    Derivatives Operations
-                </h3>
-                <h4>
-                    The Chartered Institute for Securities & Investment (The CISI)
-                </h4>
-                <h5>
-                    Issued Nov 2017
-                </h5>
-                <p>
-                    Credential ID 12023357
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2>
-            Languages
-        </h2>
-
-        <div class="tw-space-y-4">
-            <div>
-                <h3>
-                    English, Romanian
-                </h3>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 {% endblock worker_content %}
 
 {% block postworker %}

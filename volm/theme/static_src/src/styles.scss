@@ -19,10 +19,7 @@
 
 @layer components {
     .tw_neutral_button {
-        @apply tw-bg-orange-500 tw-text-white tw-font-bold tw-rounded;
-    }
-    .tw_neutral_button:hover {
-        @apply tw-bg-opacity-75 tw-text-gray-700;
+        @apply tw-bg-blue-500 tw-text-white tw-font-bold tw-rounded hover:tw-bg-blue-400;
     }
     .tw_danger_button {
         @apply tw-bg-red-500 tw-text-white tw-font-bold tw-rounded;
@@ -50,6 +47,6 @@
         @apply tw-flex tw-items-center tw-space-x-2;
     }
     .tw_tags_button {
-        @apply tw-border-solid tw-border-2 tw-border-yellow-300 tw-p-1 tw-px-2 tw-rounded-full tw-text-xs tw-text-gray-800 tw-inline-block;
+        @apply tw-border-solid tw-border-2 tw-border-blue-500 tw-p-1 tw-px-2 tw-rounded-full tw-text-xs tw-text-gray-800 tw-inline-block;
     }
 }
