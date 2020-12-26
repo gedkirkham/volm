@@ -1,10 +1,19 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+
 from contact.models import Address, ContactInfo
 from orgs.models import Org
 
 User = get_user_model()
+
+class Availability(models.Model):
+    day = models.CharField(_("Day"), max_length=50)
+    time_from = models.CharField(_("Time from"), max_length=50)
+    time_to = models.CharField(_("Time to"), max_length=50)
+    timezone = models.CharField(_("Timezone"), max_length=50)
+    worker = models.ManyToManyField("Worker", verbose_name=_("workers"))
 
 class WorkerManager(models.Manager):
     def active_orgs(self):
