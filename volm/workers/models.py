@@ -9,11 +9,14 @@ from orgs.models import Org
 User = get_user_model()
 
 class Availability(models.Model):
-    day = models.CharField(_("Day"), max_length=50)
-    time_from = models.CharField(_("Time from"), max_length=50)
-    time_to = models.CharField(_("Time to"), max_length=50)
-    timezone = models.CharField(_("Timezone"), max_length=50)
-    worker = models.ManyToManyField("Worker", verbose_name=_("workers"))
+    day = models.ManyToManyField("utils.Day", verbose_name=_("Day"))
+    time_from = models.ManyToManyField("utils.Time", verbose_name=_("Time from"), related_name="time_from")
+    time_to = models.ManyToManyField("utils.Time", verbose_name=_("Time to"), related_name="time_to")
+    timezone = models.ForeignKey("utils.Timezone", verbose_name=_("Timezone"), null=True, on_delete=models.SET_NULL)
+    worker = models.ForeignKey("Worker", verbose_name=_("Associated Worker"), on_delete=models.CASCADE, related_name='worker')
+
+    class Meta:
+        verbose_name_plural = 'Availability'
 
 class WorkerManager(models.Manager):
     def active_orgs(self):

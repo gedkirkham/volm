@@ -13,11 +13,11 @@
 
             <div class="tw-divide-y-2">
                 
-                {% for hidden in form.hidden_fields %}
+                {% for hidden in worker_form.hidden_fields %}
                     {{ hidden }}
                 {% endfor %}
 
-                {% for field in form.visible_fields %}
+                {% for field in worker_form.visible_fields %}
                     <div class="tw-py-8">
 
                         <label 
@@ -43,8 +43,42 @@
                     </div>
                 {% endfor %}
             </div>
+            
+            <div class="tw-divide-y-2">
+                {{ availability_form.management_form }}
 
-            {{ form.non_field_errors }}
+                {% for hidden in availability_form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+
+                {% for field in availability_form %}
+                    <div class="tw-py-8">
+
+                        <label 
+                            for="{{ field.id_for_label }}"
+                            class="tw-text-gray-800 tw-text-xl tw-block"
+                        >
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <p class="tw-text-gray-600">
+                                {{ field.help_text|safe }}
+                            </p>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <p class="tw-text-red-600">
+                                {{ field.errors }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            {{ worker_form.non_field_errors }}
+            {{ availability_form.non_field_errors }}
 
             <button 
                 class="tw_neutral_button tw_button_anchor"
