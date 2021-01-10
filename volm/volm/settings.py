@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'orgs',
     'tailwind',
     'theme',
+    'utils',
     'widget_tweaks',
     'workers',
 ]
