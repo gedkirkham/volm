@@ -40,7 +40,7 @@ class Worker(models.Model):
         ordering = ['user']
 
     def __str__(self):
-        return self.user.username
+        return "{}: {}".format(self.pk, self.user.username)
 
     def get_absolute_url(self):
         return reverse("workers:worker_detail", kwargs={ 'pk': self.pk })
