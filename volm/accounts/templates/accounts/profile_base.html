@@ -3,14 +3,10 @@
 <section>
     {% block content %}
         <header>
-            {% block preprofile %}{% endblock %}
-        </header>
-
-        <div class="tw-mt-12 tw-space-y-4">
-            {% block profile_content %}
+            {% block preprofile %}
                 Offer your services by creating an advert
 
-                <button class="tw_neutral_button">
+                <button class="tw_neutral_button tw-block tw-mt-2">
                     <a
                         class="tw_button_anchor"
                         href="{% url 'workers:worker_new' %}"
@@ -18,6 +14,18 @@
                         Create Advert
                     </a>
                 </button>
+            {% endblock %}
+        </header>
+
+        <div class="tw-mt-12 tw-space-y-4">
+            {% block profile_content %}
+                <ul>
+                    {% for worker in object_list %}
+                        <li>
+                            {{ worker.pk }}
+                        </li>
+                    {% endfor %}
+                </ul>
             {% endblock %}
         </div>
 
