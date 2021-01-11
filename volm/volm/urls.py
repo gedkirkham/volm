@@ -17,14 +17,16 @@ from django.contrib import admin
 from django.contrib.auth import urls as auth_urls
 from django.conf.urls.static import static
 from django.urls import path, include
+
 from .views import HomePage, ThanksPage, TestPage
 from volm import settings
+from workers.views import WorkerListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', HomePage.as_view(), name='home'),
+    path('', WorkerListView.as_view(), name='home'),
     path('orgs/', include('orgs.urls', namespace='orgs')),
     path('workers/', include('workers.urls', namespace='workers')),
     path('contact/', include('contact.urls', namespace='contact')),
