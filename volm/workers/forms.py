@@ -64,8 +64,12 @@ class WorkerForm(forms.ModelForm):
 
     class Meta():
         model = Worker
-        fields = ['active', 'long_bio', 'short_bio', 'tags', 'title']
+        fields = ['title', 'short_bio', 'long_bio']
 
         help_texts = {
             'active': _('If you are active, you are visible to the public'),
+            'title': _('Give your advert a catchy title'),
+            'short_bio': _('Optional: Will be displayed in the advert listings'),
+            'long_bio': _('Describe yourself in detail. Let people know what you can offer'),
+            'tags': _('Select tags that are relevant to yourself'),
         }
