@@ -64,7 +64,7 @@ class WorkerForm(forms.ModelForm):
 
     class Meta():
         model = Worker
-        fields = ['active', 'address', 'contact', 'orgs']
+        fields = ['active', 'long_bio', 'short_bio', 'tags', 'title']
 
         help_texts = {
             'active': _('If you are active, you are visible to the public'),

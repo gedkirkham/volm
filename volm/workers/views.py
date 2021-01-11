@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 
 from .models import Availability, Worker
 from .forms import AvailabilityForm, AvailabilityFormSet, WorkerForm, initial
+from contact.models import Address, ContactInfo
 
 class WorkerListView(ListView):
     template_name = 'workers/worker_list.html'
@@ -38,10 +39,13 @@ class WorkerCreateView(LoginRequiredMixin, TemplateView):
         post_data = request.POST or None
 
         worker_form = self.worker_form_class(post_data, prefix='worker')
+
         worker = None
         if worker_form.is_valid():
             worker = worker_form.save(commit=False)
             worker.user = request.user
+            worker.address = Address.objects.get(user=request.user)
+            worker.contact = ContactInfo.objects.get(user=request.user)
             worker.save()
 
         availability_form = self.availability_form_class(post_data, initial=initial, queryset=Availability.objects.filter(worker=worker))
