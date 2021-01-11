@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+<section>
+    {% block content %}
+        <header>
+            {% block preprofile %}{% endblock %}
+        </header>
+
+        <div class="tw-mt-12 tw-space-y-4">
+            {% block profile_content %}
+                Offer your services by creating an advert
+
+                <button class="tw_neutral_button">
+                    <a
+                        class="tw_button_anchor"
+                        href="{% url 'workers:worker_new' %}"
+                    >
+                        Create Advert
+                    </a>
+                </button>
+            {% endblock %}
+        </div>
+
+        <footer class="tw-my-8">
+            {% block postprofile %}{% endblock %}
+        </footer>
+    {% endblock %}
+</section>
