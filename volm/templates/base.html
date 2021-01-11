@@ -45,30 +45,14 @@
                         Organisations
                     </a>
                 </li> {% endcomment %}
-                <li class="tw-inline">
+                {% comment %} <li class="tw-inline">
                     <a 
                         class="tw_main_nav_a"
                         href="{% url 'workers:worker_list' %}"
                     >
                         Workers
                     </a>
-                </li>
-                <li class="tw-inline">
-                    <a 
-                        class="tw_main_nav_a"
-                        href="{% url 'accounts:signup' %}"
-                    >
-                        Sign-up
-                    </a>
-                </li>
-                <li class="tw-inline">
-                    <a 
-                        class="tw_main_nav_a"
-                        href="{% url 'contact:contact_email' %}"
-                    >
-                        Contact
-                    </a>
-                </li>
+                </li> {% endcomment %}
 
                 {% if user.is_authenticated %}
                     <li class="tw-inline">
@@ -115,14 +99,32 @@
                         Welcome {{ user.username }}
                     </li> {% endcomment %}
                 {% else %}
-                    <li class="tw-inline tw-float-right">
-                        <a 
-                            class="tw_main_nav_a"
-                            href="{% url 'login' %}"
-                        >
-                            Log-in
-                        </a>
-                    </li>
+                    <div class="tw-float-right">
+                        <li class="tw-inline">
+                            <a 
+                                class="tw_main_nav_a"
+                                href="{% url 'accounts:signup' %}"
+                            >
+                                Sign-up
+                            </a>
+                        </li>
+                        <li class="tw-inline">
+                            <a 
+                                class="tw_main_nav_a"
+                                href="{% url 'contact:contact_email' %}"
+                            >
+                                Contact
+                            </a>
+                        </li>
+                        <li class="tw-inline">
+                            <a 
+                                class="tw_main_nav_a"
+                                href="{% url 'login' %}"
+                            >
+                                Log-in
+                            </a>
+                        </li>
+                    </div>
                 {% endif %}
             </ul>
 
