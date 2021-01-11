@@ -2,6 +2,19 @@
 {% load static %}
 
 {% block worker_content %}
+    {% if user.is_authenticated %}
+        Want to create your own advert?
+
+        <button class="tw_neutral_button tw-block tw-mt-2">
+            <a
+                class="tw_button_anchor"
+                href="{% url 'workers:worker_new' %}"
+            >
+                Create Advert
+            </a>
+        </button>
+    {% endif %}
+
     {% for worker in object_list %}
         <section class="tw-max-w-sm tw-w-full sm:tw-max-w-full sm:tw-flex tw-mb-4">
             <div
