@@ -22,14 +22,15 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')7^j!e*$*f*!n&!%@v+gy9p=1f_zz!p%!uvvq79m4z91jl*dk&'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
-ALLOWED_HOSTS = [
-    '*'
-]
+ALLOWED_HOSTS = []
+ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
 
 
 # Application definition
@@ -117,10 +118,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_URL = '/static/static/'
+STATIC_ROOT = '/vol/web/static/'
+MEDIA_URL = '/static/media/'
+MEDIA_ROOT = '/vol/web/media/'
 
 LOGIN_REDIRECT_URL = 'test'
 LOGOUT_REDIRECT_URL = 'thanks'

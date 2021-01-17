@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./volm:/app
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DEBUG=1
+    depends_on:
+      - db
+  db:
+    image: postgres
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
