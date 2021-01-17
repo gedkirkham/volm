@@ -18,11 +18,11 @@ class OrgManager(models.Manager):
 
 class Org(models.Model):
     active = models.BooleanField(default=True)
-    banner_image = models.ImageField(upload_to=org_directory_path, blank=True)
+    # banner_image = models.ImageField(upload_to=org_directory_path, blank=True)
     created =  models.DateTimeField(auto_now_add=True, editable=False)
     charity_id = models.CharField(max_length=100, help_text="Legally registered charity ID")
     long_bio = models.CharField(max_length=10000, blank=True, help_text="A detailed description")
-    logo = models.ImageField(upload_to=org_directory_path, blank=True)
+    # logo = models.ImageField(upload_to=org_directory_path, blank=True)
     members = models.ManyToManyField(User)
     modified = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=100, unique=True)
