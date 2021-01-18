@@ -1,6 +1,9 @@
 __pycache__
-db.sqlite3
 .vscode/settings.json
+
 volm/static
 */media/uploads/*
 local.py
+
+#docker
+docker-compose*.yml
