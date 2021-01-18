@@ -4,6 +4,5 @@ __pycache__
 volm/static
 */media/uploads/*
 local.py
-
-#docker
-docker-compose*.yml
+prod.env
+test.env
