@@ -3,6 +3,5 @@ __pycache__
 
 volm/static
 */media/uploads/*
-local.py
 prod.env
 test.env

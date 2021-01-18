@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from .local import EMAIL_HOST_PASSWORD, DATABASES
+from .keyconfig import AllowedHosts, Email, Database, Debug, Secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,16 +22,28 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
+SECRET_KEY = Secrets.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+DEBUG = bool(int(Debug.DEBUG))
 
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
+ALLOWED_HOSTS_ENV = AllowedHosts.ALLOWED_HOSTS
 if ALLOWED_HOSTS_ENV:
     ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
 
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        "NAME": Database.NAME,
+        "USER": Database.USER,
+        "PASSWORD": Database.PASSWORD,
+        "HOST": Database.HOST,
+        "PORT": Database.PORT,
+    }
+}
 
 # Application definition
 
@@ -131,10 +143,10 @@ TAILWIND_APP_NAME = 'theme'
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST='smtp.gmail.com' 
-    EMAIL_PORT=587
-    EMAIL_HOST_USER='volmcontactemail@gmail.com'
+    EMAIL_BACKEND=Email.BACKEND
+    EMAIL_HOST=Email.HOST
+    EMAIL_PORT=Email.PORT
+    EMAIL_HOST_USER=Email.ADDRESS
     EMAIL_USE_TLS=True
 
 EMAIL_FROM = 'gedkirkham@protonmail.com'
