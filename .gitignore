@@ -5,3 +5,4 @@ volm/static
 */media/uploads/*
 prod.env
 test.env
+server.txt
