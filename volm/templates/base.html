@@ -29,30 +29,6 @@
                         Volm
                     </a>
                 </li>
-                <li class="tw-inline">
-                    <a 
-                        class="tw_main_nav_a"
-                        href="{% url 'home' %}"
-                    >
-                        Home
-                    </a>
-                </li>
-                {% comment %} <li class="tw-inline">
-                    <a 
-                        class="tw_main_nav_a"
-                        href="{% url 'orgs:org_list' %}"
-                    >
-                        Organisations
-                    </a>
-                </li> {% endcomment %}
-                {% comment %} <li class="tw-inline">
-                    <a 
-                        class="tw_main_nav_a"
-                        href="{% url 'workers:worker_list' %}"
-                    >
-                        Workers
-                    </a>
-                </li> {% endcomment %}
 
                 {% if user.is_authenticated %}
                     <li class="tw-inline">
