@@ -21,38 +21,14 @@
     <body class="tw-container tw-mx-auto tw-bg-warmGray-100">
         <nav class="tw-mb-16">
             <ul class="tw-py-4 tw-text-3xl">
-                <li class="tw-inline">
+                <li class="tw-inline tw-text-5xl tw-font-bold">
                     <a 
-                        class="tw_main_nav_a"
+                        class="tw-m-4 tw-text-gray-900 hover:tw-text-cyan-600"
                         href="{% url 'home' %}"
                     >
                         Volm
                     </a>
                 </li>
-                <li class="tw-inline">
-                    <a 
-                        class="tw_main_nav_a"
-                        href="{% url 'home' %}"
-                    >
-                        Home
-                    </a>
-                </li>
-                {% comment %} <li class="tw-inline">
-                    <a 
-                        class="tw_main_nav_a"
-                        href="{% url 'orgs:org_list' %}"
-                    >
-                        Organisations
-                    </a>
-                </li> {% endcomment %}
-                {% comment %} <li class="tw-inline">
-                    <a 
-                        class="tw_main_nav_a"
-                        href="{% url 'workers:worker_list' %}"
-                    >
-                        Workers
-                    </a>
-                </li> {% endcomment %}
 
                 {% if user.is_authenticated %}
                     <li class="tw-inline">
@@ -110,15 +86,7 @@
                         </li>
                         <li class="tw-inline">
                             <a 
-                                class="tw_main_nav_a"
-                                href="{% url 'contact:contact_email' %}"
-                            >
-                                Contact
-                            </a>
-                        </li>
-                        <li class="tw-inline">
-                            <a 
-                                class="tw_main_nav_a"
+                                class="tw-px-4 tw-py-2 tw-rounded tw-bg-yellow-100 tw-border-2 tw-border-white tw-shadow-md"
                                 href="{% url 'login' %}"
                             >
                                 Log-in
@@ -127,13 +95,22 @@
                     </div>
                 {% endif %}
             </ul>
-
-            <hr />
         </nav>
 
         <main>
             {% block content %}
             {% endblock %}
         </main>
+
+        <footer>
+            <li class="tw-inline">
+                <a 
+                    class="tw_main_nav_a"
+                    href="{% url 'contact:contact_email' %}"
+                >
+                    Contact
+                </a>
+            </li>
+        </footer>
     </body>
 </html>
