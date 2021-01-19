@@ -86,15 +86,7 @@
                         </li>
                         <li class="tw-inline">
                             <a 
-                                class="tw_main_nav_a"
-                                href="{% url 'contact:contact_email' %}"
-                            >
-                                Contact
-                            </a>
-                        </li>
-                        <li class="tw-inline">
-                            <a 
-                                class="tw_main_nav_a"
+                                class="tw-px-4 tw-py-2 tw-rounded tw-bg-yellow-100 tw-border-2 tw-border-white tw-shadow-md"
                                 href="{% url 'login' %}"
                             >
                                 Log-in
@@ -103,13 +95,22 @@
                     </div>
                 {% endif %}
             </ul>
-
-            <hr />
         </nav>
 
         <main>
             {% block content %}
             {% endblock %}
         </main>
+
+        <footer>
+            <li class="tw-inline">
+                <a 
+                    class="tw_main_nav_a"
+                    href="{% url 'contact:contact_email' %}"
+                >
+                    Contact
+                </a>
+            </li>
+        </footer>
     </body>
 </html>
