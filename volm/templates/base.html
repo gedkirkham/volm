@@ -25,8 +25,6 @@
                 <ul class="tw-text-2xl tw-h-full tw-flex tw-space-x-8">
                     <li class="tw-inline tw-text-6xl tw-font-bold tw-self-end">
                         <a 
-                    <a 
-                        <a 
                             class="tw_main_nav_a"
                             href="{% url 'home' %}"
                         >
@@ -39,8 +37,6 @@
                     {% if user.is_authenticated %}
                         <li class="tw-inline">
                             <a 
-                        <a 
-                            <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'accounts:profile' %}"
                             >
@@ -48,8 +44,6 @@
                             </a>
                         </li>
                         <li class="tw-inline">
-                            <a 
-                        <a 
                             <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'accounts:logout' %}"
@@ -77,9 +71,9 @@
                                 LOG IN
                             </a>
                         </li>
-                {% endif %}
-            </ul>
-        </nav>
+                    {% endif %}
+                </ul>
+            </nav>
 
         <main>
             {% block content %}
