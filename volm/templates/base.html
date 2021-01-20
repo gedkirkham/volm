@@ -14,13 +14,14 @@
         />
         <link 
             rel="stylesheet" 
-            href="{% static 'volm/css/master.css' %}" 
+            href="{% static 'master.css' %}" 
+            type="text/css"
         />
     </head>
 
     <body class="tw-container tw-mx-auto tw-bg-warmGray-100">
         <nav class="tw-mb-16">
-            <ul class="tw-py-4 tw-text-3xl">
+            <ul class="tw-py-4 tw-text-2xl">
                 <li class="tw-inline tw-text-5xl tw-font-bold">
                     <a 
                         class="tw-m-4 tw-text-gray-900 hover:tw-text-cyan-600"
@@ -75,21 +76,21 @@
                         Welcome {{ user.username }}
                     </li> {% endcomment %}
                 {% else %}
-                    <div class="tw-float-right">
+                    <div class="tw-float-right tw-space-x-8">
                         <li class="tw-inline">
                             <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'accounts:signup' %}"
                             >
-                                Sign-up
+                                CREATE ACCOUNT
                             </a>
                         </li>
                         <li class="tw-inline">
                             <a 
-                                class="tw-px-4 tw-py-2 tw-rounded tw-bg-yellow-100 tw-border-2 tw-border-white tw-shadow-md"
+                                class="tw_main_nav_a"
                                 href="{% url 'login' %}"
                             >
-                                Log-in
+                                LOG IN
                             </a>
                         </li>
                     </div>

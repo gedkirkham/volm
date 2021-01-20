@@ -37,7 +37,7 @@
         @apply tw-inline-block tw-py-2 tw-px-4;
     }
     .tw_main_nav_a {
-        @apply tw-rounded tw-p-4 hover:tw-bg-orange-500 hover:tw-text-white;
+        @apply tw-m-4 tw-text-gray-900 hover:tw-text-cyan-600;
     }
     
     .tw_tags-wrapper {
