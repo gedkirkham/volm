@@ -80,15 +80,18 @@
             {% endblock %}
         </main>
 
-        <footer>
-            <li class="tw-inline">
+            <ul class="tw-flex tw-h-full">
+                <li class="tw-inline tw-self-center">
+                    <a 
                 <a 
-                    class="tw_main_nav_a"
-                    href="{% url 'contact:contact_email' %}"
-                >
-                    Contact
-                </a>
-            </li>
+                    <a 
+                        class="tw_main_nav_a"
+                        href="{% url 'contact:contact_email' %}"
+                    >
+                        Contact us
+                    </a>
+                </li>
+            <ul>
         </footer>
     </body>
 </html>
