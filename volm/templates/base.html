@@ -14,23 +14,27 @@
         />
         <link 
             rel="stylesheet" 
-            href="{% static 'master.css' %}" 
+            href="{% static 'css/master.css' %}" 
             type="text/css"
         />
     </head>
 
     <body class="tw-container tw-mx-auto tw-bg-warmGray-100">
-        <nav class="tw-mb-16">
-            <ul class="tw-py-4 tw-text-2xl">
-                <li class="tw-inline tw-text-5xl tw-font-bold">
+        <header class="header">
+            <nav class="tw-h-full">
+                <ul class="tw-text-2xl tw-h-full tw-flex tw-space-x-8">
+                    <li class="tw-inline tw-text-6xl tw-font-bold tw-self-end">
+                        <a 
                     <a 
-                        class="tw-m-4 tw-text-gray-900 hover:tw-text-cyan-600"
-                        href="{% url 'home' %}"
-                    >
-                        Volm
-                    </a>
-                </li>
+                        <a 
+                            class="tw_main_nav_a"
+                            href="{% url 'home' %}"
+                        >
+                            Volm
+                        </a>
+                    </li>
 
+                    <li class="tw-flex-grow"></li>
                 {% if user.is_authenticated %}
                     <li class="tw-inline">
                         <a 
@@ -76,8 +80,7 @@
                         Welcome {{ user.username }}
                     </li> {% endcomment %}
                 {% else %}
-                    <div class="tw-float-right tw-space-x-8">
-                        <li class="tw-inline">
+                        <li class="tw-inline tw-self-end">
                             <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'accounts:signup' %}"
@@ -85,7 +88,7 @@
                                 CREATE ACCOUNT
                             </a>
                         </li>
-                        <li class="tw-inline">
+                        <li class="tw-inline tw-self-end">
                             <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'login' %}"
@@ -93,7 +96,6 @@
                                 LOG IN
                             </a>
                         </li>
-                    </div>
                 {% endif %}
             </ul>
         </nav>
