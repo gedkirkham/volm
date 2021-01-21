@@ -44,8 +44,6 @@ class WorkerCreateView(LoginRequiredMixin, TemplateView):
         if worker_form.is_valid():
             worker = worker_form.save(commit=False)
             worker.user = request.user
-            worker.address = Address.objects.get(user=request.user)
-            worker.contact = ContactInfo.objects.get(user=request.user)
             worker.save()
 
         # availability_form = self.availability_form_class(post_data, initial=initial, queryset=Availability.objects.filter(worker=worker))

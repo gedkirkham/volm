@@ -24,13 +24,11 @@ class WorkerManager(models.Manager):
 
 class Worker(models.Model):
     active = models.BooleanField(default=True)
-    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, related_name='address')
-    contact = models.ForeignKey(ContactInfo, on_delete=models.SET_NULL, null=True, related_name='contact_details')
     created =  models.DateTimeField(auto_now_add=True, editable=False)
-    long_bio = models.TextField(max_length=10000, help_text="Workers long bio")
+    description = models.TextField(max_length=10000, help_text="Advert description")
+    main_skill = models.ForeignKey('WorkerTags', verbose_name=_("Main skill"), null=True, on_delete=models.SET_NULL)
     modified = models.DateTimeField(auto_now=True)
-    orgs = models.ManyToManyField(Org, related_name='associated_organisation', help_text="Organisations that the worker is linked to")
-    short_bio = models.TextField(max_length=1000, blank=True, help_text="Workers short bio")
+    remote_only = models.BooleanField(_("Remote only"), default=False)
     tags = models.ManyToManyField('WorkerTags', related_name='tags', help_text="Worker skill identifiers")
     title = models.CharField(max_length=100, help_text="Short title")
     user = models.ForeignKey(User, help_text="Workers associated user account", on_delete=models.CASCADE, related_name='user_account')
