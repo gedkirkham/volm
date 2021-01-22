@@ -2,12 +2,12 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.forms import modelformset_factory
 
-from .models import Availability, Worker
+from .models import AvailabilityDetail, AvailabilityBasic, Worker
 
 class AvailabilityForm(forms.ModelForm):
     
     class Meta():
-        model = Availability
+        model = AvailabilityDetail
         fields = ['day', 'time_from', 'time_to', 'timezone']
 
     def __init__(self, *arg, **kwarg):
@@ -58,7 +58,7 @@ initial=[
         'timezone': [1],
     },
 ]
-AvailabilityFormSet = modelformset_factory(Availability, form=AvailabilityForm, extra=7, max_num=7, validate_max=True, fields=('day', 'time_from', 'time_to', 'timezone'))
+AvailabilityFormSet = modelformset_factory(AvailabilityDetail, form=AvailabilityForm, extra=7, max_num=7, validate_max=True, fields=('day', 'time_from', 'time_to', 'timezone'))
 
 class WorkerForm(forms.ModelForm):
 
@@ -74,3 +74,9 @@ class WorkerForm(forms.ModelForm):
             'tags': _('Select other skills that are relevant to yourself'),
             'title': _('Make it something short and snappy'),
         }
+
+class AvailabilityBasicForm(forms.ModelForm):
+    
+    class Meta():
+        model = AvailabilityBasic
+        fields = ["hours", "type"]

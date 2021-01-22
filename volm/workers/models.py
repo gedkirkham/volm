@@ -8,7 +8,7 @@ from orgs.models import Org
 
 User = get_user_model()
 
-class Availability(models.Model):
+class AvailabilityDetail(models.Model):
     day = models.ManyToManyField("utils.Day", verbose_name=_("Day"))
     time_from = models.ManyToManyField("utils.Time", verbose_name=_("Time from"), related_name="time_from")
     time_to = models.ManyToManyField("utils.Time", verbose_name=_("Time to"), related_name="time_to")
@@ -16,7 +16,25 @@ class Availability(models.Model):
     worker = models.ForeignKey("Worker", verbose_name=_("Associated Worker"), on_delete=models.CASCADE, related_name='worker')
 
     class Meta:
-        verbose_name_plural = 'Availability'
+        verbose_name_plural = 'Availability in detail'
+
+class AvailabilityBasic(models.Model):
+    hours = models.IntegerField(_("Hours available"))
+    type = models.CharField(
+            _("Type of availability"), 
+            max_length=50,
+            choices=[
+                ('wk', 'Week'),
+                ('mo', 'Month')
+            ]
+        )
+    user = models.ForeignKey(User, verbose_name=_("User"), on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Availability as basic'
+
+    def __str__(self):
+        return "{}: {} hours a {}".format(self.user, self.hours, self.type)
 
 class WorkerManager(models.Manager):
     def active_orgs(self):

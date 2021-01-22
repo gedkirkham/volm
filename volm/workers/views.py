@@ -4,8 +4,8 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
-from .models import Availability, Worker
-from .forms import AvailabilityForm, AvailabilityFormSet, WorkerForm, initial
+from .models import Worker
+from .forms import AvailabilityForm, AvailabilityBasicForm, AvailabilityFormSet, WorkerForm, initial
 from contact.models import Address, ContactInfo
 
 class WorkerListView(ListView):
@@ -32,6 +32,7 @@ class WorkerDeleteView(LoginRequiredMixin, DeleteView):
 class WorkerCreateView(LoginRequiredMixin, TemplateView):
     # availability_form_class = AvailabilityFormSet
     worker_form_class = WorkerForm
+    availability_basic_form_class = AvailabilityBasicForm
     login_url = '/login/'
     template_name = 'workers/worker_update_create_form.html'
 
@@ -39,16 +40,21 @@ class WorkerCreateView(LoginRequiredMixin, TemplateView):
         post_data = request.POST or None
 
         worker_form = self.worker_form_class(post_data, prefix='worker')
+        availability_basic_form = self.availability_basic_form_class(post_data, prefix="avail_basic")
 
         worker = None
-        if worker_form.is_valid():
+        if worker_form.is_valid() and availability_basic_form.is_valid():
             worker = worker_form.save(commit=False)
             worker.user = request.user
             worker.save()
 
+            availability_basic = availability_basic_form.save(commit=False)
+            availability_basic.user = request.user
+            availability_basic.save()
+
         # availability_form = self.availability_form_class(post_data, initial=initial, queryset=Availability.objects.filter(worker=worker))
         # context = self.get_context_data(worker_form=worker_form, availability_form=availability_form)
-        context = self.get_context_data(worker_form=worker_form)
+        context = self.get_context_data(worker_form=worker_form, availability_basic_form=availability_basic_form)
 
         # if availability_form.is_valid():
         #     for form in availability_form:
@@ -66,7 +72,7 @@ class WorkerCreateView(LoginRequiredMixin, TemplateView):
         #             availability.time_to.add(time_to)
 
         # if worker_form.is_valid() and availability_form.is_valid():
-        if worker_form.is_valid():
+        if worker_form.is_valid() and availability_basic_form.is_valid():
             return redirect(reverse_lazy('workers:worker_detail', kwargs={ 'pk': worker.pk }))
 
         return self.render_to_response(context)
