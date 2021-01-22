@@ -19,14 +19,16 @@ class AvailabilityDetail(models.Model):
         verbose_name_plural = 'Availability in detail'
 
 class AvailabilityBasic(models.Model):
-    hours = models.IntegerField(_("Hours available"))
+    choices_type = [
+        ('wk', 'Week'),
+        ('mo', 'Month')
+    ]
+
+    hours = models.PositiveSmallIntegerField(_("Hours available"))
     type = models.CharField(
             _("Type of availability"), 
             max_length=50,
-            choices=[
-                ('wk', 'Week'),
-                ('mo', 'Month')
-            ]
+            choices=choices_type,
         )
     user = models.ForeignKey(User, verbose_name=_("User"), on_delete=models.CASCADE)
 
