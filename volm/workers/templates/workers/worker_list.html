@@ -36,6 +36,9 @@
                                 {{ worker|get_verbose_name:'remote_only' }}
                             {% endif %}
                         </li>
+                        <li>
+                            {{ worker.availabilitybasic_set.first }}
+                        </li>
                     </ul>
                 </div>
 
