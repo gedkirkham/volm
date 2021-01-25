@@ -18,11 +18,10 @@ class AvailabilityDetail(models.Model):
     class Meta:
         verbose_name_plural = 'Availability in detail'
 
-class AvailabilityBasic(models.Model):
-    choices_type = [
-        ('wk', 'Week'),
-        ('mo', 'Month')
-    ]
+choices_type = [
+    ('wk', 'Week'),
+    ('mo', 'Month')
+]
 
     hours = models.PositiveSmallIntegerField(_("Hours available"))
     type = models.CharField(
@@ -36,7 +35,7 @@ class AvailabilityBasic(models.Model):
         verbose_name_plural = 'Availability as basic'
 
     def __str__(self):
-        return "{}: {} hours a {}".format(self.user, self.hours, self.type)
+        return "{} hours a {}".format(self.hours, dict(choices_type)[self.type])
 
 class WorkerManager(models.Manager):
     def active_orgs(self):
