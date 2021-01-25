@@ -43,6 +43,36 @@
                     </div>
                 {% endfor %}
 
+                {% for hidden in experience_form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+
+                {% for field in experience_form.visible_fields %}
+                    <div class="tw-py-8">
+
+                        <label 
+                            for="{{ field.id_for_label }}"
+                            class="tw-text-gray-800 tw-text-xl tw-block"
+                        >
+                            {{ field.label }}:
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <p class="tw-text-gray-600">
+                                {{ field.help_text|safe }}
+                            </p>
+                        {% endif %}
+
+                        {% for err in field.errors %}
+                            <p class="tw-text-red-600">
+                                {{ err }}
+                            </p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
                 <section class="tw-py-8">
                     <h2 class="tw-text-2xl">
                         Availability:
@@ -113,6 +143,8 @@
 
             {{ worker_form.non_field_errors }}
             {{ availability_form.non_field_errors }}
+            {{ availability_basic_form.non_field_errors }}
+            {{ experience_form.non_field_errors }}
 
             <button 
                 class="tw_neutral_button tw_button_anchor"

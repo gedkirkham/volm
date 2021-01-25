@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.forms import modelformset_factory
 
-from .models import AvailabilityDetail, AvailabilityBasic, Worker
+from .models import AvailabilityDetail, AvailabilityBasic, Experience, Worker
 
 class AvailabilityBasicForm(forms.ModelForm):
     
@@ -65,6 +65,16 @@ initial=[
     },
 ]
 AvailabilityFormSet = modelformset_factory(AvailabilityDetail, form=AvailabilityForm, extra=7, max_num=7, validate_max=True, fields=('day', 'time_from', 'time_to', 'timezone'))
+
+class ExperienceForm(forms.ModelForm):
+    """Form definition for Experience."""
+
+    class Meta:
+        """Meta definition for Experienceform."""
+
+        model = Experience
+        fields = ('length',)
+
 
 class WorkerForm(forms.ModelForm):
 

@@ -40,6 +40,28 @@ class AvailabilityBasic(models.Model):
     def __str__(self):
         return "{} hours a {}".format(self.hours, dict(choices_type)[self.type])
 
+choices_length = [
+    ('0','0-1 year'),
+    ('1','1-3 years'),
+    ('2','3-6 years'),
+    ('3','6-12 years'),
+    ('4','12+ years'),
+]
+class Experience(models.Model):
+    created =  models.DateTimeField(auto_now_add=True, editable=False)
+    length = models.CharField(
+            _("Length of experience"), 
+            max_length=50,
+            choices=choices_length,
+        )
+    main_skill = models.ForeignKey('WorkerTags', verbose_name=_("Main skill"), on_delete=models.CASCADE)
+    modified = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, help_text="User", on_delete=models.CASCADE)
+    worker = models.ForeignKey("Worker", verbose_name=_("Workers advert"), on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} {}".format(dict(choices_length)[self.length], _("experience"))
+
 class WorkerManager(models.Manager):
     def active_orgs(self):
         return Worker.objects.filter(active=True)
