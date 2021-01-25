@@ -22,14 +22,17 @@ choices_type = [
     ('wk', 'Week'),
     ('mo', 'Month')
 ]
-
+class AvailabilityBasic(models.Model):
+    created =  models.DateTimeField(auto_now_add=True, editable=False)
     hours = models.PositiveSmallIntegerField(_("Hours available"))
+    modified = models.DateTimeField(auto_now=True)
     type = models.CharField(
             _("Type of availability"), 
             max_length=50,
             choices=choices_type,
         )
     user = models.ForeignKey(User, verbose_name=_("User"), on_delete=models.CASCADE)
+    worker = models.ForeignKey("Worker", verbose_name=_("Workers advert"), on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Availability as basic'
