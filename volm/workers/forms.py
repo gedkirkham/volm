@@ -4,6 +4,12 @@ from django.forms import modelformset_factory
 
 from .models import AvailabilityDetail, AvailabilityBasic, Worker
 
+class AvailabilityBasicForm(forms.ModelForm):
+    
+    class Meta():
+        model = AvailabilityBasic
+        fields = ["hours", "type"]
+
 class AvailabilityForm(forms.ModelForm):
     
     class Meta():
@@ -74,9 +80,3 @@ class WorkerForm(forms.ModelForm):
             'tags': _('Select other skills that are relevant to yourself'),
             'title': _('Make it something short and snappy'),
         }
-
-class AvailabilityBasicForm(forms.ModelForm):
-    
-    class Meta():
-        model = AvailabilityBasic
-        fields = ["hours", "type"]
