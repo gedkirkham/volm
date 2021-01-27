@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from contact.models import Address, ContactInfo
+from accounts.models import Address, ContactInfo
 from orgs.models import Org
 
 User = get_user_model()

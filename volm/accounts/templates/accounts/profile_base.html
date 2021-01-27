@@ -17,7 +17,25 @@
             {% endblock %}
         </header>
 
-        <div class="tw-mt-12 tw-space-y-4">
+        <section>
+            <header>
+                <h2>
+                    Your address:
+                </h2>
+            </header>
+
+            <div>
+                {% if user.address_set.all %}
+                    {{ user.address_set.first }}
+                {% else %}
+                    <button class="tw_neutral_button tw_button_anchor">
+                        <a href="{% url 'accounts:address_new' %}">
+                            ADD ADDRESS
+                        </a>
+                    </button>
+                {% endif %}
+            </div>
+        </section>
             {% block profile_content %}
                 <ul>
                     {% for worker in object_list %}

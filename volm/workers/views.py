@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 
 from .models import Worker
 from .forms import AvailabilityForm, AvailabilityBasicForm, AvailabilityFormSet, ExperienceForm, WorkerForm, initial
-from contact.models import Address, ContactInfo
+from accounts.models import Address, ContactInfo
 
 class WorkerListView(ListView):
     template_name = 'workers/worker_list.html'
