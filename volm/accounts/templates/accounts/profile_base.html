@@ -41,9 +41,16 @@
                 {% endif %}
             </div>
         </section>
+
+        <section class="tw-mt-12 tw-space-y-4">
+            <header>
+                <h2>
+                    Your adverts:
+                </h2>
+            </header>
             {% block profile_content %}
                 <ul>
-                    {% for worker in object_list %}
+                    {% for worker in workers %}
                         <li>
                             <a href="{% url 'workers:worker_detail' pk=worker.pk %}">
                                 {{ worker.pk }}
@@ -52,7 +59,7 @@
                     {% endfor %}
                 </ul>
             {% endblock %}
-        </div>
+        </section>
 
         <footer class="tw-my-8">
             {% block postprofile %}{% endblock %}
