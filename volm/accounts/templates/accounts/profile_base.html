@@ -25,8 +25,13 @@
             </header>
 
             <div>
-                {% if user.address_set.all %}
-                    {{ user.address_set.first }}
+                {% if address %}
+                    {{ address }}
+                    <button class="tw_neutral_button tw_button_anchor">
+                        <a href="{% url 'accounts:address_update' pk=address.pk %}">
+                            UPDATE
+                        </a>
+                    </button>
                 {% else %}
                     <button class="tw_neutral_button tw_button_anchor">
                         <a href="{% url 'accounts:address_new' %}">
