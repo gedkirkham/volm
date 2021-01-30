@@ -21,41 +21,39 @@
 
     <body class="tw-container tw-mx-auto tw-bg-warmGray-100">
         <header class="header">
-            <nav class="tw-h-full">
-                <ul class="tw-text-2xl tw-h-full tw-flex tw-space-x-8">
-                    <li class="tw-inline tw-text-6xl tw-font-bold tw-self-end">
+        </style>
+            <nav class="tw-mt-8">
+                <ul class="tw-text-4xl tw-flex tw-justify-between tw-items-baseline tw-space-x-12">
+                   <li class="tw-text-8xl tw-font-bold">
                         <a 
                             class="tw_main_nav_a"
                             href="{% url 'home' %}"
                         >
                             Volm
                         </a>
-                    </li>
+                    </li> 
 
                     <li class="tw-flex-grow"></li>
 
                     {% if user.is_authenticated %}
-                        <li class="tw-inline">
+                        <li>
                             <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'accounts:profile' %}"
                             >
-                                My Profile
-                            </a>
+                                MY PROFILE
+                             </a>
                         </li>
-                        <li class="tw-inline">
+                        <li>
                             <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'accounts:logout' %}"
                             >
-                                Log Out
+                                LOG OUT
                             </a>
                         </li>
-                        {% comment %} <li class="tw-inline-block tw-p-4">
-                            Welcome {{ user.username }}
-                        </li> {% endcomment %}
                     {% else %}
-                        <li class="tw-inline tw-self-end">
+                        <li>
                             <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'accounts:signup' %}"
@@ -63,7 +61,7 @@
                                 CREATE ACCOUNT
                             </a>
                         </li>
-                        <li class="tw-inline tw-self-end">
+                        <li>
                             <a 
                                 class="tw_main_nav_a"
                                 href="{% url 'login' %}"
