@@ -45,7 +45,6 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['address'] = Address.objects.get(user=self.request.user)
         context['workers'] = Worker.objects.filter(active=True, user=self.request.user).order_by('-created')
-        context['user'] = User.objects.filter(pk=self.request.user.pk)
         return context
 
 class SignUp(CreateView):
